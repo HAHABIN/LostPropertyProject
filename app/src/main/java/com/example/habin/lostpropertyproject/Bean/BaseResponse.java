@@ -6,7 +6,7 @@ package com.example.habin.lostpropertyproject.Bean;
  */
 public class BaseResponse<T> {
     private boolean success;
-    private String message;
+    private String errMsg;
     private T data;
 
     public T getData() {
@@ -25,25 +25,25 @@ public class BaseResponse<T> {
         return success;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-
-    }
 
     public boolean isSuccess(){
         return success;
+    }
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 
     @Override
     public String toString() {
         return "BaseResponse{" +
                 "success=" + success +
-                ", message='" + message + '\'' +
-                ", model=" + data +
+                ", errMsg='" + errMsg + '\'' +
+                ", data=" + data +
                 '}';
     }
 }

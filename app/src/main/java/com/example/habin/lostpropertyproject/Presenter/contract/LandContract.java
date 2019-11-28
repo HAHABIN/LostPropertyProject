@@ -1,6 +1,7 @@
 package com.example.habin.lostpropertyproject.Presenter.contract;
 
 import com.example.habin.lostpropertyproject.Base.BaseContract;
+import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 
 /**
  * Create by HABIN on 2019/11/4
@@ -15,7 +16,8 @@ public interface LandContract extends BaseContract {
 
     interface View extends BaseContract.BaseView{
         //
-        void landSucess();
+        void landSucess(BaseResponse baseResponse);
+        void landFail(String errMsg);
     }
 
     interface Presenter extends BaseContract.BasePresenter<View>{

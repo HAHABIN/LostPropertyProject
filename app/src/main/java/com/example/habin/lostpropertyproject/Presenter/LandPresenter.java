@@ -29,8 +29,12 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
         mlandmodel.login(username, password, new Observer<BaseResponse>() {
             @Override
             public void OnSuccess(BaseResponse baseResponse) {
-                Log.d(TAG, "OnSuccess: "+baseResponse.toString());
-                mView.onSuccess();
+                if (baseResponse.getSuccess()){
+                    mView.landSucess(baseResponse);
+                } else {
+                    mView.landFail(baseResponse.getErrMsg());
+                }
+
             }
 
             @Override

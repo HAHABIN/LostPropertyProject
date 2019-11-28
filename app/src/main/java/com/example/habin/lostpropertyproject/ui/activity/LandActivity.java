@@ -8,6 +8,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
+import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Presenter.LandPresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
 import com.example.habin.lostpropertyproject.R;
@@ -75,22 +76,28 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
     // 成功显示
     @Override
-    public void landSucess() {
+    public void landSucess(BaseResponse baseResponse) {
+        Log.d("TESTDDD", "成功 ");
+        Toast.makeText(mActivity, "TTT", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this,MainActivity.class));
+    }
 
+    @Override
+    public void landFail(String errMsg) {
+        Toast.makeText(mActivity, "失败原因"+errMsg, Toast.LENGTH_SHORT).show();
     }
 
     //返回结果
     @Override
     public void onSuccess() {
-        Log.d("TESTDDD", "成功 ");
+
     }
 
     @Override
     public void onFailure(Throwable e) {
         Log.d(TAG, "onFailure: 登录失败"+e);
         Toast.makeText(mActivity, "登录失败", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(this,MainActivity.class);
-        startActivity(intent);
+
     }
 
 
