@@ -206,7 +206,7 @@ public class ExceptionHandle {
         public ResponeThrowable(Throwable throwable, int code) {
             super(throwable);
             this.code = code;
-        }
+    }
 
         public ResponeThrowable(String message, int code) {
             this.code = code;

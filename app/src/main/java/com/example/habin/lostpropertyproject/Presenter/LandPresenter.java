@@ -35,7 +35,8 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
 
             @Override
             public void OnFail(ExceptionHandle.ResponeThrowable e) {
-                Log.d(TAG, "OnFail: "+e);
+                Log.d(TAG, "OnFail: "+e.message);
+                mView.onFailure(e);
             }
 
             @Override

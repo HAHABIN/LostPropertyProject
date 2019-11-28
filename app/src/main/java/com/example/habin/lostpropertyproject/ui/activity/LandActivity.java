@@ -1,5 +1,6 @@
 package com.example.habin.lostpropertyproject.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
@@ -86,7 +87,10 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
     @Override
     public void onFailure(Throwable e) {
-
+        Log.d(TAG, "onFailure: 登录失败"+e);
+        Toast.makeText(mActivity, "登录失败", Toast.LENGTH_SHORT).show();
+        Intent intent = new Intent(this,MainActivity.class);
+        startActivity(intent);
     }
 
 
