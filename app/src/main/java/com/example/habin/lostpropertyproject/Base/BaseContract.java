@@ -3,7 +3,8 @@ package com.example.habin.lostpropertyproject.Base;
 /**
  * Create by HABIN on 2019/11/4 22:28
  * Email:739115041@qq.com
- * V层和P层基类接口
+ *
+ * 将view、presenter、model的接口方法都串联在一起，更加便于管理
  */
 public interface BaseContract {
 
@@ -19,5 +20,8 @@ public interface BaseContract {
         void onSuccess();
 
         void onFailure(Throwable e);
+    }
+    interface BaseModel {
+
     }
 }

@@ -78,12 +78,12 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     @Override
     public void landSucess(BaseResponse baseResponse) {
         Log.d("TESTDDD", "成功 ");
-        Toast.makeText(mActivity, "TTT", Toast.LENGTH_SHORT).show();
         startActivity(new Intent(this,MainActivity.class));
     }
 
     @Override
     public void landFail(String errMsg) {
+
         Toast.makeText(mActivity, "失败原因"+errMsg, Toast.LENGTH_SHORT).show();
     }
 
@@ -96,7 +96,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     @Override
     public void onFailure(Throwable e) {
         Log.d(TAG, "onFailure: 登录失败"+e);
-        Toast.makeText(mActivity, "登录失败", Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, "失败,请稍后再登录"+e, Toast.LENGTH_SHORT).show();
 
     }
 

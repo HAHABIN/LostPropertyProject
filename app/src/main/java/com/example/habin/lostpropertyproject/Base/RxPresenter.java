@@ -25,6 +25,9 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
      */
     protected CompositeDisposable mDisposable;
 
+    /**
+     * 构造函数 new CompositeDisposable对象
+     */
     protected void unSubscribe() {
 
         if (mDisposable != null) {
@@ -48,7 +51,7 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
         }
     }
 
-    protected void cancelallDisposable() {
+    protected void cancelAllDisposable() {
         if (mDisposable != null) {
             mDisposable.clear();
         }

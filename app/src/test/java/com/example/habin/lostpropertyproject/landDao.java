@@ -1,14 +1,11 @@
 package com.example.habin.lostpropertyproject;
 
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Base.BaseObserver;
 import com.example.habin.lostpropertyproject.Model.ILandModel;
-import com.example.habin.lostpropertyproject.Model.Observer;
-import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
-import com.example.habin.lostpropertyproject.Retrofit.RetrofitManager;
+import com.example.habin.lostpropertyproject.Service.Retrofit.RetrofitManager;
 
 import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 /**
  * Create by HABIN on 2019/11/915:52
@@ -16,9 +13,9 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class landDao implements ILandModel {
     @Override
-    public void login(String username, String password, Observer<BaseResponse> observer) {
+    public void login(String username, String password, BaseObserver<BaseResponse> baseObserver) {
         Observable<BaseResponse> login = RetrofitManager.getSingleton().Apiservice().login(username,password);
-        login.subscribe(observer);
+        login.subscribe(baseObserver);
 
     }
 

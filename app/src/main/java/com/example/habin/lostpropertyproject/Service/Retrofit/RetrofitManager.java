@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.Retrofit;
+package com.example.habin.lostpropertyproject.Service.Retrofit;
 
 import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.Service.Apiservice;

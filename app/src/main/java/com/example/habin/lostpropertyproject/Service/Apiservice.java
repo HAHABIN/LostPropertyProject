@@ -22,8 +22,8 @@ public interface Apiservice {
 //    Observable<List<BeanGSchaxun>> getGSxin(@Path("fenzhi") String fenzhi,
 //                                            @Path("bianhao") String bianhao,
 //                                            @Query("batchNo") String batchNo);
-    @POST("superadmin/logincheck")
-    Observable<BaseResponse> login(@Query("userName") String username,
+    @POST("lostadmin/logincheck")
+    Observable<BaseResponse> login(@Query("username") String username,
                                    @Query("password") String password);
 
 

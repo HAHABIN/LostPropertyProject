@@ -1,15 +1,12 @@
 package com.example.habin.lostpropertyproject;
 
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
-import com.example.habin.lostpropertyproject.Error.ExceptionHandle;
 import com.example.habin.lostpropertyproject.Model.Impl.LandModelImpl;
-import com.example.habin.lostpropertyproject.Model.Observer;
+import com.example.habin.lostpropertyproject.Base.BaseObserver;
 
 import org.junit.Test;
 
 import io.reactivex.disposables.Disposable;
-
-import static org.junit.Assert.*;
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -20,24 +17,15 @@ public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() {
         LandModelImpl landModel = new LandModelImpl();
-        landModel.login("admin", "admin", new Observer<BaseResponse>() {
-            @Override
-            public void OnSuccess(BaseResponse baseResponse) {
-                System.out.print("SS成功"+baseResponse.toString());
-            }
+        landModel.login("admin", "admin", new BaseObserver<BaseResponse>() {
 
             @Override
-            public void OnFail(ExceptionHandle.ResponeThrowable e) {
-                System.out.print("SS失败"+e);
-            }
-
-            @Override
-            public void OnCompleted() {
+            protected void OnSuccess(BaseResponse baseResponse) {
 
             }
 
             @Override
-            public void OnDisposable(Disposable d) {
+            protected void OnFail(Throwable e) {
 
             }
         });

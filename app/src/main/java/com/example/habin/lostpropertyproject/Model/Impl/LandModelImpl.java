@@ -3,9 +3,9 @@ package com.example.habin.lostpropertyproject.Model.Impl;
 
 
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Base.BaseObserver;
 import com.example.habin.lostpropertyproject.Model.ILandModel;
-import com.example.habin.lostpropertyproject.Model.Observer;
-import com.example.habin.lostpropertyproject.Retrofit.RetrofitManager;
+import com.example.habin.lostpropertyproject.Service.Retrofit.RetrofitManager;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -24,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
 public class LandModelImpl implements ILandModel {
 
 
-//    public void getxinxi(String fenzhi, String bianhao, String shijian, Observer<List<BeanGSchaxun>> observer) {
+//    public void getxinxi(String fenzhi, String bianhao, String shijian, BaseObserver<List<BeanGSchaxun>> observer) {
 //        Observable<List<BeanGSchaxun>> gSxin = RetrofitManager.getSingleton().Apiservice().getGSxin(fenzhi, bianhao, shijian);
 //        gSxin.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
 //
@@ -32,9 +32,9 @@ public class LandModelImpl implements ILandModel {
 
 
     @Override
-    public void login(String username, String password, Observer<BaseResponse> observer) {
+    public void login(String username, String password, BaseObserver<BaseResponse> baseObserver) {
         Observable<BaseResponse> login = RetrofitManager.getSingleton().Apiservice().login(username,password);
-        login.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+        login.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(baseObserver);
     }
 
     @Override

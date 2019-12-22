@@ -1,9 +1,7 @@
 package com.example.habin.lostpropertyproject;
 
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
-import com.example.habin.lostpropertyproject.Error.ExceptionHandle;
-import com.example.habin.lostpropertyproject.Model.Impl.LandModelImpl;
-import com.example.habin.lostpropertyproject.Model.Observer;
+import com.example.habin.lostpropertyproject.Base.BaseObserver;
 
 
 import org.junit.Test;
@@ -22,14 +20,14 @@ public class LoginTestTest {
 
         landDao landModel = new landDao();
         System.out.println("------------------test------------");
-        landModel.login("admin", "admin", new Observer<BaseResponse>() {
+        landModel.login("admin", "admin", new BaseObserver<BaseResponse>() {
             @Override
             public void OnSuccess(BaseResponse baseResponse) {
                 System.out.print("登陆成功");
             }
 
             @Override
-            public void OnFail(ExceptionHandle.ResponeThrowable e) {
+            public void OnFail(Throwable e) {
                 System.out.print("登陆失败");
             }
 

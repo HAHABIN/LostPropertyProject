@@ -2,13 +2,12 @@ package com.example.habin.lostpropertyproject.Presenter;
 
 import android.util.Log;
 
+import com.example.habin.lostpropertyproject.Base.BaseObserver;
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
-import com.example.habin.lostpropertyproject.Error.ExceptionHandle;
 import com.example.habin.lostpropertyproject.Model.Impl.LandModelImpl;
 import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
 
-import com.example.habin.lostpropertyproject.Model.*;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -26,7 +25,7 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
 
     @Override
     public void login(String username, String password) {
-        mlandmodel.login(username, password, new Observer<BaseResponse>() {
+        mlandmodel.login(username, password, new BaseObserver<BaseResponse>() {
             @Override
             public void OnSuccess(BaseResponse baseResponse) {
                 if (baseResponse.getSuccess()){
@@ -38,8 +37,8 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
             }
 
             @Override
-            public void OnFail(ExceptionHandle.ResponeThrowable e) {
-                Log.d(TAG, "OnFail: "+e.message);
+            public void OnFail(Throwable e) {
+                Log.d(TAG, "OnFail: "+e);
                 mView.onFailure(e);
             }
 
