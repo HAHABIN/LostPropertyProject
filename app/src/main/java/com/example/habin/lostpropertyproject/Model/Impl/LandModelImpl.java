@@ -38,7 +38,8 @@ public class LandModelImpl implements ILandModel {
     }
 
     @Override
-    public void signup(String username, String password, String mail) {
-
+    public void signup(String username, String password, String mail, BaseObserver<BaseResponse> baseObserver) {
+        Observable<BaseResponse> login = RetrofitManager.getSingleton().Apiservice().signup(username,password);
+        login.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(baseObserver);
     }
 }

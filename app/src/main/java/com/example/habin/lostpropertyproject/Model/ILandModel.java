@@ -20,7 +20,7 @@ public interface ILandModel extends BaseContract.BaseModel {
     /**
      * 用户注册
      */
-    void signup(String username, String password, String mail);
+    void signup(String username, String password, String mail,BaseObserver<BaseResponse> baseObserver);
 
 
 

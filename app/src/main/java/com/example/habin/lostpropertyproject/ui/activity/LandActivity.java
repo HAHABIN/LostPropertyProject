@@ -3,15 +3,21 @@ package com.example.habin.lostpropertyproject.ui.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.Presenter.LandPresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.StringUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,11 +37,24 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
 
     @BindView(R.id.login_et_username)
-    EditText loginEtUsername;
+    EditText mEtUsername;
     @BindView(R.id.login_et_password)
-    EditText loginEtPassword;
+    EditText mEtPassword;
     @BindView(R.id.login_btn_login)
-    Button loginBtnLogin;
+    Button mBtnLogin;
+    @BindView(R.id.login_et_mail)
+    EditText mEtMail;
+    @BindView(R.id.login_et_rpassword)
+    EditText mEtRpassword;
+    @BindView(R.id.login_tv_rempas)
+    CheckBox mTvloginRempas;
+    @BindView(R.id.login_tv_sign)
+    TextView mTvloginSign;
+    @BindView(R.id.land_tv_text)
+    TextView mTvTitle;
+
+    //是否是登陆操作
+    private boolean isLogin = true;
 
     protected int getLayoutId() {
         return R.layout.activity_land;
@@ -51,8 +70,8 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
      * 执行登陆动作
      */
     public void login() {
-        String username = loginEtUsername.getText().toString();
-        String password = loginEtPassword.getText().toString();
+        String username = mEtUsername.getText().toString();
+        String password = mEtPassword.getText().toString();
         mPresenter.login(username, password);
     }
 
@@ -60,13 +79,48 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
      * 执行注册动作
      */
     public void sign() {
-        String email = null;//emailET.getText().toString();
-        String username = null;//usernameET.getText().toString();
-        String password = null; //passwordET.getText().toString();
-        String rpassword = null;//rpasswordET.getText().toString();
-        mPresenter.signup(username, password, email);
-    }
 
+        String registerAddress = Constants.USER_SIGN;
+        String mail = mEtMail.getText().toString().trim();
+        String username = mEtUsername.getText().toString().trim();
+        String password = mEtPassword.getText().toString().trim();
+        String rpassword = mEtPassword.getText().toString().trim();
+        if (mail.length() == 0 || username.length() == 0 || password.length() == 0 || rpassword.length() == 0) {
+            Toast.makeText(mContext, "请填写必要信息", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!StringUtils.checkEmail(mail)) {
+            Toast.makeText(mContext, "请输入正确的邮箱格式", Toast.LENGTH_SHORT).show();
+        }
+        if (!password.equals(rpassword)) {
+            Toast.makeText(mContext, "两次密码不一致", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+    }
+    /**
+     * 置换登录注册窗口
+     */
+    private void changeWindows() {
+        if (isLogin) {
+            //置换注册界面
+            mTvloginSign.setText("登录");
+            mBtnLogin.setText("注册");
+            mEtRpassword.setVisibility(View.VISIBLE);
+            mEtMail.setVisibility(View.VISIBLE);
+            mTvTitle.setText("注册");
+            mTvloginRempas.setVisibility(View.GONE);
+        } else {
+            //置换登陆界面
+            mTvloginSign.setText("注册");
+            mBtnLogin.setText("登录");
+            mEtRpassword.setVisibility(View.GONE);
+            mEtMail.setVisibility(View.GONE);
+            mTvTitle.setText("登录");
+            mTvloginRempas.setVisibility(View.VISIBLE);
+        }
+        isLogin = !isLogin;
+    }
 
     //绑定
     @Override
@@ -78,13 +132,13 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     @Override
     public void landSucess(BaseResponse baseResponse) {
         Log.d("TESTDDD", "成功 ");
-        startActivity(new Intent(this,MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override
     public void landFail(String errMsg) {
 
-        Toast.makeText(mActivity, "失败原因"+errMsg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(mActivity, "失败原因" + errMsg, Toast.LENGTH_SHORT).show();
     }
 
     //返回结果
@@ -95,15 +149,29 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
     @Override
     public void onFailure(Throwable e) {
-        Log.d(TAG, "onFailure: 登录失败"+e);
-        Toast.makeText(mActivity, "失败,请稍后再登录"+e, Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onFailure: 登录失败" + e);
+        Toast.makeText(mActivity, "失败,请稍后再登录" + e, Toast.LENGTH_SHORT).show();
 
     }
 
 
-
-    @OnClick(R.id.login_btn_login)
-    public void onViewClicked() {
-        login();
+    @OnClick({R.id.login_btn_login,R.id.login_tv_rempas,R.id.login_tv_sign})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.login_btn_login:
+                if (isLogin) {
+                    login();  //登陆
+                } else {
+                    sign();  //注册
+                }
+                break;
+            case R.id.login_tv_rempas:
+                break;
+            case R.id.login_tv_sign:
+                changeWindows();
+                break;
+        }
     }
+
+
 }

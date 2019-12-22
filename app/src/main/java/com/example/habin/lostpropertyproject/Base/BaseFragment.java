@@ -14,9 +14,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Created by Zhouas666 on AndroidStudio
- * Date: 2019-01-08
- * Github: https://github.com/zas023
+ * 继承BaseActivity基类
  */
 public abstract class BaseFragment extends Fragment {
 

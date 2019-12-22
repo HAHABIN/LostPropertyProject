@@ -25,6 +25,8 @@ public interface Apiservice {
     @POST("lostadmin/logincheck")
     Observable<BaseResponse> login(@Query("username") String username,
                                    @Query("password") String password);
-
+    @POST("lostadmin/signupcheck")
+    Observable<BaseResponse> signup(@Query("username") String username,
+                                   @Query("password") String password);
 
 }
