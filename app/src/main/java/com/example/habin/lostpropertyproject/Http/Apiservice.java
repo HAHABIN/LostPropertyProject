@@ -1,12 +1,9 @@
-package com.example.habin.lostpropertyproject.Service;
+package com.example.habin.lostpropertyproject.Http;
 
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 
 import io.reactivex.Observable;
-import retrofit2.Call;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 /**

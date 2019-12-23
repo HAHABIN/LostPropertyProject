@@ -5,7 +5,7 @@ package com.example.habin.lostpropertyproject.Model.Impl;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Base.BaseObserver;
 import com.example.habin.lostpropertyproject.Model.ILandModel;
-import com.example.habin.lostpropertyproject.Service.Retrofit.RetrofitManager;
+import com.example.habin.lostpropertyproject.Http.RetrofitManager;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;

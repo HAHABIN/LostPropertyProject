@@ -42,15 +42,6 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
                 mView.onFailure(e);
             }
 
-            @Override
-            public void OnCompleted() {
-
-            }
-
-            @Override
-            public void OnDisposable(Disposable d) {
-
-            }
         });
     }
 

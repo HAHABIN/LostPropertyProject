@@ -1,7 +1,6 @@
-package com.example.habin.lostpropertyproject.Service.Retrofit;
+package com.example.habin.lostpropertyproject.Http;
 
 import com.example.habin.lostpropertyproject.Common.Constants;
-import com.example.habin.lostpropertyproject.Service.Apiservice;
 
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -15,9 +14,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * RetrofitManager管理器的创建，
  * 保证Retrofit在类中只有一个实例，避免请求体的多次创建。
  */
-
-
 public class RetrofitManager {
+
     private volatile static RetrofitManager retrofitManager;
     private Retrofit retrofit;
 
@@ -47,5 +45,9 @@ public class RetrofitManager {
 
     public Apiservice Apiservice() {
         return retrofit.create(Apiservice.class);
+    }
+
+    public <T> T create(Class<T> service) {
+        return retrofit.create(service);
     }
 }
