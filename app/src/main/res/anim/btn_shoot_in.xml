@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="600"
+    android:fromYDelta="100%"
+    android:interpolator="@android:anim/anticipate_overshoot_interpolator"
+    android:toYDelta="0" />
+    <!--创建translate动画实现控件平移的效果
+        实现了控件从下向上的平移效果
+     android:fromXDelta：平移开始X方向坐标（数值、百分数、百分数p，且多可以为正负）
+     android:fromYDelta：平移开始Y方向坐标（数值、百分数、百分数p，且多可以为正负）
+     android:toXDelta：平移结束X方向坐标（数值、百分数、百分数p，且多可以为正负）
+     android:toYDelta：平移结束Y方向坐标（数值、百分数、百分数p，且多可以为正负）
+
+    -->

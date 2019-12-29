@@ -2,6 +2,9 @@ package com.example.habin.lostpropertyproject.Http;
 
 import com.example.habin.lostpropertyproject.Common.Constants;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -18,6 +21,11 @@ public class RetrofitManager {
 
     private volatile static RetrofitManager retrofitManager;
     private Retrofit retrofit;
+    private static final int DEFAULT_CONNECT_TIME = 10;
+    private static final int DEFAULT_WRITE_TIME = 30;
+    private static final int DEFAULT_READ_TIME = 30;
+    private OkHttpClient okHttpClient;
+
 
     //无参的单利模式
     public static RetrofitManager getSingleton() {
@@ -37,10 +45,19 @@ public class RetrofitManager {
 
     //构造方法创建Retrofit实例
     private void initRetrofitManager() {
-        retrofit = new Retrofit.Builder().baseUrl(Constants.BASE_URL)
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .addConverterFactory(GsonConverterFactory.create())
+        okHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(DEFAULT_CONNECT_TIME, TimeUnit.SECONDS)//连接超时时间
+                .writeTimeout(DEFAULT_WRITE_TIME, TimeUnit.SECONDS)//设置写操作超时时间
+                .readTimeout(DEFAULT_READ_TIME, TimeUnit.SECONDS)//设置读操作超时时间
                 .build();
+
+        retrofit = new Retrofit.Builder()
+                .client(okHttpClient)//设置使用okhttp网络请求
+                .baseUrl(Constants.BASE_URL)//设置服务器路径
+                .addConverterFactory(GsonConverterFactory.create())//添加转化库，默认是Gson
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())//添加回调库，采用RxJava
+                .build();
+
     }
 
     public Apiservice Apiservice() {

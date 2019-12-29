@@ -3,9 +3,9 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorPrimary">@color/white_f5</item>
+        <item name="colorPrimaryDark">@color/blue_386FFE</item>
+        <item name="colorAccent">@color/blue_386FFE</item>
     </style>
     <!--按钮样式-->
     <style name="Button">
@@ -17,5 +17,13 @@
         <item name="android:textColor">@color/textWhite</item>
         <item name="android:background">@drawable/bg_button_default</item>
         <!--<item name="com.github.airsaid.accountbook:backgroundTint">?attr/colorAccent</item>-->
+    </style>
+
+    <!--设置了Dialog的几个属性-->
+    <style name="main_publishdialog_style" parent="android:Theme.Holo.Light.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">false</item>
+        <item name="android:windowAnimationStyle">@null</item>
     </style>
 </resources>

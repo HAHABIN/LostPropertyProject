@@ -5,10 +5,10 @@ import android.util.Log;
 import com.example.habin.lostpropertyproject.Base.BaseObserver;
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Http.RetrofitManager;
 import com.example.habin.lostpropertyproject.Model.Impl.LandModelImpl;
 import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
 
-import io.reactivex.disposables.Disposable;
 
 /**
  * Create by HABIN on 2019/11/4
@@ -25,6 +25,7 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
 
     @Override
     public void login(String username, String password) {
+
         mlandmodel.login(username, password, new BaseObserver<BaseResponse>() {
             @Override
             public void OnSuccess(BaseResponse baseResponse) {

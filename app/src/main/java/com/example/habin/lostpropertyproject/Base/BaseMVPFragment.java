@@ -1,9 +1,7 @@
 package com.example.habin.lostpropertyproject.Base;
 
 /**
- * Created by Zhouas666 on AndroidStudio
- * Date: 2019-01-08
- * Github: https://github.com/zas023
+
  */
 public abstract class BaseMVPFragment<T extends BaseContract.BasePresenter> extends BaseFragment
         implements BaseContract.BaseView{

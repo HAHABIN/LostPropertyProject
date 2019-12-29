@@ -2,6 +2,7 @@ package com.example.habin.lostpropertyproject.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,8 @@ import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.Presenter.LandPresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.ProgressUtils;
+import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 
 import butterknife.BindView;
@@ -56,6 +59,11 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     //是否是登陆操作
     private boolean isLogin = true;
 
+    @Override
+    protected boolean showTitle() {
+        return false;
+    }
+
     protected int getLayoutId() {
         return R.layout.activity_land;
     }
@@ -72,7 +80,9 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     public void login() {
         String username = mEtUsername.getText().toString();
         String password = mEtPassword.getText().toString();
+        ProgressUtils.show(this, "正在登陆...");
         mPresenter.login(username, password);
+
     }
 
     /**
@@ -131,13 +141,15 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     // 成功显示
     @Override
     public void landSucess(BaseResponse baseResponse) {
-        Log.d("TESTDDD", "成功 ");
+        ProgressUtils.dismiss();
+
         startActivity(new Intent(this, MainActivity.class));
     }
 
     @Override
     public void landFail(String errMsg) {
-
+        ProgressUtils.dismiss();
+        SnackbarUtils.show(mActivity,errMsg);
         Toast.makeText(mActivity, "失败原因" + errMsg, Toast.LENGTH_SHORT).show();
     }
 
@@ -149,8 +161,10 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
     @Override
     public void onFailure(Throwable e) {
+        ProgressUtils.dismiss();
         Log.d(TAG, "onFailure: 登录失败" + e);
-        Toast.makeText(mActivity, "失败,请稍后再登录" + e, Toast.LENGTH_SHORT).show();
+        SnackbarUtils.show(mActivity,e.getMessage());
+//        Toast.makeText(mActivity, "失败,请稍后再登录" + e, Toast.LENGTH_SHORT).show();
 
     }
 

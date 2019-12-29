@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:android="http://schemas.android.com/apk/res/android"
+    android:duration="200"
+    android:fromYDelta="0"
+    android:interpolator="@android:anim/anticipate_interpolator"
+    android:toYDelta="100%" />
+    <!--创建translate动画实现控件平移的效果
+        实现了控件从上向下的平移效果
+    -->

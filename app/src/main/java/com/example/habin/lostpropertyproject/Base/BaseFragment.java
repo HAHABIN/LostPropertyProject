@@ -25,7 +25,7 @@ public abstract class BaseFragment extends Fragment {
     protected Activity mActivity;
     protected Context mContext;
 
-    private View root = null;
+    private View mRoot = null;
 
     @Override
     public void onAttach(Context context) {
@@ -76,8 +76,16 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         int resId = getLayoutId();
-        root = inflater.inflate(resId,container,false);
-        return root;
+        if (mRoot != null) {
+            ViewGroup parent = (ViewGroup) mRoot.getParent();
+            if (parent != null) {
+                parent.removeView(mRoot);
+            }
+            return mRoot;
+        }
+        mRoot = LayoutInflater.from(getActivity()).inflate(getLayoutId(),container,false);
+//        mRoot = inflater.inflate(resId,container,false);
+        return mRoot;
     }
 
     @Override
@@ -105,9 +113,9 @@ public abstract class BaseFragment extends Fragment {
     }
 
     protected <VT> VT getViewById(int id){
-        if (root == null){
+        if (mRoot == null){
             return  null;
         }
-        return (VT) root.findViewById(id);
+        return (VT) mRoot.findViewById(id);
     }
 }

@@ -7,7 +7,7 @@ package com.example.habin.lostpropertyproject.Base;
 
 
 import android.accounts.NetworkErrorException;
-
+import android.content.Context;
 
 
 import java.net.ConnectException;
@@ -20,7 +20,19 @@ import io.reactivex.disposables.Disposable;
 
 
 public abstract class BaseObserver<T> implements Observer<T> {
-    @Override
+
+
+    protected Context mContext;
+
+    public BaseObserver(Context context) {
+        this.mContext = context;
+    }
+
+    public BaseObserver() {
+
+    }
+
+        @Override
     public void onSubscribe(Disposable d) {
         //添加订阅关系
         OnDisposable(d);
