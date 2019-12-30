@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.R;
@@ -18,7 +17,6 @@ import com.example.habin.lostpropertyproject.ui.fragment.MinePageFragment;
 import com.example.habin.lostpropertyproject.ui.fragment.TypePageFragment;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
@@ -55,7 +53,7 @@ public class MainActivity extends BaseActivity {
     //是否显示标题 默认不显示
     @Override
     protected boolean showTitle() {
-        return true;
+        return false;
     }
 
 
@@ -68,8 +66,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
-        setShowBack(View.VISIBLE);
+//        setTitleText("首页");
         mImageList = new ImageView[]{mIvHome, mIvType, mIvMessage, mIvMine};
         mTextList = new TextView[]{mTvHome, mTvType, mTvMessage, mTvMine};
         //默认

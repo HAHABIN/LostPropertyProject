@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -24,13 +26,14 @@ public abstract class BaseFragment extends Fragment {
 
     protected Activity mActivity;
     protected Context mContext;
-
+    private Unbinder mUnBinder;
     private View mRoot = null;
 
     @Override
     public void onAttach(Context context) {
         mActivity = (Activity) context;
         mContext = context;
+
         super.onAttach(context);
     }
 
@@ -91,6 +94,7 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mUnBinder = ButterKnife.bind(this, view);
         initData(savedInstanceState);
         TAG=getName();
         initWidget(savedInstanceState);
@@ -105,6 +109,12 @@ public abstract class BaseFragment extends Fragment {
         if (mDisposable != null){
             mDisposable.clear();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mUnBinder.unbind();
     }
 
     /**************************公共类*******************************************/

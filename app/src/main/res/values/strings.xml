@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">LostPropertyProject</string>
+    <string name="app_name">失物寻回</string>
 
 
 
@@ -12,4 +12,8 @@
     <string name="load_switch">正在切换中&#8230;</string>
     <string name="load_login">正在登录中&#8230;</string>
     <string name="load_sign">正在注册中&#8230;</string>
+    <string name="text_content">内容内容内容内容内容内容内容内容
+    内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+    内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+    </string>
 </resources>

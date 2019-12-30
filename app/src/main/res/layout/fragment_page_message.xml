@@ -2,9 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+
+    <com.example.habin.lostpropertyproject.view.SwipeRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="消息"
-        />
+        android:background="@color/white"></com.example.habin.lostpropertyproject.view.SwipeRecyclerView>
+
 </LinearLayout>
