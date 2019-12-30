@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
+    android:background="@color/white_eb"
     android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:background="@color/blue_386FFE"
+        android:layout_height="200dp">
+        <com.example.habin.lostpropertyproject.view.CircleImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ttt"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="20dp"
+            />
 
-    <include layout="@layout/include_toolbar"/>
+    </RelativeLayout>
 
-</LinearLayout>
+</RelativeLayout>
