@@ -17,7 +17,7 @@
             <stroke android:color="@color/white_f5" android:width="1dp"/>
             <gradient android:angle="45"
                 android:startColor="@color/blue_386FFE"
-                android:endColor="@color/blue_4979F5"/>
+                android:endColor="@color/blue_6088F0"/>
             <padding android:left="17dp" android:top="5dp" android:bottom="5dp" android:right="16dp"/>
             <corners android:topLeftRadius="15dp" android:bottomLeftRadius="15dp"/>
 

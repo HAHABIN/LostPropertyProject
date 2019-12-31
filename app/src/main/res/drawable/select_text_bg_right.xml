@@ -4,7 +4,7 @@
         <!--设置长方形-->
         <shape android:shape="rectangle">
             <stroke android:color="@color/white_f5" android:width="1dp"/>
-            <gradient android:angle="45"
+            <gradient android:angle="135"
                 android:startColor="@color/white_f5"
                 android:endColor="@color/white_f5"/>
             <padding android:left="17dp" android:top="5dp" android:bottom="5dp" android:right="16dp"/>
@@ -15,9 +15,9 @@
     <item android:state_selected="false">
         <shape android:shape="rectangle">
             <stroke android:color="@color/white_f5" android:width="1dp"/>
-            <gradient android:angle="45"
+            <gradient android:angle="135"
                 android:startColor="@color/blue_386FFE"
-                android:endColor="@color/blue_4979F5"/>
+                android:endColor="@color/blue_6088F0"/>
             <padding android:left="17dp" android:top="5dp" android:bottom="5dp" android:right="16dp"/>
             <corners android:topRightRadius="15dp" android:bottomRightRadius="15dp"/>
         </shape>

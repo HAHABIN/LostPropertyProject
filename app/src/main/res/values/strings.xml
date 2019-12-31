@@ -16,4 +16,7 @@
     内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
     内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
     </string>
+    <string name="record_lost">丢失记录</string>
+    <string name="record_find">拾物记录</string>
+    <string name="record_complete">完成记录</string>
 </resources>

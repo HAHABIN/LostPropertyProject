@@ -58,6 +58,7 @@
     <com.example.habin.lostpropertyproject.view.NoScrollViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        />
 
 </LinearLayout>

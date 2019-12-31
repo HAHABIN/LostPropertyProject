@@ -51,7 +51,12 @@
     <color name="white16">#29FFFFFF</color>
     <color name="blue_386FFE">#386FFE</color>
     <color name="blue_4979F5">#4979F5</color>
+    <color name="blue_6088F0">#6088F0</color>
+
 
     <color name="home_tab_selected">#386FFE</color>
     <color name="home_tab_unselected">#CCFFFFFF</color>
+
+    <color name="t">#B9B8B8</color>
+    <color name="color_b3">#B3B3B3</color>
 </resources>
