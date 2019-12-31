@@ -51,8 +51,8 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.civ_pic)
         CircleImageView mCivPic;        //头像
-        @BindView(R.id.tv_name)
-        TextView mTvName;               //用户名
+        @BindView(R.id.tv_nickname)
+        TextView mTvNickNmae;               //用户名
         @BindView(R.id.tv_release_time)
         TextView mTvReleaseTime;        //丢失寻找时间
         @BindView(R.id.tv_note_context)

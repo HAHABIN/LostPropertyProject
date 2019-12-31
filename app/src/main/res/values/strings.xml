@@ -2,7 +2,6 @@
     <string name="app_name">失物寻回</string>
 
 
-
     <!--Loading-->
     <string name="load_msg">正在加载中&#8230;</string>
     <string name="load_update">正在修改中&#8230;</string>
@@ -19,4 +18,12 @@
     <string name="record_lost">丢失记录</string>
     <string name="record_find">拾物记录</string>
     <string name="record_complete">完成记录</string>
+<!--    个人信息-->
+    <string name="personal_avatar">头像</string>
+    <string name="personal_nickname">昵称</string>
+    <string name="personal_userid">用户ID</string>
+    <string name="personal_gender">性别</string>
+    <string name="personal_area">地区</string>
+    <string name="personal_email">邮箱</string>
+    <string name="personal_helptiems">帮助次数</string>
 </resources>

@@ -12,6 +12,7 @@ import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Presenter.HomePagePresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.HomePageContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.ui.activity.SearchActivity;
 import com.example.habin.lostpropertyproject.ui.adapter.VpAdapter;
 import com.example.habin.lostpropertyproject.view.NoScrollViewPager;
 
@@ -82,7 +83,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     }
 
 
-    @OnClick({R.id.iv_back, R.id.tv_lost, R.id.tv_find})
+    @OnClick({R.id.iv_back, R.id.tv_lost, R.id.tv_find,R.id.iv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -98,6 +99,10 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
                 setTitle();
                 mVpContent.setCurrentItem(1);
                 break;
+            case R.id.iv_search:
+                SearchActivity.StartAct(mContext);
+                break;
+
         }
     }
 

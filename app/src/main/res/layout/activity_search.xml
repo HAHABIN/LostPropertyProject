@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white_fa"
+    tools:context=".ui.activity.SearchActivity">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/white">
+        <LinearLayout
+            android:layout_marginStart="10dp"
+            android:layout_width="match_parent"
+            android:layout_gravity="center"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:layout_margin="10dp"
+            android:background="@color/white_fa"
+            android:layout_marginLeft="10dp">
+
+            <ImageView
+                android:layout_marginStart="16dp"
+                android:src="@drawable/myfriend_search"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp">
+            </ImageView>
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/white_fa"
+                android:hint="搜索订单号，手机号，地址…"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:lines="1"
+                android:textSize="12sp"
+                android:layout_weight="1"/>
+            <ImageView
+                android:id="@+id/iv_clean"
+                android:src="@drawable/search_delete_icon"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="8dp"
+                android:visibility="gone"
+                android:layout_marginRight="16dp" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:text="取消"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <com.example.habin.lostpropertyproject.view.SwipeRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipeRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"/>
+
+    <LinearLayout
+        android:id="@+id/ll_no_order"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:visibility="gone"
+        android:background="@color/white_fa">
+        <ImageView
+            android:id="@+id/Iv_no_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="visible"
+            android:src="@drawable/ic_no_order" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="没有相关记录"
+            android:textColor="@color/gray_333"
+            android:textSize="16sp"
+            />
+    </LinearLayout>
+
+
+
+</LinearLayout>
