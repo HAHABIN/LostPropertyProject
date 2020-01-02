@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.example.habin.lostpropertyproject.Base.BaseFragment;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.ui.activity.RecordDetailsActivity;
 import com.example.habin.lostpropertyproject.ui.adapter.ToClaimListAdapter;
 import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
 
@@ -15,7 +16,7 @@ import butterknife.BindView;
  * Email 739115041@qq.com
  * 招领列表
  */
-public class ToClaimListFragment extends BaseFragment {
+public class ToClaimListFragment extends BaseFragment implements ToClaimListAdapter.OnitemClick {
 
 
     public static ToClaimListFragment newInstance(String type) {
@@ -43,7 +44,11 @@ public class ToClaimListFragment extends BaseFragment {
         Bundle bundle = this.getArguments();
 
         mType = bundle.getString("type");
-        mSw.setAdapter(new ToClaimListAdapter(mContext));
+        mSw.setAdapter(new ToClaimListAdapter(mContext,this));
     }
 
+    @Override
+    public void onItemClick(int position) {
+        RecordDetailsActivity.StartAct(mContext);
+    }
 }

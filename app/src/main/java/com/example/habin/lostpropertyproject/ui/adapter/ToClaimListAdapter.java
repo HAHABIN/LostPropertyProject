@@ -23,29 +23,40 @@ import butterknife.ButterKnife;
  */
 public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.ViewHolder> {
     private Context mContext;
-
+    private OnitemClick mOnitemClick;
 
     public ToClaimListAdapter(Context context) {
         mContext = context;
     }
+    public ToClaimListAdapter(Context context,OnitemClick onitemClick) {
+        mContext = context;
+        mOnitemClick = onitemClick;
+    }
+
+    //定义设置点击事件监听的方法
+    public void setOnitemClickLintener(OnitemClick onitemClick) {
+        this.mOnitemClick = onitemClick;
+    }
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int position) {
         return new ViewHolder(LayoutInflater.from(mContext).inflate(R.layout.item_to_claim, viewGroup, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
-
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        viewHolder.itemView.setOnClickListener(v -> {
+            if (mOnitemClick!=null){
+                mOnitemClick.onItemClick(position);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return 10;
     }
-
-
 
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -70,5 +81,8 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
         }
     }
 
-
+    //定义一个点击事件的接口
+    public interface OnitemClick {
+        void onItemClick(int position);
+    }
 }

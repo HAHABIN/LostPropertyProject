@@ -33,7 +33,6 @@ public abstract class BaseFragment extends Fragment {
     public void onAttach(Context context) {
         mActivity = (Activity) context;
         mContext = context;
-
         super.onAttach(context);
     }
 

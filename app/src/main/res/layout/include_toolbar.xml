@@ -24,14 +24,15 @@
         android:textSize="18sp"
         android:textColor="@color/white_f5"
         />
-    <ImageView
-        android:id="@+id/iv_search"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+    <TextView
+        android:id="@+id/tv_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
         android:layout_centerVertical="true"
-        android:src="@drawable/ic_search"
-        android:visibility="gone"
+        android:layout_marginRight="10dp"
+        android:text="发布"
+        android:textSize="18sp"
+        android:textColor="@color/white"
         />
 </RelativeLayout>

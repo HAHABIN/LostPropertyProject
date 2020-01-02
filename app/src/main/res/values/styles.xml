@@ -6,6 +6,13 @@
         <item name="colorPrimary">@color/white_f5</item>
         <item name="colorPrimaryDark">@color/blue_386FFE</item>
         <item name="colorAccent">@color/blue_386FFE</item>
+
+    </style>
+    <style name="NoTitle" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/white_f5</item>
+        <item name="colorPrimaryDark">@color/blue_386FFE</item>
+        <item name="colorAccent">@color/blue_386FFE</item>
     </style>
     <!--按钮样式-->
     <style name="Button">

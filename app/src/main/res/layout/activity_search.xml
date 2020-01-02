@@ -5,21 +5,23 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@color/white_fa"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     tools:context=".ui.activity.SearchActivity">
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="60dp"
         android:background="@color/white">
         <LinearLayout
             android:layout_marginStart="10dp"
             android:layout_width="match_parent"
             android:layout_gravity="center"
-            android:layout_height="30dp"
+            android:layout_height="45dp"
             android:layout_weight="1"
             android:layout_margin="10dp"
-            android:background="@color/white_fa"
+            android:background="@drawable/search_shape"
             android:layout_marginLeft="10dp">
 
             <ImageView
@@ -27,8 +29,8 @@
                 android:src="@drawable/myfriend_search"
                 android:layout_gravity="center"
                 android:padding="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_marginLeft="16dp">
             </ImageView>
             <EditText
@@ -36,7 +38,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:background="@color/white_fa"
+                android:background="@drawable/search_shape"
                 android:hint="搜索订单号，手机号，地址…"
                 android:imeOptions="actionSearch"
                 android:inputType="text"
@@ -47,8 +49,8 @@
                 android:id="@+id/iv_clean"
                 android:src="@drawable/search_delete_icon"
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:paddingVertical="8dp"
                 android:visibility="gone"
                 android:layout_marginRight="16dp" />
@@ -63,6 +65,11 @@
             android:text="取消"
             android:textColor="@color/black" />
     </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="5dp"
+        android:background="@color/white_eb" />
 
     <com.example.habin.lostpropertyproject.view.SwipeRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeRecyclerView"

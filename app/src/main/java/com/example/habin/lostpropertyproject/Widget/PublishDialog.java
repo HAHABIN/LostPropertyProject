@@ -23,8 +23,8 @@ import com.example.habin.lostpropertyproject.R;
 
 public class PublishDialog extends Dialog {
     private RelativeLayout mPublishMainRlmian;
-    private LinearLayout mPublishDialogFabu;
-    private LinearLayout mPublishDialogHuishou;
+    private LinearLayout mPublishDialogLost;
+    private LinearLayout mPublishDialogFind;
     private LinearLayout mPublishDialogPinggu;
 //    private LinearLayout mPublishDialogLlBt;
     private ImageView mPublishDialogIvMenu;
@@ -64,8 +64,8 @@ public class PublishDialog extends Dialog {
     private void init() {
         setContentView(R.layout.btn_dialog_publish);
         mPublishMainRlmian = (RelativeLayout) findViewById(R.id.publish_main_rlmian);//主布局
-        mPublishDialogFabu = (LinearLayout) findViewById(R.id.Publish_dialog_fabu);//发布
-        mPublishDialogHuishou = (LinearLayout) findViewById(R.id.publish_dialog_huishou);//官方回收
+        mPublishDialogLost = (LinearLayout) findViewById(R.id.Publish_dialog_fabu);//发布
+        mPublishDialogFind = (LinearLayout) findViewById(R.id.publish_dialog_huishou);//官方回收
         mPublishDialogPinggu = (LinearLayout) findViewById(R.id.publish_dialog_pinggu);//评估
 //        mPublishDialogLlBt = (LinearLayout) findViewById(R.id.publish_dialog_llBt);
         mPublishDialogIvMenu = (ImageView) findViewById(R.id.publish_dialog_ivMenu);//退出按钮x
@@ -100,17 +100,17 @@ public class PublishDialog extends Dialog {
      * 进入dialog
      */
     private void goinDia() {
-        mPublishDialogFabu.setVisibility(View.INVISIBLE);
-        mPublishDialogHuishou.setVisibility(View.INVISIBLE);
+        mPublishDialogLost.setVisibility(View.INVISIBLE);
+        mPublishDialogFind.setVisibility(View.INVISIBLE);
         mPublishDialogPinggu.setVisibility(View.INVISIBLE);
         //首先把发布回收评估三个控件设置为不可见
         mPublishMainRlmian.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_go_in));
         //然后设置主布局的动画
 //        mPublishDialogIvMenu.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_rotate_right));
         //这里设置底部退出按钮的动画 这里是用了一个rotate动画
-        mPublishDialogFabu.setVisibility(View.VISIBLE);
+        mPublishDialogLost.setVisibility(View.VISIBLE);
         //底部按钮动画执行过之后把发布设置为可见
-        mPublishDialogFabu.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_in));
+        mPublishDialogLost.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_in));
         //然后让他执行mian_shoot_in动画这个动画里定义的是平移动画
         //在这里设置之后如果你同时设置其他两个评估和回收动画着这三个动画会同时从屏幕的底部向上平移
         //而我们想实现的效果是挨个向上平移这里 使用到了定时器handler开启一个线程定时100毫秒启动这个线程
@@ -119,8 +119,8 @@ public class PublishDialog extends Dialog {
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mPublishDialogHuishou.setVisibility(View.VISIBLE);
-                mPublishDialogHuishou.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_in));
+                mPublishDialogFind.setVisibility(View.VISIBLE);
+                mPublishDialogFind.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_in));
             }
         }, 100);
 
@@ -151,15 +151,15 @@ public class PublishDialog extends Dialog {
             }
         }, 500);
         //这里设置了一个定时500毫秒的定时器来执行dismiss();来关闭Dialog 我们需要在500毫秒的时间内完成对控件动画的设置
-        mPublishDialogFabu.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_out));
+        mPublishDialogLost.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_out));
         //然后设置发布从上向下平移动画
-        mPublishDialogFabu.setVisibility(View.INVISIBLE);
+        mPublishDialogLost.setVisibility(View.INVISIBLE);
         //将其设置为不可见
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mPublishDialogHuishou.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_out));
-                mPublishDialogHuishou.setVisibility(View.INVISIBLE);
+                mPublishDialogFind.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_out));
+                mPublishDialogFind.setVisibility(View.INVISIBLE);
             }
         }, 100);
         //同理使用定时器将评估和回向下平移 这里需要注意的是评估和回收的定时器时间的设置不能大于关闭Dialog的定时时间
@@ -186,14 +186,14 @@ public class PublishDialog extends Dialog {
 //这三个方法设置了三个控件的点击事件并返回一个PublishDialog 这里需要一个OnClickListener的参数
 
 
-    public PublishDialog setFabuClickListener(View.OnClickListener clickListener) {
-        mPublishDialogFabu.setOnClickListener(clickListener);
+    public PublishDialog setLostClickListener(View.OnClickListener clickListener) {
+        mPublishDialogLost.setOnClickListener(clickListener);
         return this;
 
     }
 
-    public PublishDialog setHuishouClickListener(View.OnClickListener clickListener) {
-        mPublishDialogHuishou.setOnClickListener(clickListener);
+    public PublishDialog setFindClickListener(View.OnClickListener clickListener) {
+        mPublishDialogFind.setOnClickListener(clickListener);
         return this;
 
     }

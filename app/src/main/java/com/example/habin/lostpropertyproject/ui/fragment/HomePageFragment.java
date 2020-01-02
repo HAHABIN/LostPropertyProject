@@ -60,6 +60,8 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
+
         mFragmentList = new ArrayList<>();
         mFragmentList.add(ToClaimListFragment.newInstance("1"));//丢丢 type 1
         mFragmentList.add(ToClaimListFragment.newInstance("2"));//拾拾 type 2

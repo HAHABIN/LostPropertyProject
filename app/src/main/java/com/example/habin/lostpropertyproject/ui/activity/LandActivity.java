@@ -1,14 +1,13 @@
 package com.example.habin.lostpropertyproject.ui.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -23,7 +22,6 @@ import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -38,7 +36,9 @@ import butterknife.OnClick;
  */
 public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implements LandContract.View {
 
-
+    public static void StartAct(Context context) {
+        context.startActivity(new Intent(context, LandActivity.class));
+    }
     @BindView(R.id.login_et_username)
     EditText mEtUsername;
     @BindView(R.id.login_et_password)

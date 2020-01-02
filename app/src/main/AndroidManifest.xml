@@ -6,6 +6,9 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 获取wifi网络状态的信息 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -28,6 +31,8 @@
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.LandActivity" />
         <activity android:name=".ui.activity.UserInfoActivity" />
+        <activity android:name=".ui.activity.RecordDetailsActivity"/>
+        <activity android:name=".ui.activity.ReleaseActivity"/>
     </application>
 
 </manifest>

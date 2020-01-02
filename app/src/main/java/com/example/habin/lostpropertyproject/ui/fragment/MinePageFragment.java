@@ -1,11 +1,8 @@
 package com.example.habin.lostpropertyproject.ui.fragment;
 
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
@@ -16,9 +13,7 @@ import com.example.habin.lostpropertyproject.ui.activity.RecordListActivity;
 import com.example.habin.lostpropertyproject.ui.activity.SettingActivity;
 import com.example.habin.lostpropertyproject.ui.activity.UserInfoActivity;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * created by habin
@@ -39,6 +34,10 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
         return R.layout.fragment_page_mine;
     }
 
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+    }
 
     @Override
     protected MinePageContract.Presenter bindPresenter() {

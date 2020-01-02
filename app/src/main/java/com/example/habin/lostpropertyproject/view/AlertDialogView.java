@@ -10,7 +10,9 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.R;
 
-
+/**
+ * 弹窗提示
+ */
 public class AlertDialogView extends Dialog {
 
     public interface onClickListener {

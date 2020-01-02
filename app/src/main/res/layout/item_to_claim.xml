@@ -118,7 +118,6 @@
                 android:layout_margin="5dp"
                 android:padding="5dp"
                 android:src="@mipmap/ic_time" />
-
             <TextView
                 android:id="@+id/tv_find_time"
                 android:layout_width="match_parent"

@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ActivityManagerUtils;
+import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
@@ -28,7 +28,6 @@ import butterknife.Unbinder;
 public abstract class BaseActivity extends AppCompatActivity {
 
 
-
     protected static String TAG;
     protected Activity mActivity;
     protected Context mContext;
@@ -38,22 +37,22 @@ public abstract class BaseActivity extends AppCompatActivity {
     private RelativeLayout llRoot;
     private ImageView mIvBack;
     private TextView mTvTitle;
-    private ImageView mIvSearch;
+    private TextView mTvsubmit;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(getLayoutId());
+
         mActivity = this;
         mContext = this;
+        //设置状态栏文字颜色
+        StatusBarUtils.setLightStatusBar(mActivity,true);
         //添加
         ActivityManagerUtils.mActivities.add(this);
         initMainLayout();
         //View注入
         mUnBinder = ButterKnife.bind(this);
-        //init
         initData(savedInstanceState);
-//        initToolbar();
         initWidget();
         initEvent();
         initClick();
@@ -88,30 +87,40 @@ public abstract class BaseActivity extends AppCompatActivity {
     @LayoutRes
     protected abstract int getLayoutId();
 
-    /**-------------------标题初始化---------------------------*/
+
+    /**-----------------状态栏--------------*/
+
+
+
+
+    /**
+     * -------------------标题初始化---------------------------
+     */
     //是否显示标题栏
     protected abstract boolean showTitle();
 
     //初始化标题控件
     private void initTitleView() {
-        llRoot =  findViewById(R.id.rl_basetitle_root);
+        llRoot = findViewById(R.id.rl_basetitle_root);
         mIvBack = findViewById(R.id.iv_back);
-        mTvTitle =  findViewById(R.id.tv_title);
-        mIvSearch =  findViewById(R.id.iv_search);
+        mTvsubmit = findViewById(R.id.tv_submit);
+        mTvTitle = findViewById(R.id.tv_title);
+
     }
 
     /**
-     *
      * 设置中间标题文字
+     *
      * @param c
      */
     public void setTitleText(CharSequence c) {
         if (mTvTitle != null)
             mTvTitle.setText(c);
     }
+
     /**
-     *
      * 设置中间标题文字
+     *
      * @param resId
      */
     public void setTitleText(int resId) {
@@ -119,28 +128,34 @@ public abstract class BaseActivity extends AppCompatActivity {
             mTvTitle.setText(resId);
     }
 
-    public void setShowBack(int visible){
-        if (mIvBack!=null) {
+    public void setShowBack(int visible) {
+        if (mIvBack != null) {
             mIvBack.setVisibility(visible);
         }
     }
-    public void setShowSearch(int visible){
-        if (mIvSearch!=null){
-            mIvSearch.setVisibility(visible);
+
+    public void setShowRelease(int visible) {
+        if (mTvsubmit != null) {
+            mTvsubmit.setVisibility(visible);
         }
     }
-    /**使用方法 setBackOnClick().setOnClickListener(this);*/
+
+    /**
+     * 使用方法 setBackOnClick().setOnClickListener(this);
+     */
     //标题绑定监听
     public TextView setTitleOnClick() {
         return mTvTitle;
     }
+
     //返回监听
     public ImageView setBackOnClick() {
         return mIvBack;
     }
-    //搜索监听
-    public ImageView setEOnClick() {
-        return mIvSearch;
+
+    //发布监听
+    public TextView setReleaseOnClick() {
+        return mTvsubmit;
     }
 
     /**-----------------------------------------------------*/

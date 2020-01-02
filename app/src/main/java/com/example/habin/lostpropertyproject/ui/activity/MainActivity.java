@@ -1,6 +1,8 @@
 package com.example.habin.lostpropertyproject.ui.activity;
 
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -20,6 +22,13 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
+
+
+    public static void StartAct(Context context) {
+        context.startActivity(new Intent(context, MainActivity.class));
+    }
+
+
     @BindView(R.id.iv_home)
     ImageView mIvHome;
     @BindView(R.id.tv_home)
@@ -50,6 +59,7 @@ public class MainActivity extends BaseActivity {
     private Fragment fragment;
     //发布动画
     private PublishDialog publishDialog;
+
     //是否显示标题 默认不显示
     @Override
     protected boolean showTitle() {
@@ -64,6 +74,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+
 //        setTitleText("首页");
         mImageList = new ImageView[]{mIvHome, mIvType, mIvMessage, mIvMine};
         mTextList = new TextView[]{mTvHome, mTvType, mTvMessage, mTvMine};
@@ -72,23 +83,19 @@ public class MainActivity extends BaseActivity {
     }
 
 
-
     @OnClick({R.id.rl_home, R.id.rl_type, R.id.btn_add, R.id.rl_message, R.id.rl_mine})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_add:
                 if (publishDialog == null) {
                     publishDialog = new PublishDialog(MainActivity.this);
-                    publishDialog.setFabuClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                        }
+                    publishDialog.setLostClickListener(v -> {
+                        ReleaseActivity.StartAct(mContext, "2");
+                        publishDialog.outDia();
                     });
-                    publishDialog.setHuishouClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-
-                        }
+                    publishDialog.setFindClickListener(v -> {
+                        ReleaseActivity.StartAct(mContext, "1");
+                        publishDialog.outDia();
                     });
                     publishDialog.setPingguClickListener(new View.OnClickListener() {
                         @Override
@@ -122,6 +129,7 @@ public class MainActivity extends BaseActivity {
         }
 
     }
+
     //修改状态
     public void setStaus() {
         for (int i = 0; i < mImageList.length; i++) {
