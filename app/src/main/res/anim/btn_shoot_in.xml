@@ -3,7 +3,9 @@
     android:duration="600"
     android:fromYDelta="100%"
     android:interpolator="@android:anim/anticipate_overshoot_interpolator"
-    android:toYDelta="0" />
+    android:toYDelta="0"
+
+    />
     <!--创建translate动画实现控件平移的效果
         实现了控件从下向上的平移效果
      android:fromXDelta：平移开始X方向坐标（数值、百分数、百分数p，且多可以为正负）

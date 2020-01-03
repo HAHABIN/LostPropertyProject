@@ -19,17 +19,15 @@
             android:gravity="top|left"
             android:hint="此时想说...." />
 
-        <com.example.habin.lostpropertyproject.view.MyGirdView
-            android:id="@+id/gv_pic"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rl_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="5dp"
-            android:layout_weight="111"
-            android:columnWidth="90dp"
-            android:gravity="center"
-            android:stretchMode="columnWidth"
-            android:verticalSpacing="5dp"
-            android:numColumns="3" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:overScrollMode="never"/>
+
     </LinearLayout>
 
     <LinearLayout

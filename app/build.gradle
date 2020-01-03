@@ -59,4 +59,6 @@ dependencies {
     //权限管理
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
+    /*PictureSelector*/
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 }

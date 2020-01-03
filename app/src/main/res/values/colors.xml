@@ -49,6 +49,7 @@
     <!--*********************************薪资模块颜色*****************************-->
     <color name="white80">#CCFFFFFF</color>
     <color name="white16">#29FFFFFF</color>
+    <color name="white_f6">#f6f6f6</color>
     <color name="blue_386FFE">#386FFE</color>
     <color name="blue_4979F5">#4979F5</color>
     <color name="blue_6088F0">#6088F0</color>

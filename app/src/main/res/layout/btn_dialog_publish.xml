@@ -32,7 +32,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:contentDescription="@null"
-                    android:src="@mipmap/ic_mine_select" />
+                    android:src="@drawable/ic_publish_find" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -57,7 +57,7 @@
                     android:layout_height="40dp"
                     android:layout_gravity="center_horizontal"
                     android:contentDescription="@null"
-                    android:src="@mipmap/ic_message_selected"/>
+                    android:src="@drawable/ic_publish_lost"/>
 
                 <TextView
                     android:layout_width="wrap_content"
