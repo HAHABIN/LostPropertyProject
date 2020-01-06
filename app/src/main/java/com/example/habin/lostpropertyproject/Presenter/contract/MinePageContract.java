@@ -1,7 +1,6 @@
 package com.example.habin.lostpropertyproject.Presenter.contract;
 
 import com.example.habin.lostpropertyproject.Base.BaseContract;
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 
 /**
  * created by habin
@@ -11,9 +10,7 @@ import com.example.habin.lostpropertyproject.Bean.BaseResponse;
  */
 public interface MinePageContract {
     interface View extends BaseContract.BaseView{
-        //
-        void Sucess(BaseResponse baseResponse);
-        void Fail(String errMsg);
+
     }
 
     interface Presenter extends BaseContract.BasePresenter<MinePageContract.View>{

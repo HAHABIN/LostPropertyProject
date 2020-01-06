@@ -4,11 +4,14 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
@@ -18,9 +21,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
+import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.FullyGridLayoutManager;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.ui.adapter.GridImageAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -29,12 +34,17 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.permissions.Permission;
 import com.luck.picture.lib.permissions.RxPermissions;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * created by habin
@@ -64,7 +74,8 @@ public class ReleaseActivity extends BaseActivity {
     private List<LocalMedia> selectList = new ArrayList<>();
     private GridImageAdapter adapter;
     private PopupWindow pop;
-
+    private Disposable mSubscribe;
+    private int mIndex = 0;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_release;
@@ -92,6 +103,7 @@ public class ReleaseActivity extends BaseActivity {
         adapter.setList(selectList);
         adapter.setSelectMax(maxSelectNum);
         mRlImage.setAdapter(adapter);
+        mRlImage.setLayoutManager(new GridLayoutManager(mContext, 4, LinearLayoutManager.VERTICAL, false));
         adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -140,11 +152,11 @@ public class ReleaseActivity extends BaseActivity {
     //顶部设置
     private void setTitle() {
         setShowBack(View.VISIBLE);
-        setShowRelease(View.VISIBLE);
-        setReleaseOnClick().setOnClickListener(v -> finish());
-        setBackOnClick().setOnClickListener(v -> {
+        setRightText("发布");
+        setRightOnClick().setOnClickListener(v -> {
             SnackbarUtils.show(mContext, "发布成功");
         });
+        setBackOnClick().setOnClickListener(v -> finish());
         Intent intent = getIntent();
         String type = intent.getStringExtra("type");
         switch (type) {
@@ -242,6 +254,29 @@ public class ReleaseActivity extends BaseActivity {
         }
     }
 
+    private void uploadPhoto() {
+        mSubscribe = Observable.fromArray(selectList.get(mIndex).getCompressPath()).map(imagePath -> {
+            try {
+                return encodeBase64Photo(imagePath);
+            } catch (Exception e) {
+                e.printStackTrace();
+                SnackbarUtils.show(mContext,"图片出错");
+            }
+            return "";
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(s -> {
+                    if (!TextUtils.isEmpty(s)) {
+                        UploadPhotoParams params = new UploadPhotoParams.Builder()
+                                .imgStr(s)
+                                .resourceType("release")
+                                .build();
+//                        HttpClient.getInstance().startTask(HttpHelper.TaskType.UploadPhoto, this, HttpParams.getUploadPhotoParams(params), UploadPhotoEmtity.class);
+                    } else {
+//                        dismissDialog();
+                    }
+                });
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -263,6 +298,28 @@ public class ReleaseActivity extends BaseActivity {
                 adapter.setList(selectList);
                 adapter.notifyDataSetChanged();
             }
+
         }
     }
+
+
+    /**
+     * encodeBase64File:(将图片文件转成base64 字符串).
+     *
+     * @param path 文件路径
+     * @return
+     * @throws Exception
+     */
+    public static String encodeBase64Photo(String path) throws Exception {
+        Bitmap photo = UiUtils.CompressBitmap(path);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] buffer = stream.toByteArray();
+        stream.close();
+        photo.recycle();
+        return android.util.Base64.encodeToString(buffer, android.util.Base64.DEFAULT);
+    }
+
+
+
 }

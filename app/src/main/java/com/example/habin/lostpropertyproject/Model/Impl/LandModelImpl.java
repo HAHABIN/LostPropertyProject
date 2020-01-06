@@ -2,10 +2,10 @@ package com.example.habin.lostpropertyproject.Model.Impl;
 
 
 
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Base.BaseObserver;
+import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Model.ILandModel;
-import com.example.habin.lostpropertyproject.Http.RetrofitManager;
 
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -27,13 +27,13 @@ public class LandModelImpl implements ILandModel{
 
     @Override
     public void login(String username, String password, BaseObserver<BaseResponse> baseObserver) {
-        Observable<BaseResponse> login = RetrofitManager.getSingleton().Apiservice().login(username,password);
+        Observable<BaseResponse> login = HttpClient.getSingleton().Apiservice().login(username,password);
         login.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(baseObserver);
     }
 
     @Override
     public void signup(String username, String password, String mail, BaseObserver<BaseResponse> baseObserver) {
-        Observable<BaseResponse> login = RetrofitManager.getSingleton().Apiservice().signup(username,password);
+        Observable<BaseResponse> login = HttpClient.getSingleton().Apiservice().signup(username,password);
         login.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(baseObserver);
     }
 }

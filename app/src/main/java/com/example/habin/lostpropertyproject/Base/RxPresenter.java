@@ -1,5 +1,12 @@
 package com.example.habin.lostpropertyproject.Base;
 
+import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
+import com.example.habin.lostpropertyproject.Http.TaskListener;
+
+import org.json.JSONObject;
+
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 
@@ -13,7 +20,7 @@ import io.reactivex.disposables.Disposable;
  * 因为在 subscribe() 之后， Observable 会持有 Subscriber 的引用，
  * 这个引用如果不能及时被释放，将有内存泄露的风险。
  */
-public class RxPresenter<T extends BaseContract.BaseView> implements BaseContract.BasePresenter<T> {
+public class RxPresenter<T extends BaseContract.BaseView> implements BaseContract.BasePresenter<T> , TaskListener{
 
     // Presenter持有的View
     protected T mView;
@@ -66,5 +73,25 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
     public void detachView() {
         this.mView = null;
         unSubscribe();
+    }
+
+    @Override
+    public void taskStarted(HttpHelper.TaskType type) {
+
+    }
+
+    @Override
+    public void taskError(HttpHelper.TaskType type, ApiError error) {
+
+    }
+
+    @Override
+    public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
+
+    }
+
+    @Override
+    public void taskFinished(HttpHelper.TaskType type, BaseResponse item) {
+
     }
 }

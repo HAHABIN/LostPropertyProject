@@ -1,5 +1,8 @@
 package com.example.habin.lostpropertyproject.Base;
 
+import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
+
 /**
  * Create by HABIN on 2019/11/4 22:28
  * Email:739115041@qq.com
@@ -19,7 +22,7 @@ public interface BaseContract {
 
         void onSuccess();
 
-        void onFailure(Throwable e);
+        void onFailure(HttpHelper.TaskType type,ApiError e);
     }
     interface BaseModel {
 

@@ -60,22 +60,23 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initMainLayout() {
-        //添加基类布局
-        mainLayout = (RelativeLayout) View.inflate(this, R.layout.activity_base, null);
-        //获得布局
-        int contentViewId = getLayoutId();
-        //设置基类布局
-        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
-        //表示 RelativeLayout 中的相应节点放置在一个 id 值为 ll_basetitle 的兄弟节点的下面。
-        lp.addRule(RelativeLayout.BELOW, R.id.ll_basetitle);
-        if (contentViewId != 0) {
-            mainLayout.addView(View.inflate(this, getLayoutId(), null), lp);
-        }
+
         //是否显示标题栏
         if (!showTitle()) {
             setContentView(getLayoutId());
         } else {
+            //添加基类布局
+            mainLayout = (RelativeLayout) View.inflate(this, R.layout.activity_base, null);
+            //获得布局
+            int contentViewId = getLayoutId();
+            //设置基类布局
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
+            //表示 RelativeLayout 中的相应节点放置在一个 id 值为 ll_basetitle 的兄弟节点的下面。
+            lp.addRule(RelativeLayout.BELOW, R.id.ll_basetitle);
+            if (contentViewId != 0) {
+                mainLayout.addView(View.inflate(this, getLayoutId(), null), lp);
+            }
             setContentView(mainLayout);
             //标题空间
             initTitleView();
@@ -105,39 +106,20 @@ public abstract class BaseActivity extends AppCompatActivity {
         mIvBack = findViewById(R.id.iv_back);
         mTvsubmit = findViewById(R.id.tv_submit);
         mTvTitle = findViewById(R.id.tv_title);
-
     }
 
-    /**
-     * 设置中间标题文字
-     *
-     * @param c
-     */
-    public void setTitleText(CharSequence c) {
-        if (mTvTitle != null)
-            mTvTitle.setText(c);
+    public void setTitleText(String titleText){
+        mTvTitle.setVisibility(View.VISIBLE);
+        mTvTitle.setText(titleText);
     }
-
-    /**
-     * 设置中间标题文字
-     *
-     * @param resId
-     */
-    public void setTitleText(int resId) {
-        if (mTvTitle != null)
-            mTvTitle.setText(resId);
-    }
-
     public void setShowBack(int visible) {
         if (mIvBack != null) {
             mIvBack.setVisibility(visible);
         }
     }
-
-    public void setShowRelease(int visible) {
-        if (mTvsubmit != null) {
-            mTvsubmit.setVisibility(visible);
-        }
+    public void setRightText(String rightText) {
+        mTvsubmit.setVisibility(View.VISIBLE);
+        mTvsubmit.setText(rightText);
     }
 
     /**
@@ -154,7 +136,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     //发布监听
-    public TextView setReleaseOnClick() {
+    public TextView setRightOnClick() {
         return mTvsubmit;
     }
 
@@ -183,7 +165,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 初始化点击事件
      */
-    protected void initClick() {
+    private void initClick() {
     }
 
     /**

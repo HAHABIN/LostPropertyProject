@@ -2,6 +2,9 @@ package com.example.habin.lostpropertyproject.Presenter.contract;
 
 import com.example.habin.lostpropertyproject.Base.BaseContract;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
+
+import org.json.JSONObject;
 
 /**
  * Create by HABIN on 2019/11/4
@@ -16,7 +19,8 @@ public interface LandContract extends BaseContract {
 
     interface View extends BaseContract.BaseView{
         //
-        void landSucess(BaseResponse baseResponse);
+        void landSucess(HttpHelper.TaskType type, JSONObject baseResponse);
+        void landSucess(HttpHelper.TaskType type,  BaseResponse item);
         void landFail(String errMsg);
     }
 

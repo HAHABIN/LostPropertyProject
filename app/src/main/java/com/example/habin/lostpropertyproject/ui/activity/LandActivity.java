@@ -13,13 +13,16 @@ import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
-import com.example.habin.lostpropertyproject.Common.Constants;
+import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.LandPresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -61,7 +64,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
     @Override
     protected boolean showTitle() {
-        return false;
+        return true;
     }
 
     protected int getLayoutId() {
@@ -71,7 +74,9 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-
+        setTitleText("");
+        setShowBack(View.VISIBLE);
+        setBackOnClick().setOnClickListener(v -> finish());
     }
 
     /**
@@ -90,7 +95,6 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
      */
     public void sign() {
 
-        String registerAddress = Constants.USER_SIGN;
         String mail = mEtMail.getText().toString().trim();
         String username = mEtUsername.getText().toString().trim();
         String password = mEtPassword.getText().toString().trim();
@@ -113,6 +117,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
      */
     private void changeWindows() {
         if (isLogin) {
+
             //置换注册界面
             mTvloginSign.setText("登录");
             mBtnLogin.setText("注册");
@@ -121,6 +126,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
             mTvTitle.setText("注册");
             mTvloginRempas.setVisibility(View.GONE);
         } else {
+
             //置换登陆界面
             mTvloginSign.setText("注册");
             mBtnLogin.setText("登录");
@@ -140,10 +146,21 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
     // 成功显示
     @Override
-    public void landSucess(BaseResponse baseResponse) {
+    public void landSucess(HttpHelper.TaskType type,JSONObject baseResponse) {
         ProgressUtils.dismiss();
 
         startActivity(new Intent(this, MainActivity.class));
+    }
+
+    @Override
+    public void landSucess(HttpHelper.TaskType type, BaseResponse item) {
+        switch (type){
+            case Login:
+                ProgressUtils.dismiss();
+                startActivity(new Intent(this, MainActivity.class));
+                break;
+        }
+
     }
 
     @Override
@@ -160,7 +177,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     }
 
     @Override
-    public void onFailure(Throwable e) {
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
         Log.d(TAG, "onFailure: 登录失败" + e);
         SnackbarUtils.show(mActivity,e.getMessage());

@@ -12,6 +12,7 @@ import com.example.habin.lostpropertyproject.Presenter.contract.MinePageContract
 public class MineTpyePresenter extends RxPresenter<MinePageContract.View> implements MinePageContract.Presenter {
     @Override
     public void getData(String username, String password) {
-
     }
+
+
 }

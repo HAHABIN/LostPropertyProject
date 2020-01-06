@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.MineTpyePresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.MinePageContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.ui.activity.LandActivity;
 import com.example.habin.lostpropertyproject.ui.activity.RecordListActivity;
 import com.example.habin.lostpropertyproject.ui.activity.SettingActivity;
 import com.example.habin.lostpropertyproject.ui.activity.UserInfoActivity;
@@ -21,7 +23,6 @@ import butterknife.OnClick;
  * 我的碎片
  */
 public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter> implements MinePageContract.View {
-
 
 
     public static MinePageFragment newInstance() {
@@ -44,15 +45,6 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
         return new MineTpyePresenter();
     }
 
-    @Override
-    public void Sucess(BaseResponse baseResponse) {
-
-    }
-
-    @Override
-    public void Fail(String errMsg) {
-
-    }
 
     @Override
     public void onSuccess() {
@@ -60,30 +52,35 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     }
 
     @Override
-    public void onFailure(Throwable e) {
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
 
     }
 
 
-
-    @OnClick({R.id.rl_top, R.id.ll_record_lost, R.id.ll_record_find, R.id.ll_record_complete,R.id.ll_setting})
+    @OnClick({R.id.rl_top, R.id.ll_record_lost, R.id.ll_record_find, R.id.ll_record_complete, R.id.ll_setting,R.id.ll_about})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_top:
                 UserInfoActivity.StartAct(mContext);
                 break;
             case R.id.ll_record_lost:
-                RecordListActivity.StartAct(mContext,"1");
+                RecordListActivity.StartAct(mContext, "1");
                 break;
             case R.id.ll_record_find:
-                RecordListActivity.StartAct(mContext,"2");
+                RecordListActivity.StartAct(mContext, "2");
                 break;
             case R.id.ll_record_complete:
-                RecordListActivity.StartAct(mContext,"3");
+                RecordListActivity.StartAct(mContext, "3");
                 break;
             case R.id.ll_setting:
                 SettingActivity.StartAct(mContext);
                 break;
+            case R.id.ll_about:
+                LandActivity.StartAct(mContext);
+                break;
         }
     }
+
+
+
 }

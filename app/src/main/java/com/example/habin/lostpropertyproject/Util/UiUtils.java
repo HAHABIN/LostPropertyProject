@@ -2,7 +2,12 @@ package com.example.habin.lostpropertyproject.Util;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -96,5 +101,27 @@ public class UiUtils {
         return text != null ? text : "";
     }
 
+
+
+    public static Bitmap CompressBitmap(String filePath) {
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inSampleSize = 2;                       //采样率压缩
+        Bitmap bitmap = BitmapFactory.decodeFile(filePath, options);
+        Matrix matrix = new Matrix();
+        matrix.setScale(0.5f, 0.5f);                   //缩放法压缩
+        bitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+        return bitmap;
+    }
+
+    //判断是否有网络
+    public static boolean isNetworkConnected() {
+        ConnectivityManager manager = (ConnectivityManager) getContext().getSystemService(
+                Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = manager.getActiveNetworkInfo();
+        if (activeNetworkInfo != null) {
+            return activeNetworkInfo.isAvailable();
+        }
+        return false;
+    }
 }
 
