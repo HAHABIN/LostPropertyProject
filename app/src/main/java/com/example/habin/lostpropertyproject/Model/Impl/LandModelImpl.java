@@ -22,9 +22,6 @@ import io.reactivex.schedulers.Schedulers;
  * 将其中请求的结果传递到抽象方法中，方便其他类的实现。（注意这里异常的传递和订阅关系的添加）
  */
 public class LandModelImpl implements ILandModel{
-
-
-
     @Override
     public void login(String username, String password, BaseObserver<BaseResponse> baseObserver) {
         Observable<BaseResponse> login = HttpClient.getSingleton().Apiservice().login(username,password);

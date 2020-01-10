@@ -11,9 +11,9 @@ import com.example.habin.lostpropertyproject.Presenter.MineTpyePresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.MinePageContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.ui.activity.LandActivity;
-import com.example.habin.lostpropertyproject.ui.activity.RecordListActivity;
-import com.example.habin.lostpropertyproject.ui.activity.SettingActivity;
-import com.example.habin.lostpropertyproject.ui.activity.UserInfoActivity;
+import com.example.habin.lostpropertyproject.ui.activity.mine.RecordListActivity;
+import com.example.habin.lostpropertyproject.ui.activity.mine.SettingActivity;
+import com.example.habin.lostpropertyproject.ui.activity.mine.UserInfoActivity;
 
 import butterknife.OnClick;
 

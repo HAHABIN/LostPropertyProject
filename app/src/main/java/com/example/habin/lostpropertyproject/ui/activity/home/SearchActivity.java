@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.ui.activity;
+package com.example.habin.lostpropertyproject.ui.activity.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +18,6 @@ import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SearchActivity extends BaseActivity {

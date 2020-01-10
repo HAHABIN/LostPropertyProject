@@ -1,5 +1,8 @@
 package com.example.habin.lostpropertyproject.Util;
 
+import android.graphics.Bitmap;
+
+import java.io.ByteArrayOutputStream;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -8,6 +11,23 @@ import java.util.regex.Pattern;
  * Created by zhouas666 on 2017/12/12.
  */
 public class StringUtils {
+
+    /**
+     * encodeBase64File:(将图片文件转成base64 字符串).
+     *
+     * @param path 文件路径
+     * @return
+     * @throws Exception
+     */
+    public static String encodeBase64Photo(String path) throws Exception {
+        Bitmap photo = UiUtils.CompressBitmap(path);
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] buffer = stream.toByteArray();
+        stream.close();
+        photo.recycle();
+        return android.util.Base64.encodeToString(buffer, android.util.Base64.DEFAULT);
+    }
 
     /**
      * 验证邮箱的正则表达式

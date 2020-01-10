@@ -14,7 +14,7 @@ import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.HomePagePresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.HomePageContract;
 import com.example.habin.lostpropertyproject.R;
-import com.example.habin.lostpropertyproject.ui.activity.SearchActivity;
+import com.example.habin.lostpropertyproject.ui.activity.home.SearchActivity;
 import com.example.habin.lostpropertyproject.ui.adapter.VpAdapter;
 import com.example.habin.lostpropertyproject.view.NoScrollViewPager;
 
@@ -146,7 +146,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     @Override
     public void Fail(String errMsg) {
 
-    }
+}
 
 
 

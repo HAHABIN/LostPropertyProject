@@ -5,6 +5,7 @@
     android:background="@color/white"
     android:layout_height="match_parent">
     <LinearLayout
+        android:id="@+id/ll_avatar"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:orientation="horizontal"
@@ -25,6 +26,7 @@
             android:layout_weight="1"
             />
         <ImageView
+            android:id="@+id/iv_avatar"
             android:layout_gravity="center"
             android:layout_width="60dp"
             android:layout_height="60dp"
@@ -44,6 +46,7 @@
         android:layout_marginTop="5dp"
         android:background="@color/white_eb" />
     <LinearLayout
+        android:id="@+id/ll_nickname"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="10dp"
@@ -126,6 +129,7 @@
         android:background="@color/white_eb" />
 
     <LinearLayout
+        android:id="@+id/ll_gender"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="10dp"
@@ -170,6 +174,7 @@
         android:background="@color/white_eb" />
 
     <LinearLayout
+        android:id="@+id/ll_area"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="10dp"
@@ -189,7 +194,7 @@
             android:layout_weight="1"
             />
         <TextView
-            android:id="@+id/area"
+            android:id="@+id/tv_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="广东佛山"
@@ -213,6 +218,7 @@
         android:background="@color/white_eb" />
 
     <LinearLayout
+        android:id="@+id/ll_email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginHorizontal="10dp"

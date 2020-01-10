@@ -7,7 +7,7 @@
     android:background="@color/white_fa"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    tools:context=".ui.activity.SearchActivity">
+    tools:context=".ui.activity.home.SearchActivity">
 
     <LinearLayout
         android:orientation="horizontal"

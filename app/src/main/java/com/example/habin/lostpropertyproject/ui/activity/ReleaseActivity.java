@@ -1,10 +1,8 @@
 package com.example.habin.lostpropertyproject.ui.activity;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -18,23 +16,20 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.FullyGridLayoutManager;
+import com.example.habin.lostpropertyproject.Util.PictureSelectorUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
-import com.example.habin.lostpropertyproject.Util.UiUtils;
+import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.ui.adapter.GridImageAdapter;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
-import com.luck.picture.lib.permissions.Permission;
-import com.luck.picture.lib.permissions.RxPermissions;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -43,7 +38,6 @@ import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -52,7 +46,7 @@ import io.reactivex.schedulers.Schedulers;
  * Email 739115041@qq.com
  * 发布模块
  */
-public class ReleaseActivity extends BaseActivity {
+public class ReleaseActivity extends BaseActivity  {
 
     public static void StartAct(Context context, String type) {
         Intent intent = new Intent(context, ReleaseActivity.class);
@@ -71,11 +65,14 @@ public class ReleaseActivity extends BaseActivity {
 
 
     private int maxSelectNum = 3;
-    private List<LocalMedia> selectList = new ArrayList<>();
+    private List<LocalMedia>  mSelectList = new ArrayList<>();
     private GridImageAdapter adapter;
     private PopupWindow pop;
     private Disposable mSubscribe;
     private int mIndex = 0;
+    private PictureSelectorUtils mPictureSelector;
+
+    
     @Override
     protected int getLayoutId() {
         return R.layout.activity_release;
@@ -90,7 +87,7 @@ public class ReleaseActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitle();
-
+        mPictureSelector = new PictureSelectorUtils(mActivity);
 
     }
 
@@ -100,22 +97,22 @@ public class ReleaseActivity extends BaseActivity {
         FullyGridLayoutManager manager = new FullyGridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         mRlImage.setLayoutManager(manager);
         adapter = new GridImageAdapter(this, onAddPicClickListener);
-        adapter.setList(selectList);
+        adapter.setList( mSelectList);
         adapter.setSelectMax(maxSelectNum);
         mRlImage.setAdapter(adapter);
         mRlImage.setLayoutManager(new GridLayoutManager(mContext, 4, LinearLayoutManager.VERTICAL, false));
         adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                if (selectList.size() > 0) {
-                    LocalMedia media = selectList.get(position);
+                if ( mSelectList.size() > 0) {
+                    LocalMedia media =  mSelectList.get(position);
                     String pictureType = media.getPictureType();
                     int mediaType = PictureMimeType.pictureToVideo(pictureType);
                     switch (mediaType) {
                         case 1:
                             // 预览图片 可自定长按保存路径
-                            //PictureSelector.create(MainActivity.this).externalPicturePreview(position, "/custom_file", selectList);
-                            PictureSelector.create(mActivity).externalPicturePreview(position, selectList);
+                            //PictureSelector.create(MainActivity.this).externalPicturePreview(position, "/custom_file",  mSelectList);
+                            PictureSelector.create(mActivity).externalPicturePreview(position,  mSelectList);
                             break;
 
                     }
@@ -129,23 +126,23 @@ public class ReleaseActivity extends BaseActivity {
         @SuppressLint("CheckResult")
         @Override
         public void onAddPicClick() {
-            //获取写的权限
-            RxPermissions rxPermission = new RxPermissions(mActivity);
-            rxPermission.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .subscribe(new Consumer<Permission>() {
-                        @Override
-                        public void accept(Permission permission) {
-                            if (permission.granted) {// 用户已经同意该权限
-                                //第一种方式，弹出选择和拍照的dialog
-                                showPop();
 
-                                //第二种方式，直接进入相册，但是 是有拍照得按钮的
-//                                showAlbum();
-                            } else {
-                                Toast.makeText(mActivity, "拒绝", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    });
+            mPictureSelector.openDialogInActivity(maxSelectNum, mSelectList,true,false);
+//            //获取写的权限
+//            RxPermissions rxPermission = new RxPermissions(mActivity);
+//            rxPermission.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                    .subscribe(new Consumer<Permission>() {
+//                        @Override
+//                        public void accept(Permission permission) {
+//                            if (permission.granted) {// 用户已经同意该权限
+//                                //第一种方式，弹出选择和拍照的dialog
+////                                showPop();
+//
+//                            } else {
+//                                Toast.makeText(mActivity, "拒绝", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    });
         }
     };
 
@@ -255,9 +252,9 @@ public class ReleaseActivity extends BaseActivity {
     }
 
     private void uploadPhoto() {
-        mSubscribe = Observable.fromArray(selectList.get(mIndex).getCompressPath()).map(imagePath -> {
+        mSubscribe = Observable.fromArray( mSelectList.get(mIndex).getCompressPath()).map(imagePath -> {
             try {
-                return encodeBase64Photo(imagePath);
+                return StringUtils.encodeBase64Photo(imagePath);
             } catch (Exception e) {
                 e.printStackTrace();
                 SnackbarUtils.show(mContext,"图片出错");
@@ -286,40 +283,21 @@ public class ReleaseActivity extends BaseActivity {
             if (requestCode == PictureConfig.CHOOSE_REQUEST) {// 图片选择结果回调
 
                 images = PictureSelector.obtainMultipleResult(data);
-                selectList.addAll(images);
+                 mSelectList.addAll(images);
 
-                //selectList = PictureSelector.obtainMultipleResult(data);
+                // mSelectList = PictureSelector.obtainMultipleResult(data);
 
                 // 例如 LocalMedia 里面返回三种path
                 // 1.media.getPath(); 为原图path
                 // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
                 // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
                 // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
-                adapter.setList(selectList);
+                adapter.setList( mSelectList);
                 adapter.notifyDataSetChanged();
             }
 
         }
     }
-
-
-    /**
-     * encodeBase64File:(将图片文件转成base64 字符串).
-     *
-     * @param path 文件路径
-     * @return
-     * @throws Exception
-     */
-    public static String encodeBase64Photo(String path) throws Exception {
-        Bitmap photo = UiUtils.CompressBitmap(path);
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        photo.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        byte[] buffer = stream.toByteArray();
-        stream.close();
-        photo.recycle();
-        return android.util.Base64.encodeToString(buffer, android.util.Base64.DEFAULT);
-    }
-
 
 
 }

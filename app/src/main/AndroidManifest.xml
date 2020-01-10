@@ -5,12 +5,11 @@
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 获取GSM（2g）、WCDMA（联通3g）等网络状态的信息 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 获取wifi网络状态的信息 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_CALENDAR" />
-<!--相机-->
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR" /> <!-- 相机 -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -20,9 +19,11 @@
         android:roundIcon="@mipmap/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.RecordListActivity"></activity>
-        <activity android:name=".ui.activity.SearchActivity" />
-        <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.mine.EditGenderActivity"></activity>
+        <activity android:name=".ui.activity.mine.EditNicknameActivity" />
+        <activity android:name=".ui.activity.mine.RecordListActivity" />
+        <activity android:name=".ui.activity.home.SearchActivity" />
+        <activity android:name=".ui.activity.mine.SettingActivity" />
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,9 +33,9 @@
         </activity>
         <activity android:name=".ui.activity.MainActivity" />
         <activity android:name=".ui.activity.LandActivity" />
-        <activity android:name=".ui.activity.UserInfoActivity" />
-        <activity android:name=".ui.activity.RecordDetailsActivity"/>
-        <activity android:name=".ui.activity.ReleaseActivity"/>
+        <activity android:name=".ui.activity.mine.UserInfoActivity" />
+        <activity android:name=".ui.activity.RecordDetailsActivity" />
+        <activity android:name=".ui.activity.ReleaseActivity" />
     </application>
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.ui.activity;
+package com.example.habin.lostpropertyproject.ui.activity.mine;
 
 
 

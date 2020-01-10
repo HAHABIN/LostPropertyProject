@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+    
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/select_dialog_item_bg_top"
+        android:padding="20dip"
+        android:textColor="@color/blue"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:visibility="visible"
+        android:text="这是一个title"
+        android:layout_marginBottom="0.5dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/dialog_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dip"
+        android:background="@drawable/dialog_item_bg_only"
+        android:text="取消"
+        android:gravity="center"
+        android:textColor="#4a4a4a"
+        android:textSize="16sp" />
+
+</LinearLayout>
