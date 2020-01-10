@@ -21,10 +21,11 @@ import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.FullyGridLayoutManager;
-import com.example.habin.lostpropertyproject.Util.PictureSelectorUtils;
+import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.ui.adapter.GridImageAdapter;
+import com.example.habin.lostpropertyproject.view.SelectDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -70,7 +71,9 @@ public class ReleaseActivity extends BaseActivity  {
     private PopupWindow pop;
     private Disposable mSubscribe;
     private int mIndex = 0;
-    private PictureSelectorUtils mPictureSelector;
+    private SelectorDialogUtils mPictureSelector;
+    List<String> mAddressList;
+
 
     
     @Override
@@ -87,7 +90,11 @@ public class ReleaseActivity extends BaseActivity  {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitle();
-        mPictureSelector = new PictureSelectorUtils(mActivity);
+        mPictureSelector = new SelectorDialogUtils(mActivity);
+        mAddressList = new ArrayList<>();
+        for (int i = 0; i<10;i++){
+            mAddressList.add("地址"+i);
+        }
 
     }
 
@@ -126,25 +133,21 @@ public class ReleaseActivity extends BaseActivity  {
         @SuppressLint("CheckResult")
         @Override
         public void onAddPicClick() {
-
             mPictureSelector.openDialogInActivity(maxSelectNum, mSelectList,true,false);
-//            //获取写的权限
-//            RxPermissions rxPermission = new RxPermissions(mActivity);
-//            rxPermission.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                    .subscribe(new Consumer<Permission>() {
-//                        @Override
-//                        public void accept(Permission permission) {
-//                            if (permission.granted) {// 用户已经同意该权限
-//                                //第一种方式，弹出选择和拍照的dialog
-////                                showPop();
-//
-//                            } else {
-//                                Toast.makeText(mActivity, "拒绝", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//                    });
         }
     };
+
+    //弹窗列表
+    public void showList(List<String> mlist){
+        SelectorDialogUtils.showDialog(mActivity,new SelectDialog.SelectDialogListener() {
+            @Override
+            public void onItemClick(int position) {
+
+            }
+        }, mlist);
+    }
+
+
 
     //顶部设置
     private void setTitle() {
@@ -173,10 +176,13 @@ public class ReleaseActivity extends BaseActivity  {
             case R.id.rl_image:
                 break;
             case R.id.ll_address:
+                showList(mAddressList);
                 break;
             case R.id.ll_time:
+                showList(mAddressList);
                 break;
             case R.id.ll_type:
+                showList(mAddressList);
                 break;
         }
     }

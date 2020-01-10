@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.R;
-import com.example.habin.lostpropertyproject.Util.PictureSelectorUtils;
+import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
@@ -52,7 +52,7 @@ public class UserInfoActivity extends BaseActivity {
     private PopupWindow pop;
     private String mCompressPath;
     private Disposable mSubscribe;
-    private PictureSelectorUtils mPictureSelector;
+    private SelectorDialogUtils mPictureSelector;
     private SelectDialog mSelectDialog;
 
     public static void StartAct(Context context) {
@@ -76,7 +76,7 @@ public class UserInfoActivity extends BaseActivity {
         setTitleText("个人信息");
         setShowBack(View.VISIBLE);
         setBackOnClick().setOnClickListener(v -> finish());
-        mPictureSelector = new PictureSelectorUtils(mActivity);
+        mPictureSelector = new SelectorDialogUtils(mActivity);
     }
 
     @OnClick({R.id.ll_avatar,R.id.ll_nickname, R.id.ll_gender, R.id.ll_area, R.id.ll_email})

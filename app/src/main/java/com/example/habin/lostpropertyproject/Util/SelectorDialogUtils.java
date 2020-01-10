@@ -24,14 +24,14 @@ import io.reactivex.functions.Consumer;
  * Email 739115041@qq.com
  * 图片选择
  */
-public class PictureSelectorUtils {
+public class SelectorDialogUtils {
 
 
-    private SelectDialog mDialog;
+    private static SelectDialog mDialog;
     private Activity mActivity;
 
 
-    public PictureSelectorUtils(Activity mActivity) {
+    public SelectorDialogUtils(Activity mActivity) {
         this.mActivity = mActivity;
     }
 
@@ -58,7 +58,7 @@ public class PictureSelectorUtils {
                             List<String> names = new ArrayList<>();
                             names.add("拍照");
                             names.add("相册");
-                            showDialog(new SelectDialog.SelectDialogListener() {
+                            showDialog(mActivity,new SelectDialog.SelectDialogListener() {
                                 @Override
                                 public void onItemClick(int position) {
                                     switch (position) {
@@ -113,11 +113,11 @@ public class PictureSelectorUtils {
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
-    private SelectDialog showDialog(SelectDialog.SelectDialogListener listener, List<String> names) {
+    public static SelectDialog showDialog(Activity activity,SelectDialog.SelectDialogListener listener, List<String> names) {
         if (mDialog == null) {
-            mDialog = new SelectDialog(mActivity, listener, names);
+            mDialog = new SelectDialog(activity, listener, names);
         }
-        if (!mActivity.isFinishing()) {
+        if (!activity.isFinishing()) {
             mDialog.show();
         }
         return mDialog;
