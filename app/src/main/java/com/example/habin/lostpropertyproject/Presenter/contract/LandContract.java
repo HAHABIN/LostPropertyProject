@@ -2,6 +2,7 @@ package com.example.habin.lostpropertyproject.Presenter.contract;
 
 import com.example.habin.lostpropertyproject.Base.BaseContract;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 
 import org.json.JSONObject;
@@ -20,7 +21,7 @@ public interface LandContract extends BaseContract {
     interface View extends BaseContract.BaseView{
         //
         void landSucess(HttpHelper.TaskType type, JSONObject baseResponse);
-        void landSucess(HttpHelper.TaskType type,  BaseResponse item);
+        void landSucess(HttpHelper.TaskType type,  HttpItem item);
         void landFail(String errMsg);
     }
 

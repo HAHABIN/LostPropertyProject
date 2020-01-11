@@ -1,6 +1,6 @@
 package com.example.habin.lostpropertyproject.Base;
 
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.TaskListener;
@@ -91,7 +91,7 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
     }
 
     @Override
-    public void taskFinished(HttpHelper.TaskType type, BaseResponse item) {
+    public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
 
     }
 }

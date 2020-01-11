@@ -2,6 +2,8 @@ package com.example.habin.lostpropertyproject.Presenter;
 
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
+import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
@@ -33,7 +35,7 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
         hashMap.put("username",username);
         hashMap.put("password",password);
 
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.Login,this,hashMap);
+        HttpClient.getSingleton().startTask(HttpHelper.TaskType.Login,this,hashMap, PersonInfoEmtity.class);
 
 //
 //        mlandmodel.login(username, password, new BaseObserver<BaseResponse>() {
@@ -84,7 +86,7 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
     }
 
     @Override
-    public void taskFinished(HttpHelper.TaskType type, BaseResponse item) {
+    public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
         super.taskFinished(type, item);
         mView.landSucess(type,item);
 

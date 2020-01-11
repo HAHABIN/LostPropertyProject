@@ -2,9 +2,13 @@ package com.example.habin.lostpropertyproject.ui.fragment;
 
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
+import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.MineTpyePresenter;
@@ -15,7 +19,10 @@ import com.example.habin.lostpropertyproject.ui.activity.mine.RecordListActivity
 import com.example.habin.lostpropertyproject.ui.activity.mine.SettingActivity;
 import com.example.habin.lostpropertyproject.ui.activity.mine.UserInfoActivity;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 /**
  * created by habin
@@ -24,11 +31,19 @@ import butterknife.OnClick;
  */
 public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter> implements MinePageContract.View {
 
+    private static final String RESULT = "result";
+    @BindView(R.id.tv_name)
+    TextView mTvName;
 
-    public static MinePageFragment newInstance() {
-        return new MinePageFragment();
+    public static MinePageFragment newInstance(PersonInfoEmtity.ResultBean result) {
+        MinePageFragment fragment = new MinePageFragment();
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(RESULT, result);
+        fragment.setArguments(bundle);
+        return fragment;
     }
 
+    private PersonInfoEmtity.ResultBean mPersonInfo;
 
     @Override
     protected int getLayoutId() {
@@ -38,6 +53,12 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
+        Bundle bundle = this.getArguments();
+        mPersonInfo = (PersonInfoEmtity.ResultBean) bundle.getSerializable(RESULT);
+        if (mPersonInfo!=null){
+            mTvName.setText(mPersonInfo.getName());
+        }
+
     }
 
     @Override
@@ -57,7 +78,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     }
 
 
-    @OnClick({R.id.rl_top, R.id.ll_record_lost, R.id.ll_record_find, R.id.ll_record_complete, R.id.ll_setting,R.id.ll_about})
+    @OnClick({R.id.rl_top, R.id.ll_record_lost, R.id.ll_record_find, R.id.ll_record_complete, R.id.ll_setting, R.id.ll_about})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_top:
@@ -80,7 +101,6 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
                 break;
         }
     }
-
 
 
 }

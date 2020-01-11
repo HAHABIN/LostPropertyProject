@@ -54,9 +54,11 @@ public class ApiError {
         ApiError_NetworkDisconnected("网络似乎出现了点问题，请稍后再试...",-1),
         ApiError_Retorfit("Retorfit配置出错，请检查!",-2),
         ApiError_Entity("页面好像失联了，稍后再试试吧..",-3),
-        ApiError_Local("本地代码错误，请检查!",-4),
-        ApiError_Data("页面好像失联了，稍后再试试吧..",-5);
-
+        ApiError_Local("本地代码错误，请 " +
+                " 检查!",-4),
+        ApiError_Data("页面好像失联了，稍后再试试吧..",-5),
+        ApiError_Login("登录失败，密码或者账户错误",11),
+        ApiError_NoAdmin("非管理员没有权限访问",10);
         //可与服务器约定
 
         private int value;

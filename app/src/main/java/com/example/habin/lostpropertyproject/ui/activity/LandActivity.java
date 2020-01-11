@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
+import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.LandPresenter;
@@ -153,11 +155,14 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     }
 
     @Override
-    public void landSucess(HttpHelper.TaskType type, BaseResponse item) {
+    public void landSucess(HttpHelper.TaskType type, HttpItem item) {
+        ProgressUtils.dismiss();
         switch (type){
             case Login:
-                ProgressUtils.dismiss();
-                startActivity(new Intent(this, MainActivity.class));
+                if (item instanceof PersonInfoEmtity) {
+                    PersonInfoEmtity.ResultBean result = ((PersonInfoEmtity) item).getData();
+                    MainActivity.StartAct(this,result);
+                }
                 break;
         }
 

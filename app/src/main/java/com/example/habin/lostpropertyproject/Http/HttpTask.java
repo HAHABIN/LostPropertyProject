@@ -3,7 +3,7 @@ package com.example.habin.lostpropertyproject.Http;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 
@@ -22,7 +22,7 @@ import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class HttpTask {
+public class    HttpTask {
 
     private static final String TAG = "HttpTask";
 
@@ -36,7 +36,7 @@ public class HttpTask {
 
     private Observable<Response<ResponseBody>> callBack;
 
-    private BaseResponse result;
+    private HttpItem result;
     private JSONObject reustObject;
 
     public HttpHelper.TaskType getType() {
@@ -88,20 +88,19 @@ public class HttpTask {
         public void onNext(Response<ResponseBody> res) {
             try {
                 ResponseBody object = res.body();
-
                 String response = null == object ? "" : object.string();
 
-                BaseResponse httpItem =  JsonUtil.GsonToBean(response, mItem != null ? mItem : BaseResponse.class);
+                HttpItem httpItem =  JsonUtil.GsonToBean(response, mItem != null ? mItem : HttpItem.class);
                 Log.d(TAG, "ResponseBody："+response);
                 if (httpItem != null) {
-                    if (httpItem.getSuccess()) {
+                    if (httpItem.getCode() == 1) {
                         if (mItem == null) {
                             reustObject = new JSONObject(response);
                         } else {
                             result = httpItem;
                         }
                     } else {
-                        errorHandle(ApiError.ErrorType.valueOf(httpItem.getErrMsg()));
+                        errorHandle(ApiError.ErrorType.valueOf(httpItem.getCode(), httpItem.getMessage()));
                     }
                 } else {
                     errorHandle(ApiError.ErrorType.ApiError_Data);
