@@ -16,11 +16,13 @@ import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.LandPresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
+import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 
@@ -161,7 +163,13 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
             case Login:
                 if (item instanceof PersonInfoEmtity) {
                     PersonInfoEmtity.ResultBean result = ((PersonInfoEmtity) item).getData();
-                    MainActivity.StartAct(this,result);
+                    try {
+                        SharedPreferenceHandler.saveUserInfo(mContext,result);
+                        SharedPreferenceHandler.setUserId(mContext,result.getUserId());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    finish();
                 }
                 break;
         }

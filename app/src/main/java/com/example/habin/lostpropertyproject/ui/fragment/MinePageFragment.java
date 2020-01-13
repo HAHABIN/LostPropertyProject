@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.MineTpyePresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.MinePageContract;
 import com.example.habin.lostpropertyproject.R;
@@ -31,16 +33,15 @@ import butterknife.Unbinder;
  */
 public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter> implements MinePageContract.View {
 
-    private static final String RESULT = "result";
     @BindView(R.id.tv_name)
     TextView mTvName;
 
-    public static MinePageFragment newInstance(PersonInfoEmtity.ResultBean result) {
-        MinePageFragment fragment = new MinePageFragment();
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(RESULT, result);
-        fragment.setArguments(bundle);
-        return fragment;
+    public static MinePageFragment newInstance() {
+//        MinePageFragment fragment = new MinePageFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putSerializable(RESULT, result);
+//        fragment.setArguments(bundle);
+        return new MinePageFragment();
     }
 
     private PersonInfoEmtity.ResultBean mPersonInfo;
@@ -53,8 +54,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        Bundle bundle = this.getArguments();
-        mPersonInfo = (PersonInfoEmtity.ResultBean) bundle.getSerializable(RESULT);
+        mPersonInfo = MyApplication.getUserInfo(mContext);
         if (mPersonInfo!=null){
             mTvName.setText(mPersonInfo.getName());
         }

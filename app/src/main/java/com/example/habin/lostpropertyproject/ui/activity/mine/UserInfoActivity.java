@@ -10,12 +10,14 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
-import com.example.habin.lostpropertyproject.view.SelectDialog;
+import com.example.habin.lostpropertyproject.Widget.SelectDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -54,7 +56,7 @@ public class UserInfoActivity extends BaseActivity {
     private Disposable mSubscribe;
     private SelectorDialogUtils mPictureSelector;
     private SelectDialog mSelectDialog;
-
+    private PersonInfoEmtity.ResultBean mUserInfo;
     public static void StartAct(Context context) {
         context.startActivity(new Intent(context, UserInfoActivity.class));
     }
@@ -77,6 +79,15 @@ public class UserInfoActivity extends BaseActivity {
         setShowBack(View.VISIBLE);
         setBackOnClick().setOnClickListener(v -> finish());
         mPictureSelector = new SelectorDialogUtils(mActivity);
+        setInfo();
+    }
+    private void setInfo(){
+        mUserInfo = MyApplication.getUserInfo(mContext);
+        mTvNickname.setText(mUserInfo.getName());
+        mTvEmail.setText(mUserInfo.getEmail()!=null?mUserInfo.getEmail():"");
+        mTvGender.setText(mUserInfo.getGender()!=null?mUserInfo.getGender():"");
+        mTvHelptimes.setText(String.valueOf(mUserInfo.getHelpTimes()));
+        mTvUserid.setText(String.valueOf(mUserInfo.getUserId()));
     }
 
     @OnClick({R.id.ll_avatar,R.id.ll_nickname, R.id.ll_gender, R.id.ll_area, R.id.ll_email})

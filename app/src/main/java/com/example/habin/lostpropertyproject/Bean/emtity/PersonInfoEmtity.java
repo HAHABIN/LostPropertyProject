@@ -40,7 +40,7 @@ public class PersonInfoEmtity extends HttpItem {
          * }
          */
         //ID
-        private Long userId;
+        private int userId;
         //名字
         private String name;
         //头像
@@ -58,11 +58,11 @@ public class PersonInfoEmtity extends HttpItem {
         //帮助次数
         private int helpTimes;
 
-        public Long getUserId() {
+        public int getUserId() {
             return userId;
         }
 
-        public void setUserId(Long userId) {
+        public void setUserId(int userId) {
             this.userId = userId;
         }
 

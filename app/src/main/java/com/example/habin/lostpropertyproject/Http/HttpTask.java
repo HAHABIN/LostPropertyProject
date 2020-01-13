@@ -22,7 +22,7 @@ import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class    HttpTask {
+public class HttpTask {
 
     private static final String TAG = "HttpTask";
 

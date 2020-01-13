@@ -1,8 +1,11 @@
 package com.example.habin.lostpropertyproject.Http;
 
 import android.content.Context;
+import android.text.TextUtils;
 
+import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Common.Constants;
+import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,7 +36,11 @@ public class HttpClient {
 
     private Context mContext;
     private ArrayList<HttpTask> mTaskArray;
-    private String userId;
+    private int userId ;
+
+    //用户信息
+    private PersonInfoEmtity.ResultBean mPersonInfo;
+
     //无参的单利模式
     public static HttpClient getSingleton() {
         if (retrofitManager == null) {
@@ -63,13 +70,7 @@ public class HttpClient {
         mTaskArray.add(task);
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
 
-    public String getUserId() {
-        return userId;
-    }
     //无参的构造方法
     private HttpClient() {
         initRetrofitManager();

@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.Http.HttpClient;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Widget.PublishDialog;
 import com.example.habin.lostpropertyproject.ui.fragment.HomePageFragment;
@@ -25,9 +27,11 @@ import butterknife.OnClick;
 public class MainActivity extends BaseActivity {
 
     private static final String RESULT = "result";
+
     public static void StartAct(Context context) {
         context.startActivity(new Intent(context, MainActivity.class));
     }
+
     public static void StartAct(Context context, PersonInfoEmtity.ResultBean result) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(RESULT, result);
@@ -64,7 +68,6 @@ public class MainActivity extends BaseActivity {
     private Fragment fragment;
     //发布动画
     private PublishDialog publishDialog;
-
 
 
     //是否显示标题 默认不显示
@@ -106,7 +109,7 @@ public class MainActivity extends BaseActivity {
                     publishDialog.setPingguClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                        LandActivity.StartAct(mContext);
+                            LandActivity.StartAct(mContext);
                         }
                     });
                 }
@@ -128,8 +131,11 @@ public class MainActivity extends BaseActivity {
                 setStaus();
                 break;
             case R.id.rl_mine:
-                PersonInfoEmtity.ResultBean data = (PersonInfoEmtity.ResultBean) getIntent().getSerializableExtra(RESULT);
-                fragment = MinePageFragment.newInstance(data);//我的
+                if (MyApplication.isLogin(mContext)) {
+                    LandActivity.StartAct(mContext);
+                    return;
+                }
+                fragment = MinePageFragment.newInstance();//我的
                 mIsCheck = 3;
                 setStaus();
                 break;

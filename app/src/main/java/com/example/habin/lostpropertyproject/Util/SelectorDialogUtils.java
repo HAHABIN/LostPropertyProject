@@ -5,7 +5,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.widget.Toast;
 
-import com.example.habin.lostpropertyproject.view.SelectDialog;
+import com.example.habin.lostpropertyproject.Widget.SelectDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;

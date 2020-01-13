@@ -25,7 +25,7 @@ import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.ui.adapter.GridImageAdapter;
-import com.example.habin.lostpropertyproject.view.SelectDialog;
+import com.example.habin.lostpropertyproject.Widget.SelectDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
