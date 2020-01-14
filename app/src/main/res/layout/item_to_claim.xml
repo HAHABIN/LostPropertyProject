@@ -50,6 +50,16 @@
                 android:text="时间"
                 android:textColor="@color/grey_515151"
                 android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/iv_result"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:gravity="center"
+                android:background="@mipmap/ic_result_seeking"
+                android:layout_marginRight="15dp"
+                android:layout_alignParentRight="true"
+                />
         </RelativeLayout>
 
         <View

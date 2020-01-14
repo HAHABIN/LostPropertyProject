@@ -132,7 +132,28 @@
                     android:textColor="@color/grey_515151"
                     android:textSize="14sp" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_record_cancal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
 
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@mipmap/ic_record_cancal" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:text="@string/record_cancal"
+                    android:textColor="@color/grey_515151"
+                    android:textSize="14sp" />
+            </LinearLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

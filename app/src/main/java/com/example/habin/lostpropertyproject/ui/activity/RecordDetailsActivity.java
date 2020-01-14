@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
@@ -38,9 +39,15 @@ public class RecordDetailsActivity extends BaseActivity {
     TextView mTvAddress;
     @BindView(R.id.tv_find_time)
     TextView mTvFindTime;
+    @BindView(R.id.ll_bom_help)
+    LinearLayout mLlBomHelp;
+    private boolean isVis;
 
-    public static void StartAct(Context context) {
-        context.startActivity(new Intent(context, RecordDetailsActivity.class));
+    public static void StartAct(Context context,boolean isVis) {
+        Intent intent = new Intent(context, RecordDetailsActivity.class);
+        //是否显示底部栏
+        intent.putExtra("isVis",isVis);
+        context.startActivity(intent);
     }
 
     @Override
@@ -57,11 +64,15 @@ public class RecordDetailsActivity extends BaseActivity {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         StatusBarUtils.transparencyBar(mActivity);
+        isVis = getIntent().getBooleanExtra("isVis", false);
+        if (isVis){
+            mLlBomHelp.setVisibility(View.VISIBLE);
+        }
 
     }
 
 
-    @OnClick({R.id.iv_back, R.id.civ_pic})
+    @OnClick({R.id.iv_back, R.id.civ_pic,R.id.btn_help, R.id.btn_private_chat})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_back:
@@ -69,6 +80,12 @@ public class RecordDetailsActivity extends BaseActivity {
                 break;
             case R.id.civ_pic:
                 break;
+            case R.id.btn_help:
+                break;
+            case R.id.btn_private_chat:
+                break;
         }
     }
+
+
 }

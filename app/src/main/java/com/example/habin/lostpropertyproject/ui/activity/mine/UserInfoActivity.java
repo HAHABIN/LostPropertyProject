@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
@@ -13,11 +12,11 @@ import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
-import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
+import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
-import com.example.habin.lostpropertyproject.Widget.SelectDialog;
+import com.example.habin.lostpropertyproject.view.CircleImageView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -50,12 +49,12 @@ public class UserInfoActivity extends BaseActivity {
     TextView mTvEmail;
     @BindView(R.id.tv_helptimes)
     TextView mTvHelptimes;
+    @BindView(R.id.civ_avatar)
+    CircleImageView mCivAvatar;
 
-    private PopupWindow pop;
     private String mCompressPath;
     private Disposable mSubscribe;
     private SelectorDialogUtils mPictureSelector;
-    private SelectDialog mSelectDialog;
     private PersonInfoEmtity.ResultBean mUserInfo;
     public static void StartAct(Context context) {
         context.startActivity(new Intent(context, UserInfoActivity.class));
@@ -84,8 +83,8 @@ public class UserInfoActivity extends BaseActivity {
     private void setInfo(){
         mUserInfo = MyApplication.getUserInfo(mContext);
         mTvNickname.setText(mUserInfo.getName());
-        mTvEmail.setText(mUserInfo.getEmail()!=null?mUserInfo.getEmail():"");
-        mTvGender.setText(mUserInfo.getGender()!=null?mUserInfo.getGender():"");
+        mTvEmail.setText(mUserInfo.getEmail()!=null?mUserInfo.getEmail():"未设置");
+        mTvGender.setText(mUserInfo.getGender()!=null?mUserInfo.getGender():"未设置");
         mTvHelptimes.setText(String.valueOf(mUserInfo.getHelpTimes()));
         mTvUserid.setText(String.valueOf(mUserInfo.getUserId()));
     }
@@ -95,7 +94,7 @@ public class UserInfoActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.ll_avatar:
 //                showPop();
-                mPictureSelector.openForHeaderInActivity();
+                new SelectorDialogUtils(mActivity).openForHeaderInActivity();
                 break;
             case R.id.ll_nickname:
                 EditNicknameActivity.StartAct(mContext);
@@ -149,6 +148,7 @@ public class UserInfoActivity extends BaseActivity {
                 if (selectList.size() > 0) {
                     LocalMedia localMedia = selectList.get(0);
                     mCompressPath = localMedia.getCompressPath();
+                    mTvEmail.setText(mCompressPath!=null?mCompressPath:"未设置");
 //                    updatePhoto();上传
                 }
             }

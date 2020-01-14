@@ -38,8 +38,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     NoScrollViewPager mVpContent;
 
 
-    public HomePageFragment() {
-    }
+
 
     public static HomePageFragment newInstance() {
         return new HomePageFragment();
@@ -54,6 +53,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     public boolean isLostFind = true;
     private List<Fragment> mFragmentList;
 
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_page_home;
@@ -65,8 +65,8 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
 
 
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(ToClaimListFragment.newInstance("1"));//丢丢 type 1
-        mFragmentList.add(ToClaimListFragment.newInstance("2"));//拾拾 type 2
+        mFragmentList.add(ToClaimListFragment.newInstance(0));//丢丢 type 0
+        mFragmentList.add(ToClaimListFragment.newInstance(1));//拾拾 type 1
         mVpContent.setAdapter(new VpAdapter(getFragmentManager(), mFragmentList));
         //设置禁止左右滑动
         mVpContent.setNoScroll(true);

@@ -19,10 +19,10 @@ import butterknife.BindView;
 public class ToClaimListFragment extends BaseFragment implements ToClaimListAdapter.OnitemClick {
 
 
-    public static ToClaimListFragment newInstance(String type) {
+    public static ToClaimListFragment newInstance(int type) {
         ToClaimListFragment fragment = new ToClaimListFragment();
         Bundle bundle = new Bundle();
-        bundle.putString("type", type);
+        bundle.putInt("type", type);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -32,7 +32,7 @@ public class ToClaimListFragment extends BaseFragment implements ToClaimListAdap
     @BindView(R.id.swipeRecyclerView)
     SwipeRecyclerView mSw;
 //    ToClaimListAdapter mAdapter;
-    private String mType; //1为丢丢 2为拾拾
+    private int mType; //0为丢丢 1为拾拾
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_to_claim_list;
@@ -43,12 +43,12 @@ public class ToClaimListFragment extends BaseFragment implements ToClaimListAdap
         super.initData(savedInstanceState);
         Bundle bundle = this.getArguments();
 
-        mType = bundle.getString("type");
-        mSw.setAdapter(new ToClaimListAdapter(mContext,this));
+        mType = bundle.getInt("type");
+        mSw.setAdapter(new ToClaimListAdapter(mContext,this,mType));
     }
 
     @Override
     public void onItemClick(int position) {
-        RecordDetailsActivity.StartAct(mContext);
+        RecordDetailsActivity.StartAct(mContext,true);
     }
 }

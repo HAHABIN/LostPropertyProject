@@ -6,17 +6,15 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
-import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.LandPresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
@@ -43,9 +41,12 @@ import butterknife.OnClick;
  */
 public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implements LandContract.View {
 
+
+
     public static void StartAct(Context context) {
         context.startActivity(new Intent(context, LandActivity.class));
     }
+
     @BindView(R.id.login_et_username)
     EditText mEtUsername;
     @BindView(R.id.login_et_password)
@@ -56,12 +57,18 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     EditText mEtMail;
     @BindView(R.id.login_et_rpassword)
     EditText mEtRpassword;
-    @BindView(R.id.login_tv_rempas)
-    CheckBox mTvloginRempas;
     @BindView(R.id.login_tv_sign)
     TextView mTvloginSign;
     @BindView(R.id.land_tv_text)
     TextView mTvTitle;
+    @BindView(R.id.login_ll_mail)
+    LinearLayout mLlMail;
+    @BindView(R.id.login_ll_rpassword)
+    LinearLayout mLlRpassword;
+    @BindView(R.id.ll_login_pane)
+    LinearLayout llLoginPane;
+    @BindView(R.id.tv_forget_pass)
+    TextView mTvForgetPass;
 
     //是否是登陆操作
     private boolean isLogin = true;
@@ -116,6 +123,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
         }
 
     }
+
     /**
      * 置换登录注册窗口
      */
@@ -125,19 +133,19 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
             //置换注册界面
             mTvloginSign.setText("登录");
             mBtnLogin.setText("注册");
-            mEtRpassword.setVisibility(View.VISIBLE);
-            mEtMail.setVisibility(View.VISIBLE);
+            mLlRpassword.setVisibility(View.VISIBLE);
+            mLlMail.setVisibility(View.VISIBLE);
             mTvTitle.setText("注册");
-            mTvloginRempas.setVisibility(View.GONE);
+            mTvForgetPass.setVisibility(View.GONE);
         } else {
 
             //置换登陆界面
             mTvloginSign.setText("注册");
             mBtnLogin.setText("登录");
-            mEtRpassword.setVisibility(View.GONE);
-            mEtMail.setVisibility(View.GONE);
+            mLlRpassword.setVisibility(View.GONE);
+            mLlMail.setVisibility(View.GONE);
             mTvTitle.setText("登录");
-            mTvloginRempas.setVisibility(View.VISIBLE);
+            mTvForgetPass.setVisibility(View.VISIBLE);
         }
         isLogin = !isLogin;
     }
@@ -150,7 +158,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
     // 成功显示
     @Override
-    public void landSucess(HttpHelper.TaskType type,JSONObject baseResponse) {
+    public void landSucess(HttpHelper.TaskType type, JSONObject baseResponse) {
         ProgressUtils.dismiss();
 
         startActivity(new Intent(this, MainActivity.class));
@@ -159,13 +167,13 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     @Override
     public void landSucess(HttpHelper.TaskType type, HttpItem item) {
         ProgressUtils.dismiss();
-        switch (type){
+        switch (type) {
             case Login:
                 if (item instanceof PersonInfoEmtity) {
                     PersonInfoEmtity.ResultBean result = ((PersonInfoEmtity) item).getData();
                     try {
-                        SharedPreferenceHandler.saveUserInfo(mContext,result);
-                        SharedPreferenceHandler.setUserId(mContext,result.getUserId());
+                        SharedPreferenceHandler.saveUserInfo(mContext, result);
+                        SharedPreferenceHandler.setUserId(mContext, result.getUserId());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -179,7 +187,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     @Override
     public void landFail(String errMsg) {
         ProgressUtils.dismiss();
-        SnackbarUtils.show(mActivity,errMsg);
+        SnackbarUtils.show(mActivity, errMsg);
         Toast.makeText(mActivity, "失败原因" + errMsg, Toast.LENGTH_SHORT).show();
     }
 
@@ -193,13 +201,13 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
         Log.d(TAG, "onFailure: 登录失败" + e);
-        SnackbarUtils.show(mActivity,e.getMessage());
+        SnackbarUtils.show(mActivity, e.getMessage());
 //        Toast.makeText(mActivity, "失败,请稍后再登录" + e, Toast.LENGTH_SHORT).show();
 
     }
 
 
-    @OnClick({R.id.login_btn_login,R.id.login_tv_rempas,R.id.login_tv_sign})
+    @OnClick({R.id.login_btn_login, R.id.login_tv_sign, R.id.tv_forget_pass})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.login_btn_login:
@@ -209,13 +217,14 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
                     sign();  //注册
                 }
                 break;
-            case R.id.login_tv_rempas:
-                break;
             case R.id.login_tv_sign:
                 changeWindows();
                 break;
+            case R.id.tv_forget_pass:
+                break;
         }
     }
+
 
 
 }

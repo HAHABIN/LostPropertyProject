@@ -13,6 +13,8 @@
     <color name="textred">#FF5050</color>
     <color name="money">#f20e0e</color>
 
+    <color name="red_F7F44336">#F7F44336</color>
+    <color name="red_F7E76B63">#F7E76B63</color>
     <color name="firebrick">#b22222</color><!--火砖色 -->
     <color name="blue_4b98e8">#4b98e8</color>
     <color name="gray_efefef">#efefef</color>

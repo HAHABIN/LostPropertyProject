@@ -18,6 +18,15 @@
     <string name="record_lost">丢失记录</string>
     <string name="record_find">拾物记录</string>
     <string name="record_complete">完成记录</string>
+    <string name="record_cancal">取消记录</string>
+
+    <string-array name="record_list_name">
+        <item>丢失记录</item>
+        <item>拾物记录 </item>
+        <item>完成记录</item>
+        <item>取消记录</item>
+    </string-array>
+
     <!--    个人信息-->
     <string name="personal_avatar">头像</string>
     <string name="personal_nickname">昵称</string>

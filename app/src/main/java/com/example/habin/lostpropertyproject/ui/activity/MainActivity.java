@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
-import com.example.habin.lostpropertyproject.Http.HttpClient;
-import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Widget.PublishDialog;
 import com.example.habin.lostpropertyproject.ui.fragment.HomePageFragment;
@@ -131,10 +129,11 @@ public class MainActivity extends BaseActivity {
                 setStaus();
                 break;
             case R.id.rl_mine:
-                if (MyApplication.isLogin(mContext)) {
-                    LandActivity.StartAct(mContext);
-                    return;
-                }
+                //登录判断
+//                if (MyApplication.isLogin(mContext)) {
+//                    LandActivity.StartAct(mContext);
+//                    return;
+//                }
                 fragment = MinePageFragment.newInstance();//我的
                 mIsCheck = 3;
                 setStaus();
