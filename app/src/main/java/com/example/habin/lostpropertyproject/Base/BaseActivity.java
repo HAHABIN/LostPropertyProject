@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ActivityManagerUtils;
-import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
 
 import butterknife.ButterKnife;

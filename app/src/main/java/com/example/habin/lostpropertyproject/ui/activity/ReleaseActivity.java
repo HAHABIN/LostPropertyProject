@@ -71,7 +71,7 @@ public class ReleaseActivity extends BaseActivity  {
     private PopupWindow pop;
     private Disposable mSubscribe;
     private int mIndex = 0;
-    private SelectorDialogUtils mPictureSelector;
+
     List<String> mAddressList;
 
 
@@ -90,7 +90,7 @@ public class ReleaseActivity extends BaseActivity  {
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
         setTitle();
-        mPictureSelector = new SelectorDialogUtils(mActivity);
+
         mAddressList = new ArrayList<>();
         for (int i = 0; i<10;i++){
             mAddressList.add("地址"+i);
@@ -133,13 +133,14 @@ public class ReleaseActivity extends BaseActivity  {
         @SuppressLint("CheckResult")
         @Override
         public void onAddPicClick() {
-            mPictureSelector.openDialogInActivity(maxSelectNum, mSelectList,true,false);
+            new SelectorDialogUtils(mActivity).openDialogInActivity(maxSelectNum, mSelectList,true,false);
+
         }
     };
 
     //弹窗列表
     public void showList(List<String> mlist){
-        SelectorDialogUtils.showDialog(mActivity,new SelectDialog.SelectDialogListener() {
+        new SelectorDialogUtils(mActivity).showDialog(new SelectDialog.SelectDialogListener() {
             @Override
             public void onItemClick(int position) {
 

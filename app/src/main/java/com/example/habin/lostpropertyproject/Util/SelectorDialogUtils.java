@@ -27,9 +27,8 @@ import io.reactivex.functions.Consumer;
 public class SelectorDialogUtils {
 
 
-    private static SelectDialog mDialog;
+    private  SelectDialog mDialog;
     private Activity mActivity;
-
 
     public SelectorDialogUtils(Activity mActivity) {
         this.mActivity = mActivity;
@@ -48,7 +47,7 @@ public class SelectorDialogUtils {
      * @param crop         是否裁剪
      */
     @SuppressLint("CheckResult")
-    public void openDialogInActivity(final int maxSelectNum, final List<LocalMedia> selectList, final boolean crop, final boolean isHeader) {
+    public  void openDialogInActivity(final int maxSelectNum, final List<LocalMedia> selectList, final boolean crop, final boolean isHeader) {
         RxPermissions rxPermission = new RxPermissions(mActivity);
         rxPermission.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Permission>() {
@@ -58,7 +57,7 @@ public class SelectorDialogUtils {
                             List<String> names = new ArrayList<>();
                             names.add("拍照");
                             names.add("相册");
-                            showDialog(mActivity,new SelectDialog.SelectDialogListener() {
+                            showDialog(new SelectDialog.SelectDialogListener() {
                                 @Override
                                 public void onItemClick(int position) {
                                     switch (position) {
@@ -71,14 +70,17 @@ public class SelectorDialogUtils {
                                         default:
                                             break;
                                     }
+                                    mDialog.dismiss();
                                 }
                             }, names);
 
                         } else {
                             Toast.makeText(mActivity, "拒绝", Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
+
     }
 
 
@@ -113,15 +115,13 @@ public class SelectorDialogUtils {
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
-    public static SelectDialog showDialog(Activity activity,SelectDialog.SelectDialogListener listener, List<String> names) {
+    public SelectDialog showDialog(SelectDialog.SelectDialogListener listener, List<String> names) {
         if (mDialog == null) {
-            mDialog = new SelectDialog(activity, listener, names);
+            mDialog = new SelectDialog(mActivity, listener, names);
         }
-        if (!activity.isFinishing()) {
+        if (!mActivity.isFinishing()) {
             mDialog.show();
         }
         return mDialog;
     }
-
-
 }
