@@ -3,7 +3,9 @@ package com.example.habin.lostpropertyproject.ui.fragment;
 import android.os.Bundle;
 
 import com.example.habin.lostpropertyproject.Base.BaseFragment;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.ui.activity.LandActivity;
 import com.example.habin.lostpropertyproject.ui.activity.RecordDetailsActivity;
 import com.example.habin.lostpropertyproject.ui.adapter.ToClaimListAdapter;
 import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
@@ -49,6 +51,10 @@ public class ToClaimListFragment extends BaseFragment implements ToClaimListAdap
 
     @Override
     public void onItemClick(int position) {
+        if (MyApplication.isLogin(mContext)) {
+            LandActivity.StartAct(mContext);
+            return;
+        }
         RecordDetailsActivity.StartAct(mContext,true);
     }
 }

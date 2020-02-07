@@ -58,7 +58,9 @@ public class ApiError {
                 " 检查!",-4),
         ApiError_Data("页面好像失联了，稍后再试试吧..",-5),
         ApiError_Login("登录失败，密码或者账户错误",11),
-        ApiError_NoAdmin("非管理员没有权限访问",10);
+        ApiError_Regin("注册失败",2),
+        ApiError_NoAdmin("非管理员没有权限访问",10),
+        ApiError_Name("用户名已经存在",9);
         //可与服务器约定
 
         private int value;

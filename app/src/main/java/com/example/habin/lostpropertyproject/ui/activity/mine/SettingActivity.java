@@ -1,7 +1,6 @@
 package com.example.habin.lostpropertyproject.ui.activity.mine;
 
 
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +8,16 @@ import android.view.View;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
+import com.example.habin.lostpropertyproject.ui.activity.MainActivity;
+import com.example.habin.lostpropertyproject.view.AlertDialogView;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
 /**
  * 设置页面
- * */
+ */
 public class SettingActivity extends BaseActivity {
 
     public static void StartAct(Context context) {
@@ -34,5 +40,33 @@ public class SettingActivity extends BaseActivity {
         setTitleText("设置");
         setShowBack(View.VISIBLE);
         setBackOnClick().setOnClickListener(v -> finish());
+    }
+
+    @OnClick({R.id.ll_clear_data, R.id.ll_exit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_clear_data:
+                break;
+            case R.id.ll_exit:
+                AlertDialogView dialogView = new AlertDialogView(this);
+                dialogView.setTitle("退出登录");
+                dialogView.setMessage("确认退出，数据清除");
+                dialogView.setConfimStr("确认");
+                dialogView.setCancelStr("取消");
+                dialogView.setListener(new AlertDialogView.onClickListener() {
+                    @Override
+                    public void cancelClick(AlertDialogView dialog) {
+                    }
+
+                    @Override
+                    public void confirmClick(AlertDialogView dialog) {
+                        SharedPreferenceHandler.cleanUserInfo(mContext);
+                        MainActivity.StartAct(mContext);
+                        mActivity.finish();
+                    }
+                });
+                dialogView.show();
+                break;
+        }
     }
 }

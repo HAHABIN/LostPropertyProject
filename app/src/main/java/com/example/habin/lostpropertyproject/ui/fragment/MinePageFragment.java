@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
@@ -63,7 +64,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
 
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
 
     }
 

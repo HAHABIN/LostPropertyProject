@@ -3,6 +3,7 @@ package com.example.habin.lostpropertyproject.ui.fragment;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.TypePagePresenter;
@@ -47,7 +48,7 @@ public class TypePageFragment extends BaseMVPFragment<TypePageContract.Presenter
     }
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
 
     }
 

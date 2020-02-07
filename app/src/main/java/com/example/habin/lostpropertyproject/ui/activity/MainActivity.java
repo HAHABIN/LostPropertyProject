@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Widget.PublishDialog;
 import com.example.habin.lostpropertyproject.ui.fragment.HomePageFragment;
@@ -82,11 +83,10 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-//        setTitleText("首页");
         mImageList = new ImageView[]{mIvHome, mIvType, mIvMessage, mIvMine};
         mTextList = new TextView[]{mTvHome, mTvType, mTvMessage, mTvMine};
         //默认
-        getSupportFragmentManager().beginTransaction().add(R.id.fl_content, new HomePageFragment()).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.fl_content, HomePageFragment.newInstance()).commit();
     }
 
 
@@ -94,6 +94,11 @@ public class MainActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_add:
+                //登录判断
+                if (MyApplication.isLogin(mContext)) {
+                    LandActivity.StartAct(mContext);
+                    return;
+                }
                 if (publishDialog == null) {
                     publishDialog = new PublishDialog(MainActivity.this);
                     publishDialog.setLostClickListener(v -> {
@@ -130,10 +135,10 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.rl_mine:
                 //登录判断
-//                if (MyApplication.isLogin(mContext)) {
-//                    LandActivity.StartAct(mContext);
-//                    return;
-//                }
+                if (MyApplication.isLogin(mContext)) {
+                    LandActivity.StartAct(mContext);
+                    return;
+                }
                 fragment = MinePageFragment.newInstance();//我的
                 mIsCheck = 3;
                 setStaus();
@@ -157,4 +162,6 @@ public class MainActivity extends BaseActivity {
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_content, fragment).commit();
     }
+
+
 }

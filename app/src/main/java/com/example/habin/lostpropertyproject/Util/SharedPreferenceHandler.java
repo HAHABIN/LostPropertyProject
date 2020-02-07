@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.google.gson.Gson;
 
 /**
  * Create by HABIN on 2019/12/2220:26
@@ -23,30 +24,19 @@ public class SharedPreferenceHandler {
      * @param userinfo
      * @throws Exception
      */
-    public static void saveUserInfo(Context context, PersonInfoEmtity.ResultBean userinfo) throws Exception{
+    public static void saveUserInfo(Context context, PersonInfoEmtity.ResultBean userinfo){
         SharedPreferences settings = context.getSharedPreferences(STRING_SAVEUserInfo, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
-        editor.putInt("userId", userinfo.getUserId());
-        editor.putString("name",userinfo.getName());
-        editor.putString("profileImg",userinfo.getProfileImg());
-        editor.putString("email",userinfo.getEmail());
-        editor.putInt("userType",userinfo.getUserType());
-        editor.putLong("createTime",userinfo.getCreateTime());
-        editor.putLong("lastEditTime",userinfo.getLastEditTime());
-        editor.putInt("helpTimes",userinfo.getHelpTimes());
+        Gson gson=new Gson();
+        String string = gson.toJson(userinfo);
+        editor.putString("userinfo",string);
         editor.apply();
     }
-    public static PersonInfoEmtity.ResultBean getUserInfo(Context context) throws Exception{
+    public static PersonInfoEmtity.ResultBean getUserInfo(Context context) {
         SharedPreferences settings = context.getSharedPreferences(STRING_SAVEUserInfo, Context.MODE_PRIVATE);
-        PersonInfoEmtity.ResultBean userinfo = new PersonInfoEmtity.ResultBean();
-        userinfo.setUserId(settings.getInt("userId", 0));
-        userinfo.setName(settings.getString("name", null));
-        userinfo.setProfileImg(settings.getString("profileImg", null));
-        userinfo.setEmail(settings.getString("email", null));
-        userinfo.setUserType(settings.getInt("userType", 0));
-        userinfo.setCreateTime(settings.getLong("createTime", 0));
-        userinfo.setLastEditTime(settings.getLong("lastEditTime", 0));
-        userinfo.setHelpTimes(settings.getInt("helpTimes", 0));
+        Gson gson=new Gson();
+        String object = settings.getString("userinfo", null);
+        PersonInfoEmtity.ResultBean userinfo = gson.fromJson(object,PersonInfoEmtity.ResultBean.class);
         return userinfo;
     }
     public static void setUserId(Context context,int userId){
@@ -55,9 +45,14 @@ public class SharedPreferenceHandler {
         editor.putInt("userId",userId);
         editor.apply();
     }
-    public static int  getUserId(Context context) throws Exception{
+    public static int  getUserId(Context context){
         SharedPreferences userid = context.getSharedPreferences(STRING_SAVEUserId, Context.MODE_PRIVATE);
         return userid.getInt("userId",0);
+    }
+
+    public static void cleanUserInfo(Context context){
+        saveUserInfo(context,null);
+        setUserId(context,0);
     }
 
 //    "userId": 1,

@@ -1,7 +1,10 @@
 package com.example.habin.lostpropertyproject.Base;
 
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
+
+import org.json.JSONObject;
 
 /**
  * Create by HABIN on 2019/11/4 22:28
@@ -19,12 +22,7 @@ public interface BaseContract {
     }
 
     interface BaseView {
-
-        void onSuccess();
-
+        void onSuccess(HttpHelper.TaskType type, HttpItem item);
         void onFailure(HttpHelper.TaskType type,ApiError e);
-    }
-    interface BaseModel {
-
     }
 }

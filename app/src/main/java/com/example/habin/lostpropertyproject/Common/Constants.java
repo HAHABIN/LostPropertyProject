@@ -9,7 +9,8 @@ package com.example.habin.lostpropertyproject.Common;
 public class Constants {
 
     //网络请求
-    public static final String BASE_URL = "http://192.168.1.102:8080/";
+    public static final String BASE_URL = "http://192.168.1.106:8080/";
+//    public static final String BASE_URL = "http://192.168.10.50:8080/";
     public static final String USER_LOGIN = "/LoginServlet";
     public static final String USER_SIGN = "/KfaccountServlet";
 

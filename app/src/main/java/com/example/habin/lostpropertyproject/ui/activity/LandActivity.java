@@ -106,22 +106,24 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
      */
     public void sign() {
 
-        String mail = mEtMail.getText().toString().trim();
+        String email = mEtMail.getText().toString().trim();
         String username = mEtUsername.getText().toString().trim();
         String password = mEtPassword.getText().toString().trim();
         String rpassword = mEtPassword.getText().toString().trim();
-        if (mail.length() == 0 || username.length() == 0 || password.length() == 0 || rpassword.length() == 0) {
+        if (email.length() == 0 || username.length() == 0 || password.length() == 0 || rpassword.length() == 0) {
             Toast.makeText(mContext, "请填写必要信息", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (!StringUtils.checkEmail(mail)) {
+        if (!StringUtils.checkEmail(email)) {
             Toast.makeText(mContext, "请输入正确的邮箱格式", Toast.LENGTH_SHORT).show();
+            return;
         }
         if (!password.equals(rpassword)) {
             Toast.makeText(mContext, "两次密码不一致", Toast.LENGTH_SHORT).show();
             return;
         }
-
+        ProgressUtils.show(this, "正在注册...");
+        mPresenter.signup(username, password,email);
     }
 
     /**
@@ -156,19 +158,13 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
         return new LandPresenter();
     }
 
-    // 成功显示
+    //返回结果
     @Override
-    public void landSucess(HttpHelper.TaskType type, JSONObject baseResponse) {
-        ProgressUtils.dismiss();
-
-        startActivity(new Intent(this, MainActivity.class));
-    }
-
-    @Override
-    public void landSucess(HttpHelper.TaskType type, HttpItem item) {
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
         ProgressUtils.dismiss();
         switch (type) {
             case Login:
+            case Regin:
                 if (item instanceof PersonInfoEmtity) {
                     PersonInfoEmtity.ResultBean result = ((PersonInfoEmtity) item).getData();
                     try {
@@ -177,30 +173,20 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    SnackbarUtils.show(mActivity, item.getMessage());
+                    MainActivity.StartAct(mContext);
                     finish();
                 }
                 break;
+
         }
 
     }
 
-    @Override
-    public void landFail(String errMsg) {
-        ProgressUtils.dismiss();
-        SnackbarUtils.show(mActivity, errMsg);
-        Toast.makeText(mActivity, "失败原因" + errMsg, Toast.LENGTH_SHORT).show();
-    }
-
-    //返回结果
-    @Override
-    public void onSuccess() {
-
-    }
 
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
-        Log.d(TAG, "onFailure: 登录失败" + e);
         SnackbarUtils.show(mActivity, e.getMessage());
 //        Toast.makeText(mActivity, "失败,请稍后再登录" + e, Toast.LENGTH_SHORT).show();
 

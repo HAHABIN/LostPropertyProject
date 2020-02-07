@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.MessagePagePresenter;
@@ -43,7 +44,7 @@ public class MessagePageFragment  extends BaseMVPFragment<MessagePageContract.Pr
     }
 
     @Override
-    public void onSuccess() {
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
 
     }
 

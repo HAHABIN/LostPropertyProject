@@ -6,6 +6,7 @@ public class HttpHelper {
         Setting,  // 配置
         //----------登陆模块------------
         Login, //登陆
+        Regin, //注册
         Logout, //注销
 
         UploadPhoto,  //上传图片
@@ -16,12 +17,14 @@ public class HttpHelper {
     public static String getMethod(TaskType type) {
         String method = "";
         switch (type) {
-
             case Setting:
                 method = "settings/get";
                 break;
             case Login:
-                method = "lostadmin/logincheck";
+                method = "loadadmin/logincheck";
+                break;
+            case Regin:
+                method = "loadadmin/regincheck";
                 break;
             case Logout:
                 method = "user/logout";

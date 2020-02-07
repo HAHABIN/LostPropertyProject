@@ -19,10 +19,7 @@ public interface LandContract extends BaseContract {
 
 
     interface View extends BaseContract.BaseView{
-        //
-        void landSucess(HttpHelper.TaskType type, JSONObject baseResponse);
-        void landSucess(HttpHelper.TaskType type,  HttpItem item);
-        void landFail(String errMsg);
+
     }
 
     interface Presenter extends BaseContract.BasePresenter<View>{
@@ -34,7 +31,7 @@ public interface LandContract extends BaseContract {
         /**
          * 用户注册
          */
-        void signup(String username, String password, String mail);
+        void signup(String username, String password, String email);
     }
 
 

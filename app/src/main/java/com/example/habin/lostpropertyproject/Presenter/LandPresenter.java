@@ -7,10 +7,8 @@ import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
-import com.example.habin.lostpropertyproject.Model.Impl.LandModelImpl;
 import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
 
-import org.json.JSONObject;
 
 import java.util.HashMap;
 
@@ -26,7 +24,6 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
 
     private String TAG="LandPresenter";
 
-    private LandModelImpl mlandmodel = new LandModelImpl();
 
     @Override
     public void login(String username, String password) {
@@ -37,46 +34,15 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
 
         HttpClient.getSingleton().startTask(HttpHelper.TaskType.Login,this,hashMap, PersonInfoEmtity.class);
 
-//
-//        mlandmodel.login(username, password, new BaseObserver<BaseResponse>() {
-//            @Override
-//            public void OnSuccess(BaseResponse baseResponse) {
-//                if (baseResponse.getSuccess()){
-//                    mView.landSucess(baseResponse);
-//                } else {
-//                    mView.landFail(baseResponse.getErrMsg());
-//                }
-//
-//            }
-//
-//            @Override
-//            public void OnFail(Throwable e) {
-//                Log.d(TAG, "OnFail: "+e);
-//                mView.onFailure(e);
-//            }
-//
-//        });
     }
 
     @Override
-    public void signup(String username, String password, String mail) {
-//        mlandmodel.signup(username,password,mail, new BaseObserver<BaseResponse>() {
-//            @Override
-//            protected void OnSuccess(BaseResponse baseResponse) {
-//                if (baseResponse.getSuccess()){
-//                    mView.landSucess(baseResponse);
-//                } else {
-//                    mView.landFail(baseResponse.getErrMsg());
-//                }
-//
-//            }
-//
-//            @Override
-//            protected void OnFail(Throwable e) {
-//                Log.d(TAG, "OnFail: "+e);
-//                mView.onFailure(e);
-//            }
-//        });
+    public void signup(String username, String password, String email) {
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("username",username);
+        hashMap.put("password",password);
+        hashMap.put("email",email);
+        HttpClient.getSingleton().startTask(HttpHelper.TaskType.Regin,this,hashMap,PersonInfoEmtity.class);
     }
 
     @Override
@@ -88,15 +54,9 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
     @Override
     public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
         super.taskFinished(type, item);
-        mView.landSucess(type,item);
-
+        mView.onSuccess(type,item);
     }
 
 
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
-        super.taskFinished(type, object);
-        mView.landSucess(type,object);
 
-    }
 }
