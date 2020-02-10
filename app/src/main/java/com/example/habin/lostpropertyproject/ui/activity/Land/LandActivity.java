@@ -2,6 +2,7 @@ package com.example.habin.lostpropertyproject.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -43,6 +44,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
 
 
+
     public static void StartAct(Context context) {
         context.startActivity(new Intent(context, LandActivity.class));
     }
@@ -72,7 +74,8 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
     //是否是登陆操作
     private boolean isLogin = true;
-
+    //保存登录名
+    private String mUsername;
     @Override
     protected boolean showTitle() {
         return true;
@@ -88,16 +91,20 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
         setTitleText("");
         setShowBack(View.VISIBLE);
         setBackOnClick().setOnClickListener(v -> finish());
+        String username = SharedPreferenceHandler.getUserName(mContext);
+        if (username!=null){
+            mEtUsername.setText(username);
+        }
     }
 
     /**
      * 执行登陆动作
      */
     public void login() {
-        String username = mEtUsername.getText().toString();
+        mUsername = mEtUsername.getText().toString();
         String password = mEtPassword.getText().toString();
         ProgressUtils.show(this, "正在登陆...");
-        mPresenter.login(username, password);
+        mPresenter.login(mUsername, password);
 
     }
 
@@ -107,10 +114,10 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     public void sign() {
 
         String email = mEtMail.getText().toString().trim();
-        String username = mEtUsername.getText().toString().trim();
+        mUsername = mEtUsername.getText().toString().trim();
         String password = mEtPassword.getText().toString().trim();
         String rpassword = mEtPassword.getText().toString().trim();
-        if (email.length() == 0 || username.length() == 0 || password.length() == 0 || rpassword.length() == 0) {
+        if (email.length() == 0 || mUsername.length() == 0 || password.length() == 0 || rpassword.length() == 0) {
             Toast.makeText(mContext, "请填写必要信息", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -123,7 +130,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
             return;
         }
         ProgressUtils.show(this, "正在注册...");
-        mPresenter.signup(username, password,email);
+        mPresenter.signup(mUsername, password,email);
     }
 
     /**
@@ -165,6 +172,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
         switch (type) {
             case Login:
             case Regin:
+                SharedPreferenceHandler.setUserName(mContext,mUsername);
                 if (item instanceof PersonInfoEmtity) {
                     PersonInfoEmtity.ResultBean result = ((PersonInfoEmtity) item).getData();
                     try {
@@ -195,8 +203,11 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
 
     @OnClick({R.id.login_btn_login, R.id.login_tv_sign, R.id.tv_forget_pass})
     public void onViewClicked(View view) {
+        //关闭键盘
+        hideSoftKeyboardNoView(mActivity);
         switch (view.getId()) {
             case R.id.login_btn_login:
+
                 if (isLogin) {
                     login();  //登陆
                 } else {
@@ -206,7 +217,8 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
             case R.id.login_tv_sign:
                 changeWindows();
                 break;
-            case R.id.tv_forget_pass:
+            case R.id.tv_forget_pass: //忘记密码
+                EditPasswordActivity.StartAct(mContext,1);
                 break;
         }
     }
