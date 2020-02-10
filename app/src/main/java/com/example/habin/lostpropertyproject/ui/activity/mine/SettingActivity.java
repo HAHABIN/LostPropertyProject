@@ -9,10 +9,10 @@ import android.view.View;
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
+import com.example.habin.lostpropertyproject.ui.activity.Land.EditPasswordActivity;
 import com.example.habin.lostpropertyproject.ui.activity.MainActivity;
 import com.example.habin.lostpropertyproject.view.AlertDialogView;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -42,9 +42,12 @@ public class SettingActivity extends BaseActivity {
         setBackOnClick().setOnClickListener(v -> finish());
     }
 
-    @OnClick({R.id.ll_clear_data, R.id.ll_exit})
+    @OnClick({R.id.ll_clear_data, R.id.ll_exit,R.id.ll_edit_pass})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.ll_edit_pass:
+                EditPasswordActivity.StartAct(mContext);
+                break;
             case R.id.ll_clear_data:
                 break;
             case R.id.ll_exit:

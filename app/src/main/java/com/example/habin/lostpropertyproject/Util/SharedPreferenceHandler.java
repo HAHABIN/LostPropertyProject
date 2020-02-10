@@ -15,9 +15,17 @@ public class SharedPreferenceHandler {
 
     public static final String CONFIG_FILE = "lostProperty_config_file";//sharedPreference文件名
     final static String STRING_SAVEUserInfo = "UserInfo";//用户信息
-    final static String STRING_SAVEUserId = "UserInfo";//用户id
+    final static String STRING_SAVEUserName = "UserName";
+    final static String STRING_SAVEUserId = "UserId";//用户id
     final static String STRING_SAVESetting = "Setting";//设置
 
+    public enum InfoType {
+        NickName,  // 昵称
+        Email, //邮箱
+        Gender,
+        ProfileImg,
+        HelpTimes;
+    }
     /**
      * 保存用户信息
      * @param context
@@ -39,6 +47,61 @@ public class SharedPreferenceHandler {
         PersonInfoEmtity.ResultBean userinfo = gson.fromJson(object,PersonInfoEmtity.ResultBean.class);
         return userinfo;
     }
+    public static void saveNickName(Context context,String NickName){
+        SharedPreferences settings = context.getSharedPreferences(STRING_SAVEUserInfo, Context.MODE_PRIVATE);
+        Gson gson=new Gson();
+        String object = settings.getString("userinfo", null);
+        //获得用户信息
+        PersonInfoEmtity.ResultBean userinfo = gson.fromJson(object,PersonInfoEmtity.ResultBean.class);
+        userinfo.setName(NickName);
+        //修改用户信息
+        SharedPreferences.Editor editor = settings.edit();
+        String string = gson.toJson(userinfo);
+        editor.putString("userinfo",string);
+        editor.apply();
+    }
+    public static void saveInfo(Context context,String Info, InfoType type){
+        SharedPreferences settings = context.getSharedPreferences(STRING_SAVEUserInfo, Context.MODE_PRIVATE);
+        Gson gson=new Gson();
+        String object = settings.getString("userinfo", null);
+        //获得用户信息
+        PersonInfoEmtity.ResultBean userinfo = gson.fromJson(object,PersonInfoEmtity.ResultBean.class);
+        switch (type){
+            case NickName:
+                userinfo.setName(Info);
+                break;
+            case Gender:
+                userinfo.setGender(Info);
+                break;
+            case Email:
+                userinfo.setEmail(Info);
+                break;
+            case HelpTimes:
+                userinfo.setHelpTimes(Integer.parseInt(Info));
+                break;
+            case ProfileImg:
+                userinfo.setProfileImg(Info);
+                break;
+        }
+
+        //修改用户信息
+        SharedPreferences.Editor editor = settings.edit();
+        String string = gson.toJson(userinfo);
+        editor.putString("userinfo",string);
+        editor.apply();
+    }
+    public static void setUserName(Context context,String username){
+        SharedPreferences sp = context.getSharedPreferences(STRING_SAVEUserName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("username",username);
+        editor.apply();
+    }
+
+    public static String getUserName(Context context){
+        SharedPreferences sp = context.getSharedPreferences(STRING_SAVEUserName,Context.MODE_PRIVATE);
+        return sp.getString("username",null);
+    }
+
     public static void setUserId(Context context,int userId){
         SharedPreferences userid = context.getSharedPreferences(STRING_SAVEUserId, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = userid.edit();

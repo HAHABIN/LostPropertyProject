@@ -65,7 +65,6 @@ public class HttpClient {
 
     public void startTask(HttpHelper.TaskType type, TaskListener listener, HashMap<String, Object> params, Class item) {
         if (listener != null) listener.taskStarted(type);
-
         HttpTask task = new HttpTask(mContext, apiServer, listener, item).load(type, params);
         mTaskArray.add(task);
     }

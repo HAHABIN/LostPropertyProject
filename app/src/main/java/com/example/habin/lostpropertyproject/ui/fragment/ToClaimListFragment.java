@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.example.habin.lostpropertyproject.Base.BaseFragment;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
-import com.example.habin.lostpropertyproject.ui.activity.LandActivity;
+import com.example.habin.lostpropertyproject.ui.activity.Land.LandActivity;
 import com.example.habin.lostpropertyproject.ui.activity.RecordDetailsActivity;
 import com.example.habin.lostpropertyproject.ui.adapter.ToClaimListAdapter;
 import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;

@@ -5,6 +5,7 @@ import android.content.Context;
 
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
+import com.example.habin.lostpropertyproject.Util.ToastUtils;
 
 /**
  * Create by HABIN on 2019/11/616:21
@@ -22,7 +23,7 @@ public class MyApplication extends Application {
         super.onCreate();
         application = this;
         context = getApplicationContext();
-
+        ToastUtils.init(this);
     }
 
     /**

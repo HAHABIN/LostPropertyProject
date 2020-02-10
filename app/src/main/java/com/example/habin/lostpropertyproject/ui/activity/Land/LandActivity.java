@@ -1,10 +1,8 @@
-package com.example.habin.lostpropertyproject.ui.activity;
+package com.example.habin.lostpropertyproject.ui.activity.Land;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,8 +22,7 @@ import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
-
-import org.json.JSONObject;
+import com.example.habin.lostpropertyproject.ui.activity.MainActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -218,7 +215,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
                 changeWindows();
                 break;
             case R.id.tv_forget_pass: //忘记密码
-                EditPasswordActivity.StartAct(mContext,1);
+                ForgetPassActivity.StartAct(mContext);
                 break;
         }
     }

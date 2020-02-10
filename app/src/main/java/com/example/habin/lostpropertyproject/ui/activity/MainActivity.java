@@ -15,6 +15,7 @@ import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Widget.PublishDialog;
+import com.example.habin.lostpropertyproject.ui.activity.Land.LandActivity;
 import com.example.habin.lostpropertyproject.ui.fragment.HomePageFragment;
 import com.example.habin.lostpropertyproject.ui.fragment.MessagePageFragment;
 import com.example.habin.lostpropertyproject.ui.fragment.MinePageFragment;

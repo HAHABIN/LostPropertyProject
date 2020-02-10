@@ -14,7 +14,7 @@ import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.MineTpyePresenter;
 import com.example.habin.lostpropertyproject.Presenter.contract.MinePageContract;
 import com.example.habin.lostpropertyproject.R;
-import com.example.habin.lostpropertyproject.ui.activity.LandActivity;
+import com.example.habin.lostpropertyproject.ui.activity.Land.LandActivity;
 import com.example.habin.lostpropertyproject.ui.activity.mine.RecordListActivity;
 import com.example.habin.lostpropertyproject.ui.activity.mine.SettingActivity;
 import com.example.habin.lostpropertyproject.ui.activity.mine.UserInfoActivity;
@@ -40,7 +40,6 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
         return new MinePageFragment();
     }
 
-    private PersonInfoEmtity.ResultBean mPersonInfo;
 
     @Override
     protected int getLayoutId() {
@@ -50,7 +49,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        mPersonInfo = MyApplication.getUserInfo(mContext);
+        PersonInfoEmtity.ResultBean mPersonInfo = MyApplication.getUserInfo(mContext);
         if (mPersonInfo!=null){
             mTvName.setText(mPersonInfo.getName());
         }
@@ -96,10 +95,19 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
                 SettingActivity.StartAct(mContext);
                 break;
             case R.id.ll_about:
+//                String  username = SharedPreferenceHandler.getUserName(mContext);
+//                SnackbarUtils.show(mActivity,username);
                 LandActivity.StartAct(mContext);
                 break;
         }
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        PersonInfoEmtity.ResultBean personInfo = MyApplication.getUserInfo(mContext);
+        if (personInfo!=null){
+            mTvName.setText(personInfo.getName());
+        }
+    }
 }

@@ -6,6 +6,24 @@
     android:orientation="vertical">
     <LinearLayout
         android:layout_marginTop="10dp"
+        android:id="@+id/ll_edit_pass"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="修改帐号密码"
+            android:textColor="@color/grey_515151"
+            android:textSize="16sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="10dp"
         android:id="@+id/ll_clear_data"
         android:layout_width="match_parent"
         android:layout_height="50dp"

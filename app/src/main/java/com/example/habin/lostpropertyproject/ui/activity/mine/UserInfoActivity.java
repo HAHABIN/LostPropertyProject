@@ -37,6 +37,10 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class UserInfoActivity extends BaseActivity {
 
+    public static void StartAct(Context context) {
+        context.startActivity(new Intent(context, UserInfoActivity.class));
+    }
+
     @BindView(R.id.tv_nickname)
     TextView mTvNickname;
     @BindView(R.id.tv_userid)
@@ -56,9 +60,7 @@ public class UserInfoActivity extends BaseActivity {
     private Disposable mSubscribe;
     private SelectorDialogUtils mPictureSelector;
     private PersonInfoEmtity.ResultBean mUserInfo;
-    public static void StartAct(Context context) {
-        context.startActivity(new Intent(context, UserInfoActivity.class));
-    }
+
 
     @Override
     protected int getLayoutId() {
@@ -80,16 +82,17 @@ public class UserInfoActivity extends BaseActivity {
         mPictureSelector = new SelectorDialogUtils(mActivity);
         setInfo();
     }
-    private void setInfo(){
+
+    private void setInfo() {
         mUserInfo = MyApplication.getUserInfo(mContext);
         mTvNickname.setText(mUserInfo.getName());
-        mTvEmail.setText(mUserInfo.getEmail()!=null?mUserInfo.getEmail():"未设置");
-        mTvGender.setText(mUserInfo.getGender()!=null?mUserInfo.getGender():"未设置");
+        mTvEmail.setText(mUserInfo.getEmail() != null ? mUserInfo.getEmail() : "未设置");
+        mTvGender.setText(mUserInfo.getGender() != null ? mUserInfo.getGender() : "未设置");
         mTvHelptimes.setText(String.valueOf(mUserInfo.getHelpTimes()));
         mTvUserid.setText(String.valueOf(mUserInfo.getUserId()));
     }
 
-    @OnClick({R.id.ll_avatar,R.id.ll_nickname, R.id.ll_gender, R.id.ll_area, R.id.ll_email})
+    @OnClick({R.id.ll_avatar, R.id.ll_nickname, R.id.ll_gender, R.id.ll_area, R.id.ll_email})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_avatar:
@@ -97,21 +100,18 @@ public class UserInfoActivity extends BaseActivity {
                 new SelectorDialogUtils(mActivity).openForHeaderInActivity();
                 break;
             case R.id.ll_nickname:
-                EditNicknameActivity.StartAct(mContext);
+                EditNicknameActivity.StartAct(mActivity);
                 break;
             case R.id.ll_gender:
-                EditGenderActivity.StartAct(mContext);
+                EditGenderActivity.StartAct(mActivity);
                 break;
             case R.id.ll_area:
                 break;
             case R.id.ll_email:
+                EditEmailActivity.StartAct(mActivity);
                 break;
         }
     }
-
-
-
-
 
 
     private void uploadPhoto() {
@@ -121,7 +121,7 @@ public class UserInfoActivity extends BaseActivity {
                 return StringUtils.encodeBase64Photo(imagePath);
             } catch (Exception e) {
                 e.printStackTrace();
-                SnackbarUtils.show(mContext,"图片出错");
+                SnackbarUtils.show(mContext, "图片出错");
             }
             return "";
         }).subscribeOn(Schedulers.io())
@@ -142,20 +142,31 @@ public class UserInfoActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == PictureConfig.CHOOSE_REQUEST) {// 图片选择结果回调
-                List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
-                if (selectList.size() > 0) {
-                    LocalMedia localMedia = selectList.get(0);
-                    mCompressPath = localMedia.getCompressPath();
-                    mTvEmail.setText(mCompressPath!=null?mCompressPath:"未设置");
-//                    updatePhoto();上传
-                }
-            }
 
+        switch (requestCode) {
+            case PictureConfig.CHOOSE_REQUEST: // 图片选择结果回调
+                if (resultCode == RESULT_OK) {
+
+                    List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
+                    if (selectList.size() > 0) {
+                        LocalMedia localMedia = selectList.get(0);
+                        mCompressPath = localMedia.getCompressPath();
+                        mTvEmail.setText(mCompressPath != null ? mCompressPath : "未设置");
+//                    updatePhoto();上传
+                    }
+                }
+                break;
+            case 1000://用户名
+                mUserInfo = MyApplication.getUserInfo(mContext);
+                mTvNickname.setText(mUserInfo.getName());
+                mTvEmail.setText(mUserInfo.getEmail() != null ? mUserInfo.getEmail() : "未设置");
+                mTvGender.setText(mUserInfo.getGender() != null ? mUserInfo.getGender() : "未设置");
+                mTvHelptimes.setText(String.valueOf(mUserInfo.getHelpTimes()));
+                mTvUserid.setText(String.valueOf(mUserInfo.getUserId()));
+                break;
+            case 1001:
         }
     }
-
 
 }
 

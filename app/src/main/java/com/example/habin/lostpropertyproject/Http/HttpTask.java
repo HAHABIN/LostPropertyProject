@@ -65,6 +65,7 @@ public class HttpTask {
         this.params = params;
         if (params == null) params = new HashMap<>();
         try {
+
             callBack = mApiServer.postJSON(HttpHelper.getMethod(type), params);
             callBack.subscribeOn(Schedulers.io())
                     .unsubscribeOn(Schedulers.io())
