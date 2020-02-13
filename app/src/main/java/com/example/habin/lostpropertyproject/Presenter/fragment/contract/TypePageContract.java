@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.Presenter.contract;
+package com.example.habin.lostpropertyproject.Presenter.fragment.contract;
 
 import com.example.habin.lostpropertyproject.Base.BaseContract;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
@@ -6,8 +6,10 @@ import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 /**
  * created by habin
  * on 2019/12/30
- * 首页碎片Presenter逻辑接口 */
-public interface HomePageContract {
+ * Email 739115041@qq.com
+ * 分类碎片逻辑接口
+ */
+public interface TypePageContract {
 
     interface View extends BaseContract.BaseView{
         //
@@ -15,12 +17,11 @@ public interface HomePageContract {
         void Fail(String errMsg);
     }
 
-    interface Presenter extends BaseContract.BasePresenter<HomePageContract.View>{
+    interface Presenter extends BaseContract.BasePresenter<TypePageContract.View>{
         /**
          * 获取数据
          */
         void getData(String username, String password);
 
     }
-
 }

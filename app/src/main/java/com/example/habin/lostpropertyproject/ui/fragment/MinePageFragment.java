@@ -1,26 +1,18 @@
 package com.example.habin.lostpropertyproject.ui.fragment;
 
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.request.target.ViewTarget;
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
-import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.MyApplication;
-import com.example.habin.lostpropertyproject.Presenter.MineTpyePresenter;
-import com.example.habin.lostpropertyproject.Presenter.contract.MinePageContract;
+import com.example.habin.lostpropertyproject.Presenter.fragment.MineTpyePresenter;
+import com.example.habin.lostpropertyproject.Presenter.fragment.contract.MinePageContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.ui.activity.Land.LandActivity;
@@ -29,10 +21,10 @@ import com.example.habin.lostpropertyproject.ui.activity.mine.SettingActivity;
 import com.example.habin.lostpropertyproject.ui.activity.mine.UserInfoActivity;
 import com.example.habin.lostpropertyproject.view.CircleImageView;
 
+import org.json.JSONObject;
+
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.Unbinder;
 
 /**
  * created by habin
@@ -80,6 +72,11 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
 
     @Override
     public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
+
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
 
     }
 

@@ -15,14 +15,16 @@ import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
-import com.example.habin.lostpropertyproject.Presenter.LandPresenter;
-import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.land.LandPresenter;
+import com.example.habin.lostpropertyproject.Presenter.activity.land.contract.LandContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.ui.activity.MainActivity;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -185,6 +187,11 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
                 break;
 
         }
+
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject JSONObject) {
 
     }
 

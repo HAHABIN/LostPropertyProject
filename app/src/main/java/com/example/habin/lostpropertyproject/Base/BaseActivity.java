@@ -73,7 +73,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             //获得布局
             int contentViewId = getLayoutId();
             //设置基类布局
-            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams lp
+                    = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
             //表示 RelativeLayout 中的相应节点放置在一个 id 值为 ll_basetitle 的兄弟节点的下面。
             lp.addRule(RelativeLayout.BELOW, R.id.ll_basetitle);

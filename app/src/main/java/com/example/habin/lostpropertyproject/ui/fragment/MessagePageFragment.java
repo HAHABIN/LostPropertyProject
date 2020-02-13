@@ -8,10 +8,12 @@ import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
-import com.example.habin.lostpropertyproject.Presenter.MessagePagePresenter;
-import com.example.habin.lostpropertyproject.Presenter.contract.MessagePageContract;
+import com.example.habin.lostpropertyproject.Presenter.fragment.MessagePagePresenter;
+import com.example.habin.lostpropertyproject.Presenter.fragment.contract.MessagePageContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 
@@ -45,6 +47,11 @@ public class MessagePageFragment  extends BaseMVPFragment<MessagePageContract.Pr
 
     @Override
     public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
+
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
 
     }
 

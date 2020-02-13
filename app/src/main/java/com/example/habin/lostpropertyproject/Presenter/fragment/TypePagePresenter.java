@@ -1,7 +1,7 @@
-package com.example.habin.lostpropertyproject.Presenter;
+package com.example.habin.lostpropertyproject.Presenter.fragment;
 
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
-import com.example.habin.lostpropertyproject.Presenter.contract.TypePageContract;
+import com.example.habin.lostpropertyproject.Presenter.fragment.contract.TypePageContract;
 
 /**
  * created by habin

@@ -1,13 +1,12 @@
-package com.example.habin.lostpropertyproject.Presenter;
+package com.example.habin.lostpropertyproject.Presenter.activity.land;
 
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
-import com.example.habin.lostpropertyproject.Presenter.contract.LandContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.land.contract.LandContract;
 
 
 import java.util.HashMap;

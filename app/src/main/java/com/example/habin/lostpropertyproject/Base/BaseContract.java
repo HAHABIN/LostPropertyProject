@@ -23,6 +23,7 @@ public interface BaseContract {
 
     interface BaseView {
         void onSuccess(HttpHelper.TaskType type, HttpItem item);
+        void onSuccess(HttpHelper.TaskType type,JSONObject object);
         void onFailure(HttpHelper.TaskType type,ApiError e);
     }
 }

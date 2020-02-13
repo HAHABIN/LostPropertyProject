@@ -24,7 +24,6 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class EditEmailActivity extends BaseActivity implements TaskListener {
 
@@ -59,8 +58,8 @@ public class EditEmailActivity extends BaseActivity implements TaskListener {
         setRightOnClick().setOnClickListener(v -> {
             email = mEdEmail.getText().toString().trim();
             if (!StringUtils.checkEmail(email)) {
-                ToastUtils.show_s("请输入正确的邮箱格式");
-                return;
+                    ToastUtils.show_s("请输入正确的邮箱格式");
+                    return;
             }
             if (email.isEmpty()) {
                 ToastUtils.show_s("邮箱不能为空");

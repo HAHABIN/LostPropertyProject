@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.Presenter.contract;
+package com.example.habin.lostpropertyproject.Presenter.fragment.contract;
 
 import com.example.habin.lostpropertyproject.Base.BaseContract;
 
