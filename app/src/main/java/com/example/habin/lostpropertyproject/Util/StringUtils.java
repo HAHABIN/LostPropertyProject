@@ -1,6 +1,7 @@
 package com.example.habin.lostpropertyproject.Util;
 
 import android.graphics.Bitmap;
+import android.util.Base64;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Random;
@@ -26,7 +27,7 @@ public class StringUtils {
         byte[] buffer = stream.toByteArray();
         stream.close();
         photo.recycle();
-        return android.util.Base64.encodeToString(buffer, android.util.Base64.DEFAULT);
+        return android.util.Base64.encodeToString(buffer, Base64.DEFAULT);
     }
 
     /**

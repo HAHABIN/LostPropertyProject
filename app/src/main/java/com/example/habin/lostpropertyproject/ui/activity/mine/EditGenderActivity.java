@@ -112,9 +112,6 @@ public class EditGenderActivity extends BaseActivity implements TaskListener {
             case UpdateInfo:
                 SharedPreferenceHandler.saveInfo(mContext,ismale,SharedPreferenceHandler.InfoType.Gender);
                 ToastUtils.show_s(item.getMessage());
-                Intent intent = new Intent();
-                intent.putExtra("data",ismale);
-                setResult(RESULT_OK,intent);
                 finish();
                 break;
         }

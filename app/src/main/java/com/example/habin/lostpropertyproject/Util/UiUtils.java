@@ -11,8 +11,13 @@ import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.MyApplication;
+import com.example.habin.lostpropertyproject.R;
 
 
 /**
@@ -123,5 +128,17 @@ public class UiUtils {
         }
         return false;
     }
+
+    public static void GildeLoad( View view,String imgStr){
+        RequestOptions options = new RequestOptions()
+                .placeholder(R.drawable.ic_placeholder)//图片加载出来前，显示的图片
+                .fallback( R.drawable.ic_placeholder) //url为空的时候,显示的图片
+                .error(R.drawable.ic_picfail);//图片加载失败后，显示的图片
+        Glide.with(view.getContext())
+                .load(Constants.BASE_URL+imgStr)
+                .apply(options)
+                .into((ImageView) view);
+    }
+
 }
 

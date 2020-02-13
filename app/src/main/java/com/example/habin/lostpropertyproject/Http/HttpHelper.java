@@ -35,7 +35,7 @@ public class HttpHelper {
                 method = "loadadmin/updatePasswordAuth";
                 break;
             case UploadPhoto:
-                method = "user/uploadPhoto";
+                method = "saveToImgByStr/uploadPhoto";
                 break;
 
         }

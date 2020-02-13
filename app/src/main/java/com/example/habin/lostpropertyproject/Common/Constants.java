@@ -1,5 +1,8 @@
 package com.example.habin.lostpropertyproject.Common;
 
+import com.bumptech.glide.request.RequestOptions;
+import com.example.habin.lostpropertyproject.R;
+
 /**
  * Create by HABIN on 2019/11/4
  * Time：22:29
@@ -19,6 +22,8 @@ public class Constants {
     public static final int PROIMG_REQUEST = 1000;
 //    public static final int NickName_REQUEST = 1000;
 //    public static final int NickName_REQUEST = 1000;
+
+
 }
 
 
