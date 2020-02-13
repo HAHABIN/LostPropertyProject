@@ -1,5 +1,7 @@
 
 
+失物招领Android端
+
 我简要搭建的MVP模式下常见的目录结构，其中：
 
 Disposable:订阅关系处理  
@@ -16,3 +18,5 @@ View：这个包下面主要存放一下跟UI相关的部分
  &emsp;adapter：适配器类  
 Utils：存放工具类  
 Widget：存放自定义的一些组件  
+后台服务端
+https://github.com/HAHABIN/LostFoundSSM/create/master
