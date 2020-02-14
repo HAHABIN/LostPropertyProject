@@ -2,10 +2,12 @@ package com.example.habin.lostpropertyproject.ui.activity.Land;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,15 +20,18 @@ import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.activity.land.LandPresenter;
 import com.example.habin.lostpropertyproject.Presenter.activity.land.contract.LandContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.CodeUtils;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
+import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.ui.activity.MainActivity;
 
 import org.json.JSONObject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -40,7 +45,6 @@ import butterknife.OnClick;
  * 主要负责Presenter，Model的初始化，以及UI的更新操作。
  */
 public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implements LandContract.View {
-
 
 
 
@@ -70,11 +74,18 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     LinearLayout llLoginPane;
     @BindView(R.id.tv_forget_pass)
     TextView mTvForgetPass;
+    @BindView(R.id.et_phoneCodes)
+    EditText mEtPhoneCodes;
+    @BindView(R.id.iv_code)
+    ImageView mIvCode;
 
     //是否是登陆操作
     private boolean isLogin = true;
     //保存登录名
     private String mUsername;
+    //验证码
+    private Bitmap bitmap;
+    private String code;
     @Override
     protected boolean showTitle() {
         return true;
@@ -91,9 +102,20 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
         setShowBack(View.VISIBLE);
         setBackOnClick().setOnClickListener(v -> finish());
         String username = SharedPreferenceHandler.getUserName(mContext);
-        if (username!=null){
+        if (username != null) {
             mEtUsername.setText(username);
         }
+        //初始化验证码图
+        setCode();
+    }
+
+    public void setCode(){
+        //获取工具类生成的图片验证码对象
+        bitmap = CodeUtils.getInstance().createBitmap();
+        //获取当前图片验证码的对应内容用于校验  并转化为小写
+        code = CodeUtils.getInstance().getCode().toLowerCase();
+        //获取需要展示图片验证码的ImageView
+        mIvCode.setImageBitmap(bitmap);
     }
 
     /**
@@ -102,6 +124,19 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     public void login() {
         mUsername = mEtUsername.getText().toString();
         String password = mEtPassword.getText().toString();
+        if (mUsername.isEmpty()||password.isEmpty()){
+            ToastUtils.show_s("帐号密码不能为空");
+            return;
+        }
+        //获取输入验证码 统一转化为小写
+        String inputcode = mEtPhoneCodes.getText().toString().trim().toLowerCase();
+        if (inputcode.length()==0){
+            ToastUtils.show_s(mContext,"验证码不能为空");
+        }
+        if (!inputcode.equals(code)){
+            ToastUtils.show_s(mContext,"验证码错误，请输入正确验证码");
+            return;
+        }
         ProgressUtils.show(this, "正在登陆...");
         mPresenter.login(mUsername, password);
 
@@ -128,8 +163,13 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
             Toast.makeText(mContext, "两次密码不一致", Toast.LENGTH_SHORT).show();
             return;
         }
+        String inputcode = mEtPhoneCodes.getText().toString().trim().toLowerCase();
+        if (!inputcode.equals(code)){
+            ToastUtils.show_s("验证码错误，请输入正确验证码");
+            return;
+        }
         ProgressUtils.show(this, "正在注册...");
-        mPresenter.signup(mUsername, password,email);
+        mPresenter.signup(mUsername, password, email);
     }
 
     /**
@@ -171,7 +211,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
         switch (type) {
             case Login:
             case Regin:
-                SharedPreferenceHandler.setUserName(mContext,mUsername);
+                SharedPreferenceHandler.setUserName(mContext, mUsername);
                 if (item instanceof PersonInfoEmtity) {
                     PersonInfoEmtity.ResultBean result = ((PersonInfoEmtity) item).getData();
                     try {
@@ -199,19 +239,19 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
+        //更新验证码
+        setCode();
         SnackbarUtils.show(mActivity, e.getMessage());
-//        Toast.makeText(mActivity, "失败,请稍后再登录" + e, Toast.LENGTH_SHORT).show();
 
     }
 
 
-    @OnClick({R.id.login_btn_login, R.id.login_tv_sign, R.id.tv_forget_pass})
+    @OnClick({R.id.login_btn_login, R.id.login_tv_sign, R.id.tv_forget_pass,R.id.iv_code})
     public void onViewClicked(View view) {
         //关闭键盘
         hideSoftKeyboardNoView(mActivity);
         switch (view.getId()) {
             case R.id.login_btn_login:
-
                 if (isLogin) {
                     login();  //登陆
                 } else {
@@ -222,7 +262,12 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
                 changeWindows();
                 break;
             case R.id.tv_forget_pass: //忘记密码
-                ForgetPassActivity.StartAct(mContext);
+//                ForgetPassActivity.StartAct(mContext);
+                ToastUtils.show_s("请联系管理员");
+                break;
+            case R.id.iv_code:
+                setCode();
+                Toast.makeText(this, code, Toast.LENGTH_SHORT).show();
                 break;
         }
     }

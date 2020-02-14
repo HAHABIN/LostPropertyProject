@@ -17,12 +17,12 @@
             android:layout_weight="1"
             android:background="@color/blue_386FFE" />
     </LinearLayout>
-
+<!--   -->
     <LinearLayout
         android:id="@+id/ll_login_pane"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_centerInParent="true"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:background="@drawable/round_corner_bg"
@@ -112,6 +112,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
 
+
         <LinearLayout
             android:id="@+id/login_ll_rpassword"
             android:layout_width="match_parent"
@@ -141,7 +142,42 @@
 
         </LinearLayout>
 
+        <LinearLayout
 
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="45dp"
+                android:layout_weight="1"
+                >
+
+                <EditText
+                    android:id="@+id/et_phoneCodes"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@null"
+                    android:textSize="16sp"
+                    android:singleLine="true"
+                    android:hint="请输入右侧验证码" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/iv_code"
+                android:layout_width="100dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginVertical="2dp"
+                />
+
+        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -158,15 +194,15 @@
                 android:textColor="@color/grey_515151"/>
             <Button
                 android:id="@+id/login_btn_login"
-                style="@style/Button.Default"
+                android:background="@drawable/select_btn_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
+                android:layout_marginVertical="5dp"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="20dp"
-                android:gravity="center"
-                android:padding="8dp"
-                android:text="登录" />
+                android:text="登录"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/login_tv_sign"

@@ -37,7 +37,7 @@
             android:layout_marginHorizontal="15dp"
             android:hint="输入忘记密码用户名"
             android:background="@null"
-            android:maxLines="1" />
+            android:singleLine="true" />
     </LinearLayout>
     <View
         android:layout_width="match_parent"
