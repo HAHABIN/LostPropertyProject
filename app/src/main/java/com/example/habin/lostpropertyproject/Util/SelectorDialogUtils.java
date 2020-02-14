@@ -22,23 +22,25 @@ import io.reactivex.functions.Consumer;
  * created by habin
  * on 2020/1/10
  * Email 739115041@qq.com
- * 图片选择
+ * 图片选择弹出框工具
  */
 public class SelectorDialogUtils {
 
 
     private  SelectDialog mDialog;
-    private Activity mActivity;
+    private static SelectorDialogUtils mSelectorUtils;
 
-    public SelectorDialogUtils(Activity mActivity) {
-        this.mActivity = mActivity;
+    public static SelectorDialogUtils getInstance() {
+        if (mSelectorUtils == null) {
+            mSelectorUtils = new SelectorDialogUtils();
+        }
+        return new SelectorDialogUtils();
     }
-
     /**
      * 头像选择,包括裁剪以及压缩
      */
-    public void openForHeaderInActivity() {
-        openDialogInActivity(1, null, true, true);
+    public void openForHeaderInActivity(Activity activity) {
+        openDialogInActivity(activity,1, null, true, true);
     }
 
     /**
@@ -47,8 +49,8 @@ public class SelectorDialogUtils {
      * @param crop         是否裁剪
      */
     @SuppressLint("CheckResult")
-    public  void openDialogInActivity(final int maxSelectNum, final List<LocalMedia> selectList, final boolean crop, final boolean isHeader) {
-        RxPermissions rxPermission = new RxPermissions(mActivity);
+    public  void openDialogInActivity(final Activity activity,final int maxSelectNum, final List<LocalMedia> selectList, final boolean crop, final boolean isHeader) {
+        RxPermissions rxPermission = new RxPermissions(activity);
         rxPermission.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Permission>() {
                     @Override
@@ -57,15 +59,15 @@ public class SelectorDialogUtils {
                             List<String> names = new ArrayList<>();
                             names.add("拍照");
                             names.add("相册");
-                            showDialog(new SelectDialog.SelectDialogListener() {
+                            showDialog(activity,new SelectDialog.SelectDialogListener() {
                                 @Override
                                 public void onItemClick(int position) {
                                     switch (position) {
                                         case 0: // 直接调起相机
-                                            takePhoto(maxSelectNum, selectList, crop, isHeader);
+                                            takePhoto(activity,maxSelectNum, selectList, crop, isHeader);
                                             break;
                                         case 1:
-                                            openAlbum(maxSelectNum, selectList, crop, isHeader);
+                                            openAlbum(activity,maxSelectNum, selectList, crop, isHeader);
                                             break;
                                         default:
                                             break;
@@ -75,7 +77,7 @@ public class SelectorDialogUtils {
                             }, names);
 
                         } else {
-                            Toast.makeText(mActivity, "拒绝", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(activity, "拒绝", Toast.LENGTH_SHORT).show();
                         }
 
                     }
@@ -85,8 +87,8 @@ public class SelectorDialogUtils {
 
 
     // 单独拍照
-    private void takePhoto(int maxSelectNum, List<LocalMedia> selectList, boolean crop, boolean isheader) {
-        PictureSelector.create(mActivity).openCamera(PictureMimeType.ofImage())// 单独拍照，也可录像或也可音频 看你传入的类型是图片or视频
+    private void takePhoto(Activity activity, int maxSelectNum, List<LocalMedia> selectList, boolean crop, boolean isheader) {
+        PictureSelector.create(activity).openCamera(PictureMimeType.ofImage())// 单独拍照，也可录像或也可音频 看你传入的类型是图片or视频
                 .maxSelectNum(maxSelectNum)// 最大图片选择数量
                 .selectionMedia(selectList)// 是否传入已选图片
                 .enableCrop(crop)
@@ -100,8 +102,8 @@ public class SelectorDialogUtils {
     }
 
     // 进入相册 以下是例子：不需要的api可以不写
-    public void openAlbum(int maxSelectNum, List<LocalMedia> selectList, boolean crop, boolean isheader) {
-        PictureSelector.create(mActivity).openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
+    private void openAlbum(Activity activity, int maxSelectNum, List<LocalMedia> selectList, boolean crop, boolean isheader) {
+        PictureSelector.create(activity).openGallery(PictureMimeType.ofImage())// 全部.PictureMimeType.ofAll()、图片.ofImage()、视频.ofVideo()、音频.ofAudio()
                 .maxSelectNum(maxSelectNum)// 最大图片选择数量
                 .selectionMedia(selectList)// 是否传入已选图片
                 .enableCrop(crop)
@@ -115,13 +117,12 @@ public class SelectorDialogUtils {
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
-    public SelectDialog showDialog(SelectDialog.SelectDialogListener listener, List<String> names) {
+    public void showDialog(Activity activity,SelectDialog.SelectDialogListener listener, List<String> names) {
         if (mDialog == null) {
-            mDialog = new SelectDialog(mActivity, listener, names);
+            mDialog = new SelectDialog(activity, listener, names);
         }
-        if (!mActivity.isFinishing()) {
+        if (!activity.isFinishing()) {
             mDialog.show();
         }
-        return mDialog;
     }
 }

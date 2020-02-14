@@ -133,21 +133,20 @@ public class ReleaseActivity extends BaseActivity  {
         @SuppressLint("CheckResult")
         @Override
         public void onAddPicClick() {
-            new SelectorDialogUtils(mActivity).openDialogInActivity(maxSelectNum, mSelectList,true,false);
+            SelectorDialogUtils.getInstance().openDialogInActivity(mActivity,maxSelectNum, mSelectList,true,false);
 
         }
     };
 
     //弹窗列表
     public void showList(List<String> mlist){
-        new SelectorDialogUtils(mActivity).showDialog(new SelectDialog.SelectDialogListener() {
+         SelectorDialogUtils.getInstance().showDialog(mActivity,new SelectDialog.SelectDialogListener() {
             @Override
             public void onItemClick(int position) {
 
             }
         }, mlist);
     }
-
 
 
     //顶部设置

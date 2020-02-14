@@ -181,7 +181,6 @@ public class PublishDialog extends Dialog {
         } else {
             return super.onKeyDown(keyCode, event);
         }
-
     }
 //这三个方法设置了三个控件的点击事件并返回一个PublishDialog 这里需要一个OnClickListener的参数
 

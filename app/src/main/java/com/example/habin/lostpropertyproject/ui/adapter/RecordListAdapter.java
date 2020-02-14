@@ -48,6 +48,10 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        //如果是全部订单
+        if (mType==4){
+
+        }
         viewHolder.mIvResult.setBackgroundResource(ResultPic[mType]);
         viewHolder.itemView.setOnClickListener(v -> {
             if (mOnitemClick!=null){

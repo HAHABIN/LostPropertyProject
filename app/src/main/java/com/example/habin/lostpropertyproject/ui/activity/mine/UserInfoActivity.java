@@ -70,7 +70,6 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
 
     private String mCompressPath;
     private Disposable mSubscribe;
-    private SelectorDialogUtils mPictureSelector;
     private PersonInfoEmtity.ResultBean mUserInfo;
 
 
@@ -91,7 +90,6 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
         setTitleText("个人信息");
         setShowBack(View.VISIBLE);
         setBackOnClick().setOnClickListener(v -> finish());
-        mPictureSelector = new SelectorDialogUtils(mActivity);
         setInfo();
     }
     /**
@@ -112,7 +110,7 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
         switch (view.getId()) {
             case R.id.ll_avatar:
 //                showPop();
-                new SelectorDialogUtils(mActivity).openForHeaderInActivity();
+                 SelectorDialogUtils.getInstance().openForHeaderInActivity(mActivity);
                 break;
             case R.id.ll_nickname:
                 EditNicknameActivity.StartAct(mActivity);

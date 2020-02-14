@@ -133,7 +133,7 @@
                     android:textSize="14sp" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/ll_record_cancal"
+                android:id="@+id/ll_record_mine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
@@ -144,13 +144,13 @@
                 <ImageView
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:src="@mipmap/ic_record_cancal" />
+                    android:src="@mipmap/ic_record_mine" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:text="@string/record_cancal"
+                    android:text="@string/record_mine"
                     android:textColor="@color/grey_515151"
                     android:textSize="14sp" />
             </LinearLayout>

@@ -86,7 +86,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     }
 
 
-    @OnClick({R.id.rl_top, R.id.ll_record_lost, R.id.ll_record_cancal, R.id.ll_record_find, R.id.ll_record_complete, R.id.ll_setting, R.id.ll_about})
+    @OnClick({R.id.rl_top, R.id.ll_record_lost, R.id.ll_record_mine, R.id.ll_record_find, R.id.ll_record_complete, R.id.ll_setting, R.id.ll_about})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_top:
@@ -101,7 +101,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
             case R.id.ll_record_complete:
                 RecordListActivity.StartAct(mContext, "2");
                 break;
-            case R.id.ll_record_cancal:
+            case R.id.ll_record_mine:
                 RecordListActivity.StartAct(mContext, "3");
                 break;
             case R.id.ll_setting:

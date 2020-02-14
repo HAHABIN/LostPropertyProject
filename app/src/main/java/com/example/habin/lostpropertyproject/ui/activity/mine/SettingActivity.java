@@ -11,7 +11,7 @@ import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.ui.activity.Land.EditPasswordActivity;
 import com.example.habin.lostpropertyproject.ui.activity.MainActivity;
-import com.example.habin.lostpropertyproject.view.AlertDialogView;
+import com.example.habin.lostpropertyproject.Widget.AlertDialogView;
 
 import butterknife.OnClick;
 

@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.view;
+package com.example.habin.lostpropertyproject.Widget;
 
 import android.app.Dialog;
 import android.content.Context;

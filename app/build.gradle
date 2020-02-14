@@ -61,4 +61,7 @@ dependencies {
 
     /*PictureSelector*/
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
+
+    //PickerView 选择弹出
+    implementation 'com.contrarywind:Android-PickerView:3.2.5'
 }
