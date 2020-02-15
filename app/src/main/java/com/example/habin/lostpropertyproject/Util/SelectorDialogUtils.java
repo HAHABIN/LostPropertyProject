@@ -3,9 +3,14 @@ package com.example.habin.lostpropertyproject.Util;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bigkoo.pickerview.OptionsPickerView;
 import com.example.habin.lostpropertyproject.Widget.SelectDialog;
+import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -27,7 +32,7 @@ import io.reactivex.functions.Consumer;
 public class SelectorDialogUtils {
 
 
-    private  SelectDialog mDialog;
+    private SelectDialog mDialog;
     private static SelectorDialogUtils mSelectorUtils;
 
     public static SelectorDialogUtils getInstance() {
@@ -36,11 +41,12 @@ public class SelectorDialogUtils {
         }
         return new SelectorDialogUtils();
     }
+
     /**
      * 头像选择,包括裁剪以及压缩
      */
     public void openForHeaderInActivity(Activity activity) {
-        openDialogInActivity(activity,1, null, true, true);
+        openDialogInActivity(activity, 1, null, true, true);
     }
 
     /**
@@ -49,7 +55,7 @@ public class SelectorDialogUtils {
      * @param crop         是否裁剪
      */
     @SuppressLint("CheckResult")
-    public  void openDialogInActivity(final Activity activity,final int maxSelectNum, final List<LocalMedia> selectList, final boolean crop, final boolean isHeader) {
+    public void openDialogInActivity(final Activity activity, final int maxSelectNum, final List<LocalMedia> selectList, final boolean crop, final boolean isHeader) {
         RxPermissions rxPermission = new RxPermissions(activity);
         rxPermission.requestEach(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(new Consumer<Permission>() {
@@ -59,15 +65,15 @@ public class SelectorDialogUtils {
                             List<String> names = new ArrayList<>();
                             names.add("拍照");
                             names.add("相册");
-                            showDialog(activity,new SelectDialog.SelectDialogListener() {
+                            showDialog(activity, new SelectDialog.SelectDialogListener() {
                                 @Override
                                 public void onItemClick(int position) {
                                     switch (position) {
                                         case 0: // 直接调起相机
-                                            takePhoto(activity,maxSelectNum, selectList, crop, isHeader);
+                                            takePhoto(activity, maxSelectNum, selectList, crop, isHeader);
                                             break;
                                         case 1:
-                                            openAlbum(activity,maxSelectNum, selectList, crop, isHeader);
+                                            openAlbum(activity, maxSelectNum, selectList, crop, isHeader);
                                             break;
                                         default:
                                             break;
@@ -117,12 +123,65 @@ public class SelectorDialogUtils {
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 
-    public void showDialog(Activity activity,SelectDialog.SelectDialogListener listener, List<String> names) {
+    public void showDialog(Activity activity, SelectDialog.SelectDialogListener listener, List<String> names) {
         if (mDialog == null) {
             mDialog = new SelectDialog(activity, listener, names);
         }
         if (!activity.isFinishing()) {
             mDialog.show();
         }
+    }
+
+    // 弹出条件选择器
+    public void ShowBankName_T(Activity activity, final ArrayList<String> dList, final SwipeRecyclerView mSwipeView,final TextView view) {
+        OptionsPickerView pvOptions = new OptionsPickerView.Builder(activity, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+
+                if (dList != null && !dList.isEmpty()) {
+                    String strBankName = dList.get(options1);
+                    view.setText(strBankName);
+            //        mSwipeView.setRefreshing(true);
+                }
+
+            }
+        })
+                .setDividerColor(Color.BLACK)
+                .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+                .setContentTextSize(20)//设置文字大小
+                .setSubmitColor(Color.parseColor("#386FFE"))//确定按钮文字颜色
+                .setCancelColor(Color.parseColor("#386FFE"))//取消按钮文字颜色
+                .setOutSideCancelable(false)// default is true
+                .build();
+
+        pvOptions.setPicker(dList);//条件选择器
+
+        pvOptions.show();
+    }
+    // 弹出条件选择器
+    public void ShowBankName(Activity activity, final ArrayList<String> dList, final TextView view) {
+        OptionsPickerView pvOptions = new OptionsPickerView.Builder(activity, new OptionsPickerView.OnOptionsSelectListener() {
+            @Override
+            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+
+                if (dList != null && !dList.isEmpty()) {
+                    String strBankName = dList.get(options1);
+                    view.setText(strBankName);
+                    //        mSwipeView.setRefreshing(true);
+                }
+
+            }
+        })
+                .setDividerColor(Color.BLACK)
+                .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+                .setContentTextSize(20)//设置文字大小
+                .setSubmitColor(Color.parseColor("#386FFE"))//确定按钮文字颜色
+                .setCancelColor(Color.parseColor("#386FFE"))//取消按钮文字颜色
+                .setOutSideCancelable(false)// default is true
+                .build();
+
+        pvOptions.setPicker(dList);//条件选择器
+
+        pvOptions.show();
     }
 }

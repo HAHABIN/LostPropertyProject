@@ -25,7 +25,6 @@ import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.ui.adapter.GridImageAdapter;
-import com.example.habin.lostpropertyproject.Widget.SelectDialog;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -35,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -47,7 +47,9 @@ import io.reactivex.schedulers.Schedulers;
  * Email 739115041@qq.com
  * 发布模块
  */
-public class ReleaseActivity extends BaseActivity  {
+public class ReleaseActivity extends BaseActivity {
+
+
 
     public static void StartAct(Context context, String type) {
         Intent intent = new Intent(context, ReleaseActivity.class);
@@ -63,19 +65,23 @@ public class ReleaseActivity extends BaseActivity  {
     LinearLayout mLlTime;
     @BindView(R.id.ll_type)
     LinearLayout mLlType;
-
+    @BindView(R.id.tv_address)
+    TextView mTvAddress;
+    @BindView(R.id.tv_time)
+    TextView mTvTime;
+    @BindView(R.id.tv_type)
+    TextView mTvType;
 
     private int maxSelectNum = 3;
-    private List<LocalMedia>  mSelectList = new ArrayList<>();
+    private List<LocalMedia> mSelectList = new ArrayList<>();
     private GridImageAdapter adapter;
     private PopupWindow pop;
     private Disposable mSubscribe;
     private int mIndex = 0;
 
-    List<String> mAddressList;
+    ArrayList<String> mAddressList;
 
 
-    
     @Override
     protected int getLayoutId() {
         return R.layout.activity_release;
@@ -92,8 +98,8 @@ public class ReleaseActivity extends BaseActivity  {
         setTitle();
 
         mAddressList = new ArrayList<>();
-        for (int i = 0; i<10;i++){
-            mAddressList.add("地址"+i);
+        for (int i = 0; i < 10; i++) {
+            mAddressList.add("地址" + i);
         }
 
     }
@@ -104,22 +110,22 @@ public class ReleaseActivity extends BaseActivity  {
         FullyGridLayoutManager manager = new FullyGridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         mRlImage.setLayoutManager(manager);
         adapter = new GridImageAdapter(this, onAddPicClickListener);
-        adapter.setList( mSelectList);
+        adapter.setList(mSelectList);
         adapter.setSelectMax(maxSelectNum);
         mRlImage.setAdapter(adapter);
         mRlImage.setLayoutManager(new GridLayoutManager(mContext, 4, LinearLayoutManager.VERTICAL, false));
         adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
-                if ( mSelectList.size() > 0) {
-                    LocalMedia media =  mSelectList.get(position);
+                if (mSelectList.size() > 0) {
+                    LocalMedia media = mSelectList.get(position);
                     String pictureType = media.getPictureType();
                     int mediaType = PictureMimeType.pictureToVideo(pictureType);
                     switch (mediaType) {
                         case 1:
                             // 预览图片 可自定长按保存路径
                             //PictureSelector.create(MainActivity.this).externalPicturePreview(position, "/custom_file",  mSelectList);
-                            PictureSelector.create(mActivity).externalPicturePreview(position,  mSelectList);
+                            PictureSelector.create(mActivity).externalPicturePreview(position, mSelectList);
                             break;
 
                     }
@@ -133,19 +139,14 @@ public class ReleaseActivity extends BaseActivity  {
         @SuppressLint("CheckResult")
         @Override
         public void onAddPicClick() {
-            SelectorDialogUtils.getInstance().openDialogInActivity(mActivity,maxSelectNum, mSelectList,true,false);
+            SelectorDialogUtils.getInstance().openDialogInActivity(mActivity, maxSelectNum, mSelectList, true, false);
 
         }
     };
 
     //弹窗列表
-    public void showList(List<String> mlist){
-         SelectorDialogUtils.getInstance().showDialog(mActivity,new SelectDialog.SelectDialogListener() {
-            @Override
-            public void onItemClick(int position) {
-
-            }
-        }, mlist);
+    public void showList(ArrayList<String> mlist,TextView view) {
+        SelectorDialogUtils.getInstance().ShowBankName(mActivity, mlist,view);
     }
 
 
@@ -176,13 +177,13 @@ public class ReleaseActivity extends BaseActivity  {
             case R.id.rl_image:
                 break;
             case R.id.ll_address:
-                showList(mAddressList);
+                showList(mAddressList,mTvAddress);
                 break;
             case R.id.ll_time:
-                showList(mAddressList);
+                showList(mAddressList,mTvTime);
                 break;
             case R.id.ll_type:
-                showList(mAddressList);
+                showList(mAddressList,mTvType);
                 break;
         }
     }
@@ -258,12 +259,13 @@ public class ReleaseActivity extends BaseActivity  {
     }
 
     private void uploadPhoto() {
-        mSubscribe = Observable.fromArray( mSelectList.get(mIndex).getCompressPath()).map(imagePath -> {
+
+        mSubscribe = Observable.fromArray(mSelectList.get(mIndex).getCompressPath()).map(imagePath -> {
             try {
                 return StringUtils.encodeBase64Photo(imagePath);
             } catch (Exception e) {
                 e.printStackTrace();
-                SnackbarUtils.show(mContext,"图片出错");
+                SnackbarUtils.show(mContext, "图片出错");
             }
             return "";
         }).subscribeOn(Schedulers.io())
@@ -289,7 +291,7 @@ public class ReleaseActivity extends BaseActivity  {
             if (requestCode == PictureConfig.CHOOSE_REQUEST) {// 图片选择结果回调
 
                 images = PictureSelector.obtainMultipleResult(data);
-                 mSelectList.addAll(images);
+                mSelectList.addAll(images);
 
                 // mSelectList = PictureSelector.obtainMultipleResult(data);
 
@@ -298,7 +300,7 @@ public class ReleaseActivity extends BaseActivity  {
                 // 2.media.getCutPath();为裁剪后path，需判断media.isCut();是否为true
                 // 3.media.getCompressPath();为压缩后path，需判断media.isCompressed();是否为true
                 // 如果裁剪并压缩了，以取压缩路径为准，因为是先裁剪后压缩的
-                adapter.setList( mSelectList);
+                adapter.setList(mSelectList);
                 adapter.notifyDataSetChanged();
             }
 

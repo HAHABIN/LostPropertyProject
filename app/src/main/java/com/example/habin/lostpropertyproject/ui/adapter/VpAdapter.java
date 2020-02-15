@@ -1,9 +1,11 @@
 package com.example.habin.lostpropertyproject.ui.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
 import java.util.List;
 /**
@@ -25,6 +27,12 @@ public class VpAdapter extends FragmentStatePagerAdapter {
         this.mTitleList = mTitleList;
     }
 
+//    @NonNull
+//    @Override
+//    public Object instantiateItem(@NonNull ViewGroup container, int position) {
+//        return mFragmentList.get(position);
+//    }
+
     @Override
     public Fragment getItem(int position) {
         return mFragmentList.get(position);
@@ -35,6 +43,9 @@ public class VpAdapter extends FragmentStatePagerAdapter {
         return mFragmentList==null ? 0:mFragmentList.size();
     }
 
+    public Fragment getFragment(int position) {
+        return mFragmentList.get(position);
+    }
     @Nullable
     @Override
     public CharSequence getPageTitle(int position) {

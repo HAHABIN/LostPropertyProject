@@ -15,6 +15,8 @@ import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.fragment.HomePagePresenter;
 import com.example.habin.lostpropertyproject.Presenter.fragment.contract.HomePageContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
+import com.example.habin.lostpropertyproject.Widget.SelectDialog;
 import com.example.habin.lostpropertyproject.ui.activity.home.SearchActivity;
 import com.example.habin.lostpropertyproject.ui.adapter.VpAdapter;
 import com.example.habin.lostpropertyproject.view.NoScrollViewPager;
@@ -35,12 +37,6 @@ import butterknife.OnClick;
 public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter> implements HomePageContract.View {
 
 
-    @BindView(R.id.iv_back)
-    ImageView ivBack;
-    @BindView(R.id.vp_content)
-    NoScrollViewPager mVpContent;
-
-
 
 
     public static HomePageFragment newInstance() {
@@ -48,6 +44,10 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     }
 
 
+    @BindView(R.id.tv_address)
+    TextView mTvAddress;
+    @BindView(R.id.vp_content)
+    NoScrollViewPager mVpContent;
     @BindView(R.id.tv_lost)
     TextView mTvLost;
     @BindView(R.id.tv_find)
@@ -55,7 +55,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
 
     public boolean isLostFind = true;
     private List<Fragment> mFragmentList;
-
+    private VpAdapter mVpAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -70,7 +70,8 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
         mFragmentList = new ArrayList<>();
         mFragmentList.add(ToClaimListFragment.newInstance(0));//丢丢 type 0
         mFragmentList.add(ToClaimListFragment.newInstance(1));//拾拾 type 1
-        mVpContent.setAdapter(new VpAdapter(getFragmentManager(), mFragmentList));
+        mVpAdapter = new VpAdapter(getFragmentManager(), mFragmentList);
+        mVpContent.setAdapter(mVpAdapter);
         //设置禁止左右滑动
         mVpContent.setNoScroll(true);
         //预加载
@@ -90,10 +91,19 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     }
 
 
-    @OnClick({R.id.iv_back, R.id.tv_lost, R.id.tv_find,R.id.iv_search})
+    @OnClick({R.id.tv_address, R.id.tv_lost, R.id.tv_find,R.id.iv_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.iv_back:
+            case R.id.tv_address:
+//                SelectorDialogUtils.getInstance().ShowBankName(mActivity,mTvAddress);
+                ToClaimListFragment fragment;
+                if (isLostFind){
+                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(0);
+                } else {
+                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(1);
+
+                }
+                fragment.updateDate(mTvAddress.getText().toString());
                 break;
             case R.id.tv_lost:
                 isLostFind = true;

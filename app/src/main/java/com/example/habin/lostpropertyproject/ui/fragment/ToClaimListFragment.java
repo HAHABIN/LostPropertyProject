@@ -1,10 +1,12 @@
 package com.example.habin.lostpropertyproject.ui.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.example.habin.lostpropertyproject.Base.BaseFragment;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.ui.activity.Land.LandActivity;
 import com.example.habin.lostpropertyproject.ui.activity.RecordDetailsActivity;
 import com.example.habin.lostpropertyproject.ui.adapter.ToClaimListAdapter;
@@ -28,6 +30,13 @@ public class ToClaimListFragment extends BaseFragment implements ToClaimListAdap
         fragment.setArguments(bundle);
         return fragment;
     }
+//    public static ToClaimListFragment newInstance(String address) {
+//        ToClaimListFragment fragment = new ToClaimListFragment();
+//        Bundle bundle = new Bundle();
+//        bundle.putString("address", address);
+//        fragment.setArguments(bundle);
+//        return fragment;
+//    }
 
 
 
@@ -35,6 +44,15 @@ public class ToClaimListFragment extends BaseFragment implements ToClaimListAdap
     SwipeRecyclerView mSw;
 //    ToClaimListAdapter mAdapter;
     private int mType; //0为丢丢 1为拾拾
+    private String mAddress;
+
+
+    public void updateDate(String address) {
+        mAddress = address;
+        ToastUtils.show_s("-------------"+mAddress+mType);
+    }
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_to_claim_list;
@@ -43,11 +61,14 @@ public class ToClaimListFragment extends BaseFragment implements ToClaimListAdap
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        Bundle bundle = this.getArguments();
-
-        mType = bundle.getInt("type");
+        Bundle arguments = this.getArguments();
+        if (arguments != null) {
+//            mAddress = arguments.getString("address", null);
+            mType = arguments.getInt("type",0);
+        }
         mSw.setAdapter(new ToClaimListAdapter(mContext,this,mType));
     }
+
 
     @Override
     public void onItemClick(int position) {
