@@ -2,10 +2,8 @@ package com.example.habin.lostpropertyproject.Bean.Local.City;
 
 import com.contrarywind.interfaces.IPickerViewData;
 
-import org.litepal.crud.LitePalSupport;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Create by HABIN on 2020/2/1614:02
@@ -13,7 +11,7 @@ import java.util.List;
  * 一级
  * 省级实体类
  */
-public class Province extends LitePalSupport implements IPickerViewData {
+public class Province  implements IPickerViewData {
 
     private int provinceId;
 

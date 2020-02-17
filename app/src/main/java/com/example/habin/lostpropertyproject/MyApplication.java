@@ -11,7 +11,6 @@ import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 
-import org.litepal.LitePal;
 
 import java.util.ArrayList;
 
@@ -36,7 +35,7 @@ public class MyApplication extends Application {
         application = this;
         context = getApplicationContext();
         //配置LitePal数据库
-        LitePal.initialize(this);
+//        LitePal.initialize(this);
         ToastUtils.init(this);
         //初始化省级列表
         initProvice();

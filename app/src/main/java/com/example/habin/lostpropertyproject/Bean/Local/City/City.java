@@ -2,8 +2,6 @@ package com.example.habin.lostpropertyproject.Bean.Local.City;
 
 import com.contrarywind.interfaces.IPickerViewData;
 
-import org.litepal.crud.LitePalSupport;
-import org.litepal.exceptions.DataSupportException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +11,9 @@ import java.util.List;
  * Email:739115041@qq.com
  * 二级
  * 市级实体类
+ * extends LitePalSupport //移除litepal数据库
  */
-public class City extends LitePalSupport implements IPickerViewData {
+public class City implements IPickerViewData {
 
 
     private int cityId;

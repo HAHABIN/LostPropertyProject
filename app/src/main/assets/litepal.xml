@@ -1,5 +1,5 @@
 <litepal>
-
+<!--        废除-->
     <dbname value="city_date" />
 
     <version value="1" />

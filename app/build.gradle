@@ -64,6 +64,6 @@ dependencies {
     //PickerView 选择弹出
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
-    //litepal本地数据库
-    implementation 'org.litepal.android:java:3.0.0'
+//    //litepal本地数据库
+//    implementation 'org.litepal.android:java:3.0.0'
 }

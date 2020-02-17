@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.Local.City.City;
 import com.example.habin.lostpropertyproject.Bean.Local.City.County;
@@ -20,16 +19,12 @@ import com.example.habin.lostpropertyproject.Presenter.fragment.contract.HomePag
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Ui.activity.home.SearchActivity;
 import com.example.habin.lostpropertyproject.Ui.adapter.VpAdapter;
-import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.view.NoScrollViewPager;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-import org.litepal.LitePal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,25 +130,14 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
         switch (view.getId()) {
             case R.id.ll_address:
                 SelectorDialogUtils.ShowCityNoCounty(mActivity,mTvAddress);
-//                //获取本地数据库省级数据
-//                mProvinceList = (ArrayList<Province>) LitePal.findAll(Province.class);
-//                //如果数据为空 则网络获取数据
-//                if (mProvinceList.size() > 0) {
-//                    ToastUtils.show_s(mContext, "已存在本地地址");
-//                } else {
-//                    //初始化选中地址内容
-//                    ProgressUtils.show(mContext, "地址------");
-//                    mPresenter.getProviceList();
-//                }
-//                SelectorDialogUtils.getInstance().ShowBankName(mActivity,mTvAddress);
-//                ToClaimListFragment fragment;
-//                if (isLostFind){
-//                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(0);
-//                } else {
-//                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(1);
-//
-//                }
-//                fragment.updateDate(mTvAddress.getText().toString());
+                ToClaimListFragment fragment;
+                if (isLostFind){
+                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(0);
+                } else {
+                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(1);
+
+                }
+                fragment.updateDate(mTvAddress.getText().toString());
                 break;
             case R.id.tv_lost:
                 isLostFind = true;
