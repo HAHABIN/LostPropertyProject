@@ -9,15 +9,13 @@ import com.example.habin.lostpropertyproject.Bean.BaseResponse;
  * Email 739115041@qq.com
  * 分类碎片逻辑接口
  */
-public interface TypePageContract {
+public interface TypePageContract extends BaseContract{
 
-    interface View extends BaseContract.BaseView{
-        //
-        void Sucess(BaseResponse baseResponse);
-        void Fail(String errMsg);
+    interface View extends BaseView{
+
     }
 
-    interface Presenter extends BaseContract.BasePresenter<TypePageContract.View>{
+    interface Presenter extends BasePresenter<View>{
         /**
          * 获取数据
          */

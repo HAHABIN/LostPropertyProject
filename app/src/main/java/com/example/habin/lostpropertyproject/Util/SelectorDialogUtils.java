@@ -8,7 +8,13 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.view.OptionsPickerView;
+import com.example.habin.lostpropertyproject.Bean.Local.City.City;
+import com.example.habin.lostpropertyproject.Bean.Local.City.County;
+import com.example.habin.lostpropertyproject.Bean.Local.City.Province;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Widget.SelectDialog;
 import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
 import com.luck.picture.lib.PictureSelector;
@@ -34,6 +40,10 @@ public class SelectorDialogUtils {
 
     private SelectDialog mDialog;
     private static SelectorDialogUtils mSelectorUtils;
+
+    private static ArrayList<Province> proviceList = MyApplication.getProviceList();
+    private static ArrayList<ArrayList<City>> cityList = MyApplication.getCityList();
+    private static ArrayList<ArrayList<ArrayList<County>>> countyList = MyApplication.getCountyList();
 
     public static SelectorDialogUtils getInstance() {
         if (mSelectorUtils == null) {
@@ -134,53 +144,129 @@ public class SelectorDialogUtils {
 
     // 弹出条件选择器
     public void ShowBankName_T(Activity activity, final ArrayList<String> dList, final SwipeRecyclerView mSwipeView,final TextView view) {
-        OptionsPickerView pvOptions = new OptionsPickerView.Builder(activity, new OptionsPickerView.OnOptionsSelectListener() {
+//        OptionsPickerView pvOptions = new OptionsPickerView.Builder(activity, new OptionsPickerView.OnOptionsSelectListener() {
+//            @Override
+//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
+//
+//                if (dList != null && !dList.isEmpty()) {
+//                    String strBankName = dList.get(options1);
+//                    view.setText(strBankName);
+//            //        mSwipeView.setRefreshing(true);
+//                }
+//
+//            }
+//        })
+//                .setDividerColor(Color.BLACK)
+//                .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+//                .setContentTextSize(20)//设置文字大小
+//                .setSubmitColor(Color.parseColor("#386FFE"))//确定按钮文字颜色
+//                .setCancelColor(Color.parseColor("#386FFE"))//取消按钮文字颜色
+//                .setOutSideCancelable(false)// default is true
+//                .build();
+//
+//        pvOptions.setPicker(dList);//条件选择器
+//
+//        pvOptions.show();
+    }
+
+//    public void setData(){
+//        for (int i = 0; i < 10; i++) {
+//            dList.add("地址" + i);
+//            mAddressList2.add(dList);
+//            mAddressList3.add(mAddressList2);
+//        }
+//    }
+//
+    // 弹出条件选择器
+    public void ShowBankName(Activity activity, final ArrayList<String> dList, final TextView view) {
+      OptionsPickerView pvOptions = new OptionsPickerBuilder(activity, new OnOptionsSelectListener() {
+          @Override
+          public void onOptionsSelect(int options1, int options2, int options3, View v) {
+//              //返回的分别是三个级别的选中位置
+//              String tx = options1Items.get(options1).getPickerViewText()
+//                      + options2Items.get(options1).get(option2)
+//                      + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
+//              tvOptions.setText(tx);
+              if (dList != null && !dList.isEmpty()) {
+                  String strBankName = dList.get(options1);
+                  view.setText(strBankName);
+                  //        mSwipeView.setRefreshing(true);
+              }
+          }
+      })
+              .setDividerColor(Color.BLACK)
+              .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
+              .setContentTextSize(20)//设置文字大小 滚动文字大小
+              .setSubmitColor(Color.parseColor("#386FFE"))//确定按钮文字颜色
+              .setCancelColor(Color.parseColor("#386FFE"))//取消按钮文字颜色
+              .setOutSideCancelable(false)// 点击屏幕，点在控件外部范围时，是否取消显示
+              .build();
+
+      pvOptions.setPicker(dList);
+      pvOptions.show();
+    }
+
+    // 弹出省市区级选择器
+    public static void ShowCity(Activity activity, final TextView view) {
+
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(activity, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-
-                if (dList != null && !dList.isEmpty()) {
-                    String strBankName = dList.get(options1);
-                    view.setText(strBankName);
-            //        mSwipeView.setRefreshing(true);
-                }
-
+                    String provinceName = proviceList.get(options1).getPickerViewText();
+                    String cityName =  cityList.get(options1).get(options2).getPickerViewText();
+                    String countyName = countyList.get(options1).get(options2).get(options3).getPickerViewText();
+                    view.setText(String.format("%s%s%s%s%s",provinceName,"省",cityName,"市",countyName));
+//                view.setText(provinceName+"省"+cityName+"市"+countyName);
             }
         })
+
                 .setDividerColor(Color.BLACK)
+                .setTitleText("选择地区")   //标题文字
+                .setTitleColor(Color.BLACK)//标题文字颜色
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
-                .setContentTextSize(20)//设置文字大小
+                .setContentTextSize(20)//设置文字大小 滚动文字大小
                 .setSubmitColor(Color.parseColor("#386FFE"))//确定按钮文字颜色
                 .setCancelColor(Color.parseColor("#386FFE"))//取消按钮文字颜色
-                .setOutSideCancelable(false)// default is true
+                .setOutSideCancelable(false)// 点击屏幕，点在控件外部范围时，是否取消显示
+                .setLabels("省", "市", "")//设置选择的三级单位
+                .setSelectOptions(0, 0, 0)  //设置默认选中项
+                .setCyclic(false, false, false)//循环与否
+                .isDialog(false)//是否显示为对话框样式
                 .build();
 
-        pvOptions.setPicker(dList);//条件选择器
+        pvOptions.setPicker(proviceList,cityList,countyList);//条件选择器
 
         pvOptions.show();
     }
-    // 弹出条件选择器
-    public void ShowBankName(Activity activity, final ArrayList<String> dList, final TextView view) {
-        OptionsPickerView pvOptions = new OptionsPickerView.Builder(activity, new OptionsPickerView.OnOptionsSelectListener() {
+
+    // 弹出省市区级选择器
+    public static void ShowCityNoCounty(Activity activity, final TextView view) {
+
+        OptionsPickerView pvOptions = new OptionsPickerBuilder(activity, new OnOptionsSelectListener() {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
-
-                if (dList != null && !dList.isEmpty()) {
-                    String strBankName = dList.get(options1);
-                    view.setText(strBankName);
-                    //        mSwipeView.setRefreshing(true);
-                }
-
+//                String provinceName = proviceList.get(options1).getPickerViewText();
+                String cityName =  cityList.get(options1).get(options2).getPickerViewText();
+//                String countyName = countyList.get(options1).get(options2).get(options3).getPickerViewText();
+                view.setText(String.format(cityName));
             }
         })
+
                 .setDividerColor(Color.BLACK)
+                .setTitleText("选择地区")   //标题文字
+                .setTitleColor(Color.BLACK)//标题文字颜色
                 .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
-                .setContentTextSize(20)//设置文字大小
+                .setContentTextSize(20)//设置文字大小 滚动文字大小
                 .setSubmitColor(Color.parseColor("#386FFE"))//确定按钮文字颜色
                 .setCancelColor(Color.parseColor("#386FFE"))//取消按钮文字颜色
-                .setOutSideCancelable(false)// default is true
+                .setOutSideCancelable(false)// 点击屏幕，点在控件外部范围时，是否取消显示
+                .setLabels("省", "市","")//设置选择的三级单位
+                .setSelectOptions(0, 0)  //设置默认选中项
+                .setCyclic(false, false, false)//循环与否
+                .isDialog(false)//是否显示为对话框样式
                 .build();
 
-        pvOptions.setPicker(dList);//条件选择器
+        pvOptions.setPicker(proviceList,cityList);//条件选择器
 
         pvOptions.show();
     }

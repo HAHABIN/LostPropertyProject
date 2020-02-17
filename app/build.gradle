@@ -55,7 +55,6 @@ dependencies {
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
 
     //PickerView 选择器
-    implementation 'com.contrarywind:Android-PickerView:3.2.5'
     //权限管理
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
@@ -63,5 +62,8 @@ dependencies {
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
 
     //PickerView 选择弹出
-    implementation 'com.contrarywind:Android-PickerView:3.2.5'
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
+    //litepal本地数据库
+    implementation 'org.litepal.android:java:3.0.0'
 }

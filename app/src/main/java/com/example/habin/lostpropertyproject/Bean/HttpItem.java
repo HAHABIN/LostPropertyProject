@@ -1,6 +1,6 @@
 package com.example.habin.lostpropertyproject.Bean;
 
-public class HttpItem {
+public class HttpItem  {
 
     private boolean success;
     private String message;

@@ -18,6 +18,7 @@ import java.util.HashMap;
  * 用户信息P层  调度处理类
  */
 public class UserInfoPresenter extends RxPresenter<UserInfoContract.View> implements UserInfoContract.Presenter{
+
     @Override
     public void UploadPhoto(String imgStr) {
         HashMap<String, Object> hashMap = new HashMap<>();

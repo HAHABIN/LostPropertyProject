@@ -22,7 +22,7 @@ public interface LandContract extends BaseContract {
 
     }
 
-    interface Presenter extends BaseContract.BasePresenter<View>{
+    interface Presenter extends BasePresenter<View>{
         /**
          * 用户登陆
          */

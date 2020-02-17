@@ -8,13 +8,13 @@ import com.example.habin.lostpropertyproject.Base.BaseContract;
  * 用户信息契约类
  *
  */
-public interface UserInfoContract {
+public interface UserInfoContract extends BaseContract{
 
-    interface View extends BaseContract.BaseView{
+    interface View extends BaseView{
 
     }
 
-    interface Presenter extends BaseContract.BasePresenter<UserInfoContract.View>{
+    interface Presenter extends BasePresenter<View>{
         /**
          * 图片上传
          */

@@ -20,26 +20,26 @@
         android:roundIcon="@mipmap/ic_launcher_foreground"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.mine.EditEmailActivity"></activity>
-        <activity android:name=".ui.activity.Land.ForgetPassActivity" />
-        <activity android:name=".ui.activity.Land.EditPasswordActivity" />
-        <activity android:name=".ui.activity.mine.EditGenderActivity" />
-        <activity android:name=".ui.activity.mine.EditNicknameActivity" />
-        <activity android:name=".ui.activity.mine.RecordListActivity" />
-        <activity android:name=".ui.activity.home.SearchActivity" />
-        <activity android:name=".ui.activity.mine.SettingActivity" />
-        <activity android:name=".ui.activity.SplashActivity">
+        <activity android:name=".Ui.activity.mine.EditEmailActivity"></activity>
+        <activity android:name=".Ui.activity.Land.ForgetPassActivity" />
+        <activity android:name=".Ui.activity.Land.EditPasswordActivity" />
+        <activity android:name=".Ui.activity.mine.EditGenderActivity" />
+        <activity android:name=".Ui.activity.mine.EditNicknameActivity" />
+        <activity android:name=".Ui.activity.mine.RecordListActivity" />
+        <activity android:name=".Ui.activity.home.SearchActivity" />
+        <activity android:name=".Ui.activity.mine.SettingActivity" />
+        <activity android:name=".Ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MainActivity" />
-        <activity android:name=".ui.activity.Land.LandActivity" />
-        <activity android:name=".ui.activity.mine.UserInfoActivity" />
-        <activity android:name=".ui.activity.RecordDetailsActivity" />
-        <activity android:name=".ui.activity.ReleaseActivity" />
+        <activity android:name=".Ui.activity.MainActivity" />
+        <activity android:name=".Ui.activity.Land.LandActivity" />
+        <activity android:name=".Ui.activity.mine.UserInfoActivity" />
+        <activity android:name=".Ui.activity.RecordDetailsActivity" />
+        <activity android:name=".Ui.activity.ReleaseActivity" />
     </application>
 
 </manifest>

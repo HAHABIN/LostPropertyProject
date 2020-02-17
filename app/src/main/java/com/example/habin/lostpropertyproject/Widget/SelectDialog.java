@@ -16,7 +16,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.R;
-import com.example.habin.lostpropertyproject.ui.adapter.SelectRecyclerAdapter;
+import com.example.habin.lostpropertyproject.Ui.adapter.SelectRecyclerAdapter;
 
 import java.util.List;
 

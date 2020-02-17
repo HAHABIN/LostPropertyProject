@@ -8,12 +8,12 @@ import com.example.habin.lostpropertyproject.Base.BaseContract;
  * Email 739115041@qq.com
  * 我的碎片逻辑接口
  */
-public interface MinePageContract {
-    interface View extends BaseContract.BaseView{
+public interface MinePageContract extends BaseContract{
+    interface View extends BaseView{
 
     }
 
-    interface Presenter extends BaseContract.BasePresenter<MinePageContract.View>{
+    interface Presenter extends BasePresenter<View>{
         /**
          * 获取数据
          */

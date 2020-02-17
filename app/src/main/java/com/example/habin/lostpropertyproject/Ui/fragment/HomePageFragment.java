@@ -1,0 +1,214 @@
+package com.example.habin.lostpropertyproject.Ui.fragment;
+
+
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+
+import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
+import com.example.habin.lostpropertyproject.Bean.BaseResponse;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
+import com.example.habin.lostpropertyproject.Bean.Local.City.City;
+import com.example.habin.lostpropertyproject.Bean.Local.City.County;
+import com.example.habin.lostpropertyproject.Bean.Local.City.Province;
+import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
+import com.example.habin.lostpropertyproject.Presenter.fragment.HomePagePresenter;
+import com.example.habin.lostpropertyproject.Presenter.fragment.contract.HomePageContract;
+import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Ui.activity.home.SearchActivity;
+import com.example.habin.lostpropertyproject.Ui.adapter.VpAdapter;
+import com.example.habin.lostpropertyproject.Util.JsonUtil;
+import com.example.habin.lostpropertyproject.Util.ProgressUtils;
+import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
+import com.example.habin.lostpropertyproject.Util.ToastUtils;
+import com.example.habin.lostpropertyproject.view.NoScrollViewPager;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.litepal.LitePal;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+/**
+ * created by habin
+ * on 2019/12/27
+ * 首页碎片
+ */
+public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter> implements HomePageContract.View {
+
+
+    public static HomePageFragment newInstance() {
+        return new HomePageFragment();
+    }
+
+
+    @BindView(R.id.tv_address)
+    TextView mTvAddress;
+    @BindView(R.id.vp_content)
+    NoScrollViewPager mVpContent;
+    @BindView(R.id.tv_lost)
+    TextView mTvLost;
+    @BindView(R.id.tv_find)
+    TextView mTvFind;
+
+    //判断目前所在列表
+    public boolean isLostFind = true;
+    //丢拾列表
+    private List<Fragment> mFragmentList;
+    //ViewPage适配器
+    private VpAdapter mVpAdapter;
+
+
+    //二级联动省级
+    private ArrayList<Province> mOptions1List;
+    //二级联动市级
+    private ArrayList<ArrayList<City>> mOptions2List;
+    //三级联动区县
+    private ArrayList<ArrayList<ArrayList<County>>> mOptions3List;
+
+    //省级列表
+    private ArrayList<Province> mProvinceList;
+    //市级列表
+    private ArrayList<City> mCityList;
+    //区县列表
+    private ArrayList<County> mCountyList;
+    //选中省份
+    private Province mSelectedProvice;
+    //选中城市
+    private City mSelectCity;
+    //选中区县
+    private County mSelectCounty;
+
+    //当前选中级别
+    private int currentLevel;
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.fragment_page_home;
+    }
+
+    @Override
+    protected void initData(Bundle savedInstanceState) {
+        super.initData(savedInstanceState);
+
+        //初始化列表
+        mFragmentList = new ArrayList<>();
+        mFragmentList.add(ToClaimListFragment.newInstance(0));//丢丢 type 0
+        mFragmentList.add(ToClaimListFragment.newInstance(1));//拾拾 type 1
+        //初始化适配器和数据源
+        mVpAdapter = new VpAdapter(getFragmentManager(), mFragmentList);
+        //设置适配器
+        mVpContent.setAdapter(mVpAdapter);
+        //设置禁止左右滑动
+        mVpContent.setNoScroll(true);
+        //预加载
+        mVpContent.setOffscreenPageLimit(1);
+        //设置标题栏内容
+        setTitle();
+    }
+
+    private void initProvice() {
+    }
+
+    @Override
+    protected void processLogic() {
+        super.processLogic();
+
+    }
+
+    @Override
+    protected HomePageContract.Presenter bindPresenter() {
+        return new HomePagePresenter();
+    }
+
+
+    @OnClick({R.id.ll_address, R.id.tv_lost, R.id.tv_find, R.id.iv_search})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.ll_address:
+                SelectorDialogUtils.ShowCityNoCounty(mActivity,mTvAddress);
+//                //获取本地数据库省级数据
+//                mProvinceList = (ArrayList<Province>) LitePal.findAll(Province.class);
+//                //如果数据为空 则网络获取数据
+//                if (mProvinceList.size() > 0) {
+//                    ToastUtils.show_s(mContext, "已存在本地地址");
+//                } else {
+//                    //初始化选中地址内容
+//                    ProgressUtils.show(mContext, "地址------");
+//                    mPresenter.getProviceList();
+//                }
+//                SelectorDialogUtils.getInstance().ShowBankName(mActivity,mTvAddress);
+//                ToClaimListFragment fragment;
+//                if (isLostFind){
+//                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(0);
+//                } else {
+//                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(1);
+//
+//                }
+//                fragment.updateDate(mTvAddress.getText().toString());
+                break;
+            case R.id.tv_lost:
+                isLostFind = true;
+                setTitle();
+                //顶部导航栏点击回调
+                mVpContent.setCurrentItem(0);
+                break;
+            case R.id.tv_find:
+                isLostFind = false;
+                setTitle();
+                mVpContent.setCurrentItem(1);
+                break;
+            case R.id.iv_search:
+                SearchActivity.StartAct(mContext);
+                break;
+
+        }
+    }
+
+
+    /**
+     * 设置状态栏
+     */
+    protected void setTitle() {
+        if (isLostFind) {
+            //设置丢丢状态
+            mTvLost.setSelected(true);
+            mTvFind.setSelected(false);
+        } else {
+            //设置拾拾状态
+            mTvLost.setSelected(false);
+            mTvFind.setSelected(true);
+        }
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
+
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
+        ProgressUtils.dismiss();
+
+        switch (type) {
+            case QueryCity:
+                break;
+        }
+    }
+
+    @Override
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        ProgressUtils.dismiss();
+        ToastUtils.show_s(e.getMessage());
+    }
+
+
+}

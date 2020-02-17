@@ -1,6 +1,11 @@
 package com.example.habin.lostpropertyproject;
 
+import com.example.habin.lostpropertyproject.Bean.Local.City.Province;
+import com.example.habin.lostpropertyproject.Util.JsonUtil;
+
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 
 /**
@@ -11,9 +16,12 @@ import org.junit.Test;
 public class LoginTestTest {
     @Test
     public void test() {
-
-        landDao landModel = new landDao();
-        System.out.println("------------------test------------");
+        ArrayList<Province> provinceArrayList = JsonUtil.JsontoProvince(MyApplication.getContext());
+        for (Province province :provinceArrayList){
+            System.out.println(province.toString());
+        }
+//        landDao landModel = new landDao();
+//        System.out.println("------------------test------------");
 //        landModel.login("admin", "admin", new BaseObserver<BaseResponse>() {
 //            @Override
 //            public void OnSuccess(BaseResponse baseResponse) {

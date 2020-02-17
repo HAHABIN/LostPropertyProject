@@ -8,14 +8,20 @@ public class HttpHelper {
         Login, //登陆
         Regin, //注册
         Logout, //注销
-        UpdateInfo,//修改用户信息
         UpdatePasswordAuth, //修改密码
+
+        //---------用户信息模块
+        UpdateInfo,//修改用户信息
         UploadPhoto,  //上传图片
+        QueryCity //获取省市级地址
     }
 
     public static String getMethod(TaskType type) {
         String method = "";
         switch (type) {
+            case QueryCity:
+                method = "chinaAddress/City";
+                break;
             case Setting:
                 method = "settings/get";
                 break;
@@ -37,6 +43,7 @@ public class HttpHelper {
             case UploadPhoto:
                 method = "saveToImgByStr/uploadPhoto";
                 break;
+
 
         }
         return method;

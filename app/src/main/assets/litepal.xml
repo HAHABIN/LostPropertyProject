@@ -1,0 +1,12 @@
+<litepal>
+
+    <dbname value="city_date" />
+
+    <version value="1" />
+
+    <list>
+        <mapping class="com.example.habin.lostpropertyproject.Bean.Local.City.City" />
+        <mapping class="com.example.habin.lostpropertyproject.Bean.Local.City.Province" />
+        <mapping class="com.example.habin.lostpropertyproject.Bean.Local.City.County" />
+    </list>
+</litepal>

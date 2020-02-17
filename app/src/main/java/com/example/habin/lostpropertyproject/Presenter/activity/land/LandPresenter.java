@@ -37,6 +37,9 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
 
     @Override
     public void signup(String username, String password, String email) {
+
+
+
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("username",username);
         hashMap.put("password",password);
