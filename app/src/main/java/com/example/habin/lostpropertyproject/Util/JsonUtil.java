@@ -3,12 +3,9 @@ package com.example.habin.lostpropertyproject.Util;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import com.example.habin.lostpropertyproject.Bean.Local.City.Province;
-import com.example.habin.lostpropertyproject.Common.Constants;
-import com.example.habin.lostpropertyproject.MyApplication;
+import com.example.habin.lostpropertyproject.Bean.emtity.Province;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -188,33 +185,18 @@ public class JsonUtil {
     /**
      * 获取省级数据列表
      * */
-    public static ArrayList<Province> JsontoProvince(Context context) {
+    public static<T> ArrayList<T> JsontoListT(Context context,String fileName,Class<T> cls) {
         //获取assets 目录下的Json文件
-        String jsonData = getJson(context, "provice.json");
+        String jsonData = getJson(context, fileName);
 
-        ArrayList<Province> provinces = null;
-        try {
-            //获取省级列表
-            provinces = parseData(jsonData);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return provinces;
-    }
-
-    /**
-     * 将json数据转化为省级列表
-     * */
-    public static ArrayList<Province> parseData(String result) {//Gson 解析
         //动态数组
-        ArrayList<Province> detail = new ArrayList<>();
+        ArrayList<T> detail = new ArrayList<>();
         try {
             //转化为数组json
-            JSONArray data = new JSONArray(result);
-            Gson gson = new Gson();
+            JSONArray data = new JSONArray(jsonData);
             for (int i = 0; i < data.length(); i++) {
                 //将json转为实体
-                Province entity = gson.fromJson(data.optJSONObject(i).toString(), Province.class);
+                T entity = gson.fromJson(data.optJSONObject(i).toString(), cls);
                 //添加到List
                 detail.add(entity);
             }
@@ -223,6 +205,7 @@ public class JsonUtil {
         }
         return detail;
     }
+
 
     /**
      * 获取assets 目录下的Json文件

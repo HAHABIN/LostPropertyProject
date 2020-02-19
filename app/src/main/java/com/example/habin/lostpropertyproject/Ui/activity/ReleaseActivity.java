@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.FullyGridLayoutManager;
 import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
@@ -103,6 +104,8 @@ public class ReleaseActivity extends BaseActivity {
 
     }
 
+
+
     @Override
     protected void initWidget() {
         super.initWidget();
@@ -143,10 +146,6 @@ public class ReleaseActivity extends BaseActivity {
         }
     };
 
-    //弹窗列表
-    public void showList(ArrayList<String> mlist,TextView view) {
-        SelectorDialogUtils.getInstance().ShowBankName(mActivity, mlist,view);
-    }
 
 
     //顶部设置
@@ -154,6 +153,7 @@ public class ReleaseActivity extends BaseActivity {
         setShowBack(View.VISIBLE);
         setRightText("发布");
         setRightOnClick().setOnClickListener(v -> {
+
             SnackbarUtils.show(mContext, "发布成功");
         });
         setBackOnClick().setOnClickListener(v -> finish());
@@ -176,15 +176,15 @@ public class ReleaseActivity extends BaseActivity {
             case R.id.rl_image:
                 break;
             case R.id.ll_address:
-                SelectorDialogUtils.ShowCity(mActivity,mTvAddress);
+                SelectorDialogUtils.getInstance().ShowCity(mActivity,mTvAddress);
 //                showList(mAddressList,mTvAddress);
 //                SelectorDialogUtils.getInstance().ShowBankName(mActivity, mAddressList,mTvAddress);
                 break;
             case R.id.ll_time:
-                showList(mAddressList,mTvTime);
+                SelectorDialogUtils.getInstance().ShowTime(mActivity,mTvTime);
                 break;
             case R.id.ll_type:
-                showList(mAddressList,mTvType);
+                SelectorDialogUtils.getInstance().ShowType(mActivity, MyApplication.getTypeList(),mTvType);
                 break;
         }
     }

@@ -6,14 +6,19 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
 import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
-import com.example.habin.lostpropertyproject.Bean.Local.City.City;
-import com.example.habin.lostpropertyproject.Bean.Local.City.County;
-import com.example.habin.lostpropertyproject.Bean.Local.City.Province;
+import com.bigkoo.pickerview.view.TimePickerView;
+import com.example.habin.lostpropertyproject.Bean.emtity.ArticleType;
+import com.example.habin.lostpropertyproject.Bean.emtity.City;
+import com.example.habin.lostpropertyproject.Bean.emtity.County;
+import com.example.habin.lostpropertyproject.Bean.emtity.Province;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Widget.SelectDialog;
 import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
@@ -24,7 +29,10 @@ import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.permissions.Permission;
 import com.luck.picture.lib.permissions.RxPermissions;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import io.reactivex.functions.Consumer;
@@ -142,43 +150,20 @@ public class SelectorDialogUtils {
         }
     }
 
-    // 弹出条件选择器
-    public void ShowBankName_T(Activity activity, final ArrayList<String> dList, final SwipeRecyclerView mSwipeView,final TextView view) {
-//        OptionsPickerView pvOptions = new OptionsPickerView.Builder(activity, new OptionsPickerView.OnOptionsSelectListener() {
-//            @Override
-//            public void onOptionsSelect(int options1, int options2, int options3, View v) {
-//
-//                if (dList != null && !dList.isEmpty()) {
-//                    String strBankName = dList.get(options1);
-//                    view.setText(strBankName);
-//            //        mSwipeView.setRefreshing(true);
-//                }
-//
-//            }
-//        })
-//                .setDividerColor(Color.BLACK)
-//                .setTextColorCenter(Color.BLACK) //设置选中项文字颜色
-//                .setContentTextSize(20)//设置文字大小
-//                .setSubmitColor(Color.parseColor("#386FFE"))//确定按钮文字颜色
-//                .setCancelColor(Color.parseColor("#386FFE"))//取消按钮文字颜色
-//                .setOutSideCancelable(false)// default is true
-//                .build();
-//
-//        pvOptions.setPicker(dList);//条件选择器
-//
-//        pvOptions.show();
+    public void ShowTime(Activity activity,final TextView textView){
+        TimePickerView timePicker = new TimePickerBuilder(activity, new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                textView.setText(simpleDateFormat.format(date));
+            }
+        }).build();
+        //精准到秒
+//        timePicker.setDate(Calendar.getInstance());
+        timePicker.show();
     }
-
-//    public void setData(){
-//        for (int i = 0; i < 10; i++) {
-//            dList.add("地址" + i);
-//            mAddressList2.add(dList);
-//            mAddressList3.add(mAddressList2);
-//        }
-//    }
-//
     // 弹出条件选择器
-    public void ShowBankName(Activity activity, final ArrayList<String> dList, final TextView view) {
+    public void ShowType(Activity activity, final ArrayList<ArticleType> dList, final TextView view) {
       OptionsPickerView pvOptions = new OptionsPickerBuilder(activity, new OnOptionsSelectListener() {
           @Override
           public void onOptionsSelect(int options1, int options2, int options3, View v) {
@@ -188,7 +173,7 @@ public class SelectorDialogUtils {
 //                      + options3Items.get(options1).get(option2).get(options3).getPickerViewText();
 //              tvOptions.setText(tx);
               if (dList != null && !dList.isEmpty()) {
-                  String strBankName = dList.get(options1);
+                  String strBankName = dList.get(options1).getPickerViewText();
                   view.setText(strBankName);
                   //        mSwipeView.setRefreshing(true);
               }
@@ -207,7 +192,7 @@ public class SelectorDialogUtils {
     }
 
     // 弹出省市区级选择器
-    public static void ShowCity(Activity activity, final TextView view) {
+    public void ShowCity(Activity activity, final TextView view) {
 
         OptionsPickerView pvOptions = new OptionsPickerBuilder(activity, new OnOptionsSelectListener() {
             @Override
@@ -215,7 +200,7 @@ public class SelectorDialogUtils {
                     String provinceName = proviceList.get(options1).getPickerViewText();
                     String cityName =  cityList.get(options1).get(options2).getPickerViewText();
                     String countyName = countyList.get(options1).get(options2).get(options3).getPickerViewText();
-                    view.setText(String.format("%s%s%s%s%s",provinceName,"省",cityName,"市",countyName));
+                    view.setText(String.format("%s%s%s",provinceName,cityName,countyName));
 //                view.setText(provinceName+"省"+cityName+"市"+countyName);
             }
         })
@@ -228,7 +213,7 @@ public class SelectorDialogUtils {
                 .setSubmitColor(Color.parseColor("#386FFE"))//确定按钮文字颜色
                 .setCancelColor(Color.parseColor("#386FFE"))//取消按钮文字颜色
                 .setOutSideCancelable(false)// 点击屏幕，点在控件外部范围时，是否取消显示
-                .setLabels("省", "市", "")//设置选择的三级单位
+                .setLabels("", "", "")//设置选择的三级单位
                 .setSelectOptions(0, 0, 0)  //设置默认选中项
                 .setCyclic(false, false, false)//循环与否
                 .isDialog(false)//是否显示为对话框样式
@@ -246,9 +231,14 @@ public class SelectorDialogUtils {
             @Override
             public void onOptionsSelect(int options1, int options2, int options3, View v) {
 //                String provinceName = proviceList.get(options1).getPickerViewText();
+
                 String cityName =  cityList.get(options1).get(options2).getPickerViewText();
+                if (cityName.length()>5){
+                    cityName = cityName.substring(0,4)+"...";
+                }
 //                String countyName = countyList.get(options1).get(options2).get(options3).getPickerViewText();
-                view.setText(String.format(cityName));
+                view.setText(String.format("%s",cityName));
+
             }
         })
 
@@ -260,7 +250,7 @@ public class SelectorDialogUtils {
                 .setSubmitColor(Color.parseColor("#386FFE"))//确定按钮文字颜色
                 .setCancelColor(Color.parseColor("#386FFE"))//取消按钮文字颜色
                 .setOutSideCancelable(false)// 点击屏幕，点在控件外部范围时，是否取消显示
-                .setLabels("省", "市","")//设置选择的三级单位
+                .setLabels("", "","")//设置选择的三级单位
                 .setSelectOptions(0, 0)  //设置默认选中项
                 .setCyclic(false, false, false)//循环与否
                 .isDialog(false)//是否显示为对话框样式

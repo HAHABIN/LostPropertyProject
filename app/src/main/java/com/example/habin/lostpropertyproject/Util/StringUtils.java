@@ -3,7 +3,14 @@ package com.example.habin.lostpropertyproject.Util;
 import android.graphics.Bitmap;
 import android.util.Base64;
 
+import com.example.habin.lostpropertyproject.Bean.emtity.ArticleType;
+import com.example.habin.lostpropertyproject.MyApplication;
+
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -97,5 +104,52 @@ public class StringUtils {
         blue = blue.length()==1 ? "0" + blue : blue ;
         //生成十六进制颜色值
         return "#"+red+green+blue;
+    }
+
+
+    /*
+     * 将时间戳转换为时间
+     *
+     * s就是时间戳
+     */
+
+    public static String stampToDate(String s){
+        String res;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        //如果它本来就是long类型的,则不用写这一步
+        long lt = new Long(s);
+        Date date = new Date(lt);
+        res = simpleDateFormat.format(date);
+        return res;
+    }
+    /**
+     * String str = "2019-03-13 13:54:00";
+     * 时间字符串转为时间戳
+     * */
+    public static long  dateToStamp(String str)  {
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
+        try {
+            date = simpleDateFormat.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date.getTime();
+
+    }
+
+    //类别搜索返回
+    public int typeNameToId(String name){
+        int id = 1;
+        ArrayList<ArticleType> typeList = MyApplication.getTypeList();
+        //直接跳出多重循环 如果有多个for
+        loop:for (ArticleType type : typeList){
+            if (type.getTypeName().equals(name)){
+                id =  type.getTypeId();
+                break loop;
+            }
+        }
+        return id;
     }
 }

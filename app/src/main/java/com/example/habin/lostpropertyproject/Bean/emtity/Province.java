@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.Bean.Local.City;
+package com.example.habin.lostpropertyproject.Bean.emtity;
 
 import com.contrarywind.interfaces.IPickerViewData;
 

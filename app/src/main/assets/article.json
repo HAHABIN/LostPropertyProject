@@ -1,0 +1,79 @@
+[
+  {
+    "typeId": 1,
+    "typeName": "钱包",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 2,
+    "typeName": "钥匙",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 3,
+    "typeName": "宠物",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 4,
+    "typeName": "卡类/证照",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 5,
+    "typeName": "数码产品",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 6,
+    "typeName": "手袋/挎包",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 7,
+    "typeName": "衣服/鞋帽",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 8,
+    "typeName": "首饰/挂件",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 9,
+    "typeName": "行李/包裹",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 10,
+    "typeName": "书籍/文件",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  },
+  {
+    "typeId": 11,
+    "typeName": "其他",
+    "priority": 1,
+    "createTime": 1581783612000,
+    "lastEditTime": null
+  }
+]

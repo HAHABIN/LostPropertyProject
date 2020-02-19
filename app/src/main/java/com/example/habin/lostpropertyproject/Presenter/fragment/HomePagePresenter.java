@@ -1,13 +1,10 @@
 package com.example.habin.lostpropertyproject.Presenter.fragment;
 
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
-import com.example.habin.lostpropertyproject.Bean.Local.City.Province;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.fragment.contract.HomePageContract;
-import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
-import com.example.habin.lostpropertyproject.Util.UiUtils;
 
 import org.json.JSONObject;
 

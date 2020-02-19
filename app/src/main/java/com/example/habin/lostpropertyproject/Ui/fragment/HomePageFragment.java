@@ -3,15 +3,16 @@ package com.example.habin.lostpropertyproject.Ui.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
-import com.example.habin.lostpropertyproject.Bean.Local.City.City;
-import com.example.habin.lostpropertyproject.Bean.Local.City.County;
-import com.example.habin.lostpropertyproject.Bean.Local.City.Province;
+import com.example.habin.lostpropertyproject.Bean.emtity.City;
+import com.example.habin.lostpropertyproject.Bean.emtity.County;
+import com.example.habin.lostpropertyproject.Bean.emtity.Province;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.fragment.HomePagePresenter;
@@ -22,6 +23,7 @@ import com.example.habin.lostpropertyproject.Ui.adapter.VpAdapter;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.view.NoScrollViewPager;
 
 import org.json.JSONObject;
@@ -39,6 +41,8 @@ import butterknife.OnClick;
  */
 public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter> implements HomePageContract.View {
 
+
+    private String str;
 
     public static HomePageFragment newInstance() {
         return new HomePageFragment();
@@ -85,6 +89,10 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     //当前选中级别
     private int currentLevel;
 
+    //最新地址
+    String address = null;
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_page_home;
@@ -108,15 +116,38 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
         mVpContent.setOffscreenPageLimit(1);
         //设置标题栏内容
         setTitle();
-    }
 
-    private void initProvice() {
     }
 
     @Override
-    protected void processLogic() {
-        super.processLogic();
+    protected void initClick() {
+        super.initClick();
+        //监听地址栏
+        mTvAddress.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                address = mTvAddress.getText().toString();
+                ToClaimListFragment fragment;
+                if (isLostFind){
+                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(0);
+                } else {
+                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(1);
+
+                }
+                fragment.updateDate(mTvAddress.getText().toString());
+
+            }
+        });
     }
 
     @Override
@@ -130,25 +161,21 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
         switch (view.getId()) {
             case R.id.ll_address:
                 SelectorDialogUtils.ShowCityNoCounty(mActivity,mTvAddress);
-                ToClaimListFragment fragment;
-                if (isLostFind){
-                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(0);
-                } else {
-                    fragment = (ToClaimListFragment) mVpAdapter.getFragment(1);
-
-                }
-                fragment.updateDate(mTvAddress.getText().toString());
                 break;
             case R.id.tv_lost:
                 isLostFind = true;
                 setTitle();
                 //顶部导航栏点击回调
                 mVpContent.setCurrentItem(0);
+                ToClaimListFragment fragment0 = (ToClaimListFragment) mVpAdapter.getFragment(0);
+                fragment0.updateDate(mTvAddress.getText().toString());
                 break;
             case R.id.tv_find:
                 isLostFind = false;
                 setTitle();
                 mVpContent.setCurrentItem(1);
+                ToClaimListFragment fragment1 = (ToClaimListFragment) mVpAdapter.getFragment(1);
+                fragment1.updateDate(mTvAddress.getText().toString());
                 break;
             case R.id.iv_search:
                 SearchActivity.StartAct(mContext);

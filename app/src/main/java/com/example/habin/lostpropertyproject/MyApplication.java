@@ -3,9 +3,10 @@ package com.example.habin.lostpropertyproject;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.habin.lostpropertyproject.Bean.Local.City.City;
-import com.example.habin.lostpropertyproject.Bean.Local.City.County;
-import com.example.habin.lostpropertyproject.Bean.Local.City.Province;
+import com.example.habin.lostpropertyproject.Bean.emtity.ArticleType;
+import com.example.habin.lostpropertyproject.Bean.emtity.City;
+import com.example.habin.lostpropertyproject.Bean.emtity.County;
+import com.example.habin.lostpropertyproject.Bean.emtity.Province;
 import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
@@ -28,6 +29,7 @@ public class MyApplication extends Application {
     private static ArrayList<Province> options1Items;
     private static ArrayList<ArrayList<City>> options2Items;
     private static ArrayList<ArrayList<ArrayList<County>>> options3Items;
+    private static ArrayList<ArticleType> jsonType;
 
     @Override
     public void onCreate() {
@@ -42,14 +44,15 @@ public class MyApplication extends Application {
     }
 
     private void initProvice() {
-
+        //获取类型分类
+        jsonType = JsonUtil.JsontoListT(getContext(), "article.json", ArticleType.class);
         if (options1Items == null) {
             options1Items = new ArrayList<>(); //省
             options2Items = new ArrayList<>();//市
             options3Items = new ArrayList<>();
         }
         //获取省份数据
-        ArrayList<Province> jsonProvince = JsonUtil.JsontoProvince(getContext());
+        ArrayList<Province> jsonProvince = JsonUtil.JsontoListT(getContext(),"provice.json",Province.class);
 //        //添加全部
 //        options1Items.add(new Province(5000,"全国",1));
         //添加省份
@@ -141,5 +144,10 @@ public class MyApplication extends Application {
     }
     public static ArrayList<ArrayList<ArrayList<County>>> getCountyList() {
         return options3Items;
+    }
+
+    public static ArrayList<ArticleType> getTypeList(){
+
+        return jsonType;
     }
 }

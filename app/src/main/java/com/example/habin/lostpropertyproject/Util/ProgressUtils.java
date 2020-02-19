@@ -9,6 +9,7 @@ import com.example.habin.lostpropertyproject.R;
 /**
  *
  * ProgressDialog封装工具类
+ * 加载中控件
  */
 public class ProgressUtils {
 

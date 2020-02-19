@@ -1,7 +1,8 @@
 package com.example.habin.lostpropertyproject;
 
-import com.example.habin.lostpropertyproject.Bean.Local.City.Province;
+import com.example.habin.lostpropertyproject.Bean.emtity.Province;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
+import com.example.habin.lostpropertyproject.Util.StringUtils;
 
 import org.junit.Test;
 
@@ -16,33 +17,10 @@ import java.util.ArrayList;
 public class LoginTestTest {
     @Test
     public void test() {
-        ArrayList<Province> provinceArrayList = JsonUtil.JsontoProvince(MyApplication.getContext());
-        for (Province province :provinceArrayList){
-            System.out.println(province.toString());
-        }
-//        landDao landModel = new landDao();
-//        System.out.println("------------------test------------");
-//        landModel.login("admin", "admin", new BaseObserver<BaseResponse>() {
-//            @Override
-//            public void OnSuccess(BaseResponse baseResponse) {
-//                System.out.print("登陆成功");
-//            }
-//
-//            @Override
-//            public void OnFail(Throwable e) {
-//                System.out.print("登陆失败");
-//            }
-//
-//            @Override
-//            public void OnCompleted() {
-//
-//            }
-//
-//            @Override
-//            public void OnDisposable(Disposable d) {
-//
-//            }
-//        });
-
+        String s = StringUtils.stampToDate("1581783612000");
+        System.out.println(s);
+        String str = "2019-03-13 13:54:00";
+        long l = StringUtils.dateToStamp(s);
+        System.out.println(l);
     }
 }

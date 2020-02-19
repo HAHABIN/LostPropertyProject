@@ -1,10 +1,9 @@
-package com.example.habin.lostpropertyproject.Bean.Local.City;
+package com.example.habin.lostpropertyproject.Bean.emtity;
 
 import com.contrarywind.interfaces.IPickerViewData;
 
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Create by HABIN on 2020/2/1614:02

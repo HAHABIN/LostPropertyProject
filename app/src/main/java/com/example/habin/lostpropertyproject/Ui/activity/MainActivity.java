@@ -96,10 +96,10 @@ public class MainActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_add:
                 //登录判断
-                if (MyApplication.isLogin(mContext)) {
-                    LandActivity.StartAct(mContext);
-                    return;
-                }
+//                if (MyApplication.isLogin(mContext)) {
+//                    LandActivity.StartAct(mContext);
+//                    return;
+//                }
                 if (publishDialog == null) {
                     publishDialog = new PublishDialog(MainActivity.this);
                     publishDialog.setLostClickListener(v -> {
