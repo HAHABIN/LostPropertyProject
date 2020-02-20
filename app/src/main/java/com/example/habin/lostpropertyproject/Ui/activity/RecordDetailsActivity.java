@@ -9,9 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
+import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.view.CircleImageView;
+
+import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -42,6 +46,7 @@ public class RecordDetailsActivity extends BaseActivity {
     @BindView(R.id.ll_bom_help)
     LinearLayout mLlBomHelp;
     private boolean isVis;
+    private ArticleInfoEntity.ResultBean data;
 
     public static void StartAct(Context context,boolean isVis) {
         Intent intent = new Intent(context, RecordDetailsActivity.class);
@@ -49,7 +54,13 @@ public class RecordDetailsActivity extends BaseActivity {
         intent.putExtra("isVis",isVis);
         context.startActivity(intent);
     }
-
+    public static void StartAct(Context context, boolean isVis, ArticleInfoEntity.ResultBean data) {
+        Intent intent = new Intent(context, RecordDetailsActivity.class);
+        //是否显示底部栏
+        intent.putExtra("isVis",isVis);
+        intent.putExtra("data",data);
+        context.startActivity(intent);
+    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_record_detail;
@@ -65,12 +76,21 @@ public class RecordDetailsActivity extends BaseActivity {
         super.initData(savedInstanceState);
         StatusBarUtils.transparencyBar(mActivity);
         isVis = getIntent().getBooleanExtra("isVis", false);
+        data = (ArticleInfoEntity.ResultBean) getIntent().getSerializableExtra("data");
         if (isVis){
             mLlBomHelp.setVisibility(View.VISIBLE);
         }
 
     }
 
+    @Override
+    protected void initEvent() {
+        super.initEvent();
+        mTvReleaseTime.setText(StringUtils.stampToDate(data.getCreateTime()));
+        mTvAddress.setText(data.getAddressContent());
+        mTvFindTime.setText(StringUtils.stampToDate(data.getFindTime()));
+        mTvNoteContext.setText(data.getDescription());
+    }
 
     @OnClick({R.id.iv_back, R.id.civ_pic,R.id.btn_help, R.id.btn_private_chat})
     public void onViewClicked(View view) {

@@ -9,7 +9,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleType;
 import com.example.habin.lostpropertyproject.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,15 +31,24 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
     private Context mContext;
     private OnitemClick mOnitemClick;
     private int mType;
+    private List<ArticleInfoEntity.ResultBean> mDataList;
 
     //图片选中样式集合
-    private int[] ResultPic = {R.mipmap.ic_result_seeking,R.mipmap.ic_result_pickuping,R.mipmap.ic_result_succsee, R.mipmap.ic_result_cancal};
+    private int[] ResultPic = {R.mipmap.ic_result_seeking, R.mipmap.ic_result_pickuping, R.mipmap.ic_result_succsee, R.mipmap.ic_result_cancal};
 
-    public RecordListAdapter(Context context) {
-        mContext = context;
+
+    public void setData(List<ArticleInfoEntity.ResultBean> dataList) {
+        if(mDataList == null){
+            mDataList = new ArrayList<>();
+            mDataList.addAll(dataList);
+        }else{
+            mDataList.clear();
+            mDataList.addAll(dataList);
+        }
+        notifyDataSetChanged();
     }
 
-    public RecordListAdapter(Context context, OnitemClick onitemClick,int type) {
+    public RecordListAdapter(Context context, OnitemClick onitemClick, int type) {
         mContext = context;
         mOnitemClick = onitemClick;
         mType = type;
@@ -49,12 +63,12 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         //如果是全部订单
-        if (mType==4){
+        if (mType == 4) {
 
         }
-        viewHolder.mIvResult.setBackgroundResource(ResultPic[mType]);
+        viewHolder.mIvResult.setBackgroundResource(ResultPic[mDataList.get(position).getRecordStatus()-1]);
         viewHolder.itemView.setOnClickListener(v -> {
-            if (mOnitemClick!=null){
+            if (mOnitemClick != null) {
                 mOnitemClick.onItemClick(position);
             }
         });
@@ -62,7 +76,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mDataList == null ? 0 : mDataList.size();
     }
 
 
@@ -73,6 +87,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
         ImageView mIvResult;
         @BindView(R.id.tv_note_context)
         TextView mTvNoteContext;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

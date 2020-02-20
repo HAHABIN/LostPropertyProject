@@ -14,6 +14,8 @@ import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.fragment.MineTpyePresenter;
 import com.example.habin.lostpropertyproject.Presenter.fragment.contract.MinePageContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.ProgressUtils;
+import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.Ui.activity.Land.LandActivity;
 import com.example.habin.lostpropertyproject.Ui.activity.mine.RecordListActivity;
@@ -40,10 +42,6 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
 
 
     public static MinePageFragment newInstance() {
-//        MinePageFragment fragment = new MinePageFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putSerializable(RESULT, result);
-//        fragment.setArguments(bundle);
         return new MinePageFragment();
     }
 
@@ -82,7 +80,6 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
 
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
-
     }
 
 
@@ -93,16 +90,16 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
                 UserInfoActivity.StartAct(mContext);
                 break;
             case R.id.ll_record_lost:
-                RecordListActivity.StartAct(mContext, "0");
+                RecordListActivity.StartAct(mContext, 1);
                 break;
             case R.id.ll_record_find:
-                RecordListActivity.StartAct(mContext, "1");
+                RecordListActivity.StartAct(mContext, 2);
                 break;
             case R.id.ll_record_complete:
-                RecordListActivity.StartAct(mContext, "2");
+                RecordListActivity.StartAct(mContext, 3);
                 break;
             case R.id.ll_record_mine:
-                RecordListActivity.StartAct(mContext, "3");
+                RecordListActivity.StartAct(mContext, 4);
                 break;
             case R.id.ll_setting:
                 SettingActivity.StartAct(mContext);

@@ -117,12 +117,12 @@ public class StringUtils {
      * s就是时间戳
      */
 
-    public static String stampToDate(String s){
+    public static String stampToDate(long time){
         String res;
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         //如果它本来就是long类型的,则不用写这一步
-        long lt = new Long(s);
-        Date date = new Date(lt);
+//        long lt = new Long(s);
+        Date date = new Date(time);
         res = simpleDateFormat.format(date);
         return res;
     }

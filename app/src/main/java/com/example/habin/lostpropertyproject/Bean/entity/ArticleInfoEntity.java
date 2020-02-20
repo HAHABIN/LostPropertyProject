@@ -31,7 +31,7 @@ public class ArticleInfoEntity extends HttpItem {
         //物品类型
         private int type;
         //联系电话
-        private int phone;
+        private String phone;
         //发布者id
         private int userId;
         //拾物时间或者丢失时间
@@ -45,7 +45,7 @@ public class ArticleInfoEntity extends HttpItem {
         //物品照片
         private String imgStr;
         //记录状态1为丢失记录 2为拾物记录 3完成记录 4取消记录
-        private int record_status;
+        private int recordStatus;
         //帮助者id
         private int helperId;
         //完成时间
@@ -71,11 +71,11 @@ public class ArticleInfoEntity extends HttpItem {
             this.type = type;
         }
 
-        public int getPhone() {
+        public String getPhone() {
             return phone;
         }
 
-        public void setPhone(int phone) {
+        public void setPhone(String phone) {
             this.phone = phone;
         }
 
@@ -120,12 +120,12 @@ public class ArticleInfoEntity extends HttpItem {
             this.imgStr = imgStr;
         }
 
-        public int getRecord_status() {
-            return record_status;
+        public int getRecordStatus() {
+            return recordStatus;
         }
 
-        public void setRecord_status(int record_status) {
-            this.record_status = record_status;
+        public void setRecordStatus(int recordStatus) {
+            this.recordStatus = recordStatus;
         }
 
         public int getHelperId() {
