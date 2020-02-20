@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.bigkoo.pickerview.builder.OptionsPickerBuilder;
@@ -15,10 +14,10 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.example.habin.lostpropertyproject.Bean.emtity.ArticleType;
-import com.example.habin.lostpropertyproject.Bean.emtity.City;
-import com.example.habin.lostpropertyproject.Bean.emtity.County;
-import com.example.habin.lostpropertyproject.Bean.emtity.Province;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleType;
+import com.example.habin.lostpropertyproject.Bean.entity.City;
+import com.example.habin.lostpropertyproject.Bean.entity.County;
+import com.example.habin.lostpropertyproject.Bean.entity.Province;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Widget.SelectDialog;
 import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
@@ -151,13 +150,19 @@ public class SelectorDialogUtils {
     }
 
     public void ShowTime(Activity activity,final TextView textView){
+        Calendar startDate = Calendar.getInstance();
+        startDate.set(1999,1,1);
+        Calendar endDate = Calendar.getInstance();
         TimePickerView timePicker = new TimePickerBuilder(activity, new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 textView.setText(simpleDateFormat.format(date));
             }
-        }).build();
+        })
+                .setDate(endDate)// 如果不设置的话，默认是系统时间*/
+                .setRangDate(startDate,endDate)
+                .build();
         //精准到秒
 //        timePicker.setDate(Calendar.getInstance());
         timePicker.show();

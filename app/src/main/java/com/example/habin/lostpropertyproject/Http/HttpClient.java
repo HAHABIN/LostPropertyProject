@@ -1,11 +1,9 @@
 package com.example.habin.lostpropertyproject.Http;
 
 import android.content.Context;
-import android.text.TextUtils;
 
-import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Common.Constants;
-import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,7 +37,7 @@ public class HttpClient {
     private int userId ;
 
     //用户信息
-    private PersonInfoEmtity.ResultBean mPersonInfo;
+    private PersonInfoEntity.ResultBean mPersonInfo;
 
     //无参的单利模式
     public static HttpClient getSingleton() {

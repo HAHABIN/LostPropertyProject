@@ -2,11 +2,11 @@ package com.example.habin.lostpropertyproject.Presenter.activity.land;
 
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
-import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
-import com.example.habin.lostpropertyproject.Presenter.activity.land.contract.LandContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.LandContract;
 
 
 import java.util.HashMap;
@@ -31,7 +31,7 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
         hashMap.put("username",username);
         hashMap.put("password",password);
 
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.Login,this,hashMap, PersonInfoEmtity.class);
+        HttpClient.getSingleton().startTask(HttpHelper.TaskType.Login,this,hashMap, PersonInfoEntity.class);
 
     }
 
@@ -44,7 +44,7 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
         hashMap.put("username",username);
         hashMap.put("password",password);
         hashMap.put("email",email);
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.Regin,this,hashMap,PersonInfoEmtity.class);
+        HttpClient.getSingleton().startTask(HttpHelper.TaskType.Regin,this,hashMap, PersonInfoEntity.class);
     }
 
     @Override

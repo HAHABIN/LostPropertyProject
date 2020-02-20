@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
-import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.MyApplication;
@@ -56,7 +56,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     @Override
     protected void initData(Bundle savedInstanceState) {
         super.initData(savedInstanceState);
-        PersonInfoEmtity.ResultBean mPersonInfo = MyApplication.getUserInfo(mContext);
+        PersonInfoEntity.ResultBean mPersonInfo = MyApplication.getUserInfo(mContext);
         if (mPersonInfo != null) {
             mTvName.setText(mPersonInfo.getName());
         }
@@ -118,7 +118,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     @Override
     public void onResume() {
         super.onResume();
-        PersonInfoEmtity.ResultBean personInfo = MyApplication.getUserInfo(mContext);
+        PersonInfoEntity.ResultBean personInfo = MyApplication.getUserInfo(mContext);
         if (personInfo != null) {
             mTvName.setText(personInfo.getName());
             UiUtils.GildeLoad(mCivPic,personInfo.getProfileImg());

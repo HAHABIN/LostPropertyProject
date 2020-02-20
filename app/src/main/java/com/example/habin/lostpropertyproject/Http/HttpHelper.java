@@ -13,7 +13,11 @@ public class HttpHelper {
         //---------用户信息模块
         UpdateInfo,//修改用户信息
         UploadPhoto,  //上传图片
-        QueryCity //获取省市级地址
+        QueryCity, //获取省市级地址
+
+        //发布物品信息模块
+        InsertArInfo,  //发布信息
+        QueryArticleInfo //查询获取信息列表
     }
 
     public static String getMethod(TaskType type) {
@@ -43,7 +47,12 @@ public class HttpHelper {
             case UploadPhoto:
                 method = "saveToImgByStr/uploadPhoto";
                 break;
-
+            case InsertArInfo:
+                method = "articleInfo/InsertArInfo";
+                break;
+            case QueryArticleInfo:
+                method = "articleInfo/QueryArticleInfo";
+                break;
 
         }
         return method;

@@ -10,9 +10,10 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
-import com.example.habin.lostpropertyproject.Bean.emtity.City;
-import com.example.habin.lostpropertyproject.Bean.emtity.County;
-import com.example.habin.lostpropertyproject.Bean.emtity.Province;
+
+import com.example.habin.lostpropertyproject.Bean.entity.City;
+import com.example.habin.lostpropertyproject.Bean.entity.County;
+import com.example.habin.lostpropertyproject.Bean.entity.Province;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.fragment.HomePagePresenter;

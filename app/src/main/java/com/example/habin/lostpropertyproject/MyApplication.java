@@ -3,11 +3,11 @@ package com.example.habin.lostpropertyproject;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.habin.lostpropertyproject.Bean.emtity.ArticleType;
-import com.example.habin.lostpropertyproject.Bean.emtity.City;
-import com.example.habin.lostpropertyproject.Bean.emtity.County;
-import com.example.habin.lostpropertyproject.Bean.emtity.Province;
-import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleType;
+import com.example.habin.lostpropertyproject.Bean.entity.City;
+import com.example.habin.lostpropertyproject.Bean.entity.County;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
+import com.example.habin.lostpropertyproject.Bean.entity.Province;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
@@ -24,7 +24,7 @@ public class MyApplication extends Application {
     public static MyApplication application;
     private static Context context;
     public static int userId;
-    private static PersonInfoEmtity.ResultBean userInfo;
+    private static PersonInfoEntity.ResultBean userInfo;
 
     private static ArrayList<Province> options1Items;
     private static ArrayList<ArrayList<City>> options2Items;
@@ -122,7 +122,7 @@ public class MyApplication extends Application {
         return userId;
     }
 
-    public static PersonInfoEmtity.ResultBean getUserInfo(Context context) {
+    public static PersonInfoEntity.ResultBean getUserInfo(Context context) {
         try {
             userInfo = SharedPreferenceHandler.getUserInfo(context);
         } catch (Exception e) {
@@ -147,7 +147,6 @@ public class MyApplication extends Application {
     }
 
     public static ArrayList<ArticleType> getTypeList(){
-
         return jsonType;
     }
 }

@@ -39,7 +39,7 @@
         <activity android:name=".Ui.activity.Land.LandActivity" />
         <activity android:name=".Ui.activity.mine.UserInfoActivity" />
         <activity android:name=".Ui.activity.RecordDetailsActivity" />
-        <activity android:name=".Ui.activity.ReleaseActivity" />
+        <activity android:name=".Ui.activity.ReleaseActivity" android:windowSoftInputMode="adjustResize|stateHidden" />
     </application>
 
 </manifest>

@@ -3,7 +3,7 @@ package com.example.habin.lostpropertyproject.Util;
 import android.content.Context;
 import android.content.res.AssetManager;
 
-import com.example.habin.lostpropertyproject.Bean.emtity.Province;
+import com.example.habin.lostpropertyproject.Bean.entity.Province;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;

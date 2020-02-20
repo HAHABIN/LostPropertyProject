@@ -11,12 +11,12 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
-import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.activity.mine.UserInfoPresenter;
-import com.example.habin.lostpropertyproject.Presenter.activity.mine.contract.UserInfoContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.UserInfoContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
@@ -70,7 +70,7 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
 
     private String mCompressPath;
     private Disposable mSubscribe;
-    private PersonInfoEmtity.ResultBean mUserInfo;
+    private PersonInfoEntity.ResultBean mUserInfo;
 
 
     @Override
@@ -160,7 +160,11 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
                     List<LocalMedia> selectList = PictureSelector.obtainMultipleResult(data);
                     if (selectList.size() > 0) {
                         LocalMedia localMedia = selectList.get(0);
-                        mCompressPath = localMedia.getCutPath();
+                        if (localMedia.isCut()){
+                            mCompressPath = localMedia.getCutPath();
+                        } else {
+                            mCompressPath = localMedia.getCompressPath();
+                        }
                         //加载头像
                         Glide.with(mContext).load(Uri.fromFile(new File(mCompressPath))).into(mCivAvatar);
                         uploadPhoto();//上传
@@ -189,7 +193,7 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
                     ToastUtils.show_s(object.getString("message"));
                     if (object.getInt("code") == 1){
                         ProgressUtils.show(mContext,"正在加载图片。。。");
-                        String profileimg = object.getString("data");
+                        String profileimg = object.getString("result");
                         //保存图片地址
                         SharedPreferenceHandler.saveInfo(mContext,profileimg,SharedPreferenceHandler.InfoType.ProfileImg);
                         mPresenter.updateInfo(profileimg);

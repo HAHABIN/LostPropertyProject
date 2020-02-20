@@ -15,7 +15,7 @@
         android:layout_height="35dp"
         android:hint="输入邮箱"
         android:inputType="textEmailAddress"
-        android:maxLines="1"
+        android:singleLine="true"
         android:textSize="14sp"
         android:background="@null"
         />

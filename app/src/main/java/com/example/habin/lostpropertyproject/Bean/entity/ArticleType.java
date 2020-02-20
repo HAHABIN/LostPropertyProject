@@ -1,9 +1,6 @@
-package com.example.habin.lostpropertyproject.Bean.emtity;
+package com.example.habin.lostpropertyproject.Bean.entity;
 
 import com.contrarywind.interfaces.IPickerViewData;
-
-import java.io.Serializable;
-import java.util.Date;
 
 /**
  * @author HABIN

@@ -1,9 +1,10 @@
 package com.example.habin.lostpropertyproject.Util;
 
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.util.Base64;
 
-import com.example.habin.lostpropertyproject.Bean.emtity.ArticleType;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleType;
 import com.example.habin.lostpropertyproject.MyApplication;
 
 import java.io.ByteArrayOutputStream;
@@ -63,6 +64,9 @@ public class StringUtils {
      */
     public static boolean checkPhoneNumber(String mobileNumber) {
         boolean flag = false;
+        if (mobileNumber.length()==0){
+            return false;
+        }
         try {
             // Pattern regex = Pattern.compile("^(((13[0-9])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8})|(0\\d{2}-\\d{8})|(0\\d{3}-\\d{7})$");
             Pattern regex = Pattern.compile("^1[345789]\\d{9}$");
@@ -123,12 +127,12 @@ public class StringUtils {
         return res;
     }
     /**
-     * String str = "2019-03-13 13:54:00";
+     * String str = "2019-03-13 ";
      * 时间字符串转为时间戳
      * */
     public static long  dateToStamp(String str)  {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = null;
         try {
             date = simpleDateFormat.parse(str);
@@ -140,8 +144,9 @@ public class StringUtils {
     }
 
     //类别搜索返回
-    public int typeNameToId(String name){
-        int id = 1;
+    public static int typeNameToId(String name){
+        //默认11其他
+        int id = 11;
         ArrayList<ArticleType> typeList = MyApplication.getTypeList();
         //直接跳出多重循环 如果有多个for
         loop:for (ArticleType type : typeList){

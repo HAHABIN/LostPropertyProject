@@ -14,11 +14,11 @@ import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
-import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.activity.land.LandPresenter;
-import com.example.habin.lostpropertyproject.Presenter.activity.land.contract.LandContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.LandContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.CodeUtils;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
@@ -211,8 +211,8 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
             case Login:
             case Regin:
                 SharedPreferenceHandler.setUserName(mContext, mUsername);
-                if (item instanceof PersonInfoEmtity) {
-                    PersonInfoEmtity.ResultBean result = ((PersonInfoEmtity) item).getData();
+                if (item instanceof PersonInfoEntity) {
+                    PersonInfoEntity.ResultBean result = ((PersonInfoEntity) item).getResult();
                     try {
                         SharedPreferenceHandler.saveUserInfo(mContext, result);
                         SharedPreferenceHandler.setUserId(mContext, result.getUserId());

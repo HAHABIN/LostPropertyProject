@@ -4,7 +4,7 @@ import com.example.habin.lostpropertyproject.Base.RxPresenter;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
-import com.example.habin.lostpropertyproject.Presenter.activity.mine.contract.UserInfoContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.UserInfoContract;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 

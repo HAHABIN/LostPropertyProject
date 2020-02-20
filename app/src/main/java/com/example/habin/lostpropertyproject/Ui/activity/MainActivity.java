@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
-import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Widget.PublishDialog;
@@ -32,7 +32,7 @@ public class MainActivity extends BaseActivity {
         context.startActivity(new Intent(context, MainActivity.class));
     }
 
-    public static void StartAct(Context context, PersonInfoEmtity.ResultBean result) {
+    public static void StartAct(Context context, PersonInfoEntity.ResultBean result) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(RESULT, result);
         context.startActivity(intent);
@@ -96,10 +96,10 @@ public class MainActivity extends BaseActivity {
         switch (view.getId()) {
             case R.id.btn_add:
                 //登录判断
-//                if (MyApplication.isLogin(mContext)) {
-//                    LandActivity.StartAct(mContext);
-//                    return;
-//                }
+                if (MyApplication.isLogin(mContext)) {
+                    LandActivity.StartAct(mContext);
+                    return;
+                }
                 if (publishDialog == null) {
                     publishDialog = new PublishDialog(MainActivity.this);
                     publishDialog.setLostClickListener(v -> {

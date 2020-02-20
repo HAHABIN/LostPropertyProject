@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.Presenter.activity.land.contract;
+package com.example.habin.lostpropertyproject.Presenter.activity.contract;
 
 import com.example.habin.lostpropertyproject.Base.BaseContract;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;

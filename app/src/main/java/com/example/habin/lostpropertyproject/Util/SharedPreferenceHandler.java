@@ -3,7 +3,7 @@ package com.example.habin.lostpropertyproject.Util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.example.habin.lostpropertyproject.Bean.emtity.PersonInfoEmtity;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.google.gson.Gson;
 
 /**
@@ -32,7 +32,7 @@ public class SharedPreferenceHandler {
      * @param userinfo
      * @throws Exception
      */
-    public static void saveUserInfo(Context context, PersonInfoEmtity.ResultBean userinfo){
+    public static void saveUserInfo(Context context, PersonInfoEntity.ResultBean userinfo){
         SharedPreferences settings = context.getSharedPreferences(STRING_SAVEUserInfo, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         Gson gson=new Gson();
@@ -40,11 +40,11 @@ public class SharedPreferenceHandler {
         editor.putString("userinfo",string);
         editor.apply();
     }
-    public static PersonInfoEmtity.ResultBean getUserInfo(Context context) {
+    public static PersonInfoEntity.ResultBean getUserInfo(Context context) {
         SharedPreferences settings = context.getSharedPreferences(STRING_SAVEUserInfo, Context.MODE_PRIVATE);
         Gson gson=new Gson();
         String object = settings.getString("userinfo", null);
-        PersonInfoEmtity.ResultBean userinfo = gson.fromJson(object,PersonInfoEmtity.ResultBean.class);
+        PersonInfoEntity.ResultBean userinfo = gson.fromJson(object,PersonInfoEntity.ResultBean.class);
         return userinfo;
     }
     public static void saveNickName(Context context,String NickName){
@@ -52,7 +52,7 @@ public class SharedPreferenceHandler {
         Gson gson=new Gson();
         String object = settings.getString("userinfo", null);
         //获得用户信息
-        PersonInfoEmtity.ResultBean userinfo = gson.fromJson(object,PersonInfoEmtity.ResultBean.class);
+        PersonInfoEntity.ResultBean userinfo = gson.fromJson(object,PersonInfoEntity.ResultBean.class);
         userinfo.setName(NickName);
         //修改用户信息
         SharedPreferences.Editor editor = settings.edit();
@@ -65,7 +65,7 @@ public class SharedPreferenceHandler {
         Gson gson=new Gson();
         String object = settings.getString("userinfo", null);
         //获得用户信息
-        PersonInfoEmtity.ResultBean userinfo = gson.fromJson(object,PersonInfoEmtity.ResultBean.class);
+        PersonInfoEntity.ResultBean userinfo = gson.fromJson(object,PersonInfoEntity.ResultBean.class);
         switch (type){
             case NickName:
                 userinfo.setName(Info);
