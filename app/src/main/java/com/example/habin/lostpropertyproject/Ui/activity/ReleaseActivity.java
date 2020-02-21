@@ -66,6 +66,7 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
         context.startActivity(intent);
     }
 
+
     @BindView(R.id.rl_image)
     RecyclerView mRlImage;
     @BindView(R.id.ll_address)
@@ -156,7 +157,7 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
         @SuppressLint("CheckResult")
         @Override
         public void onAddPicClick() {
-            SelectorDialogUtils.getInstance().openDialogInActivity(mActivity, maxSelectNum, mSelectList, false, false);
+            SelectorDialogUtils.getInstance().openDialogInActivity(mActivity, maxSelectNum, mSelectList, true, false);
         }
     };
 

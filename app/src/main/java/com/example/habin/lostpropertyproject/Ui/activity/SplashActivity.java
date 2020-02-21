@@ -35,7 +35,6 @@ public class SplashActivity extends BaseActivity {
         //全屏透明状态栏
         StatusBarUtils.transparencyBar(mActivity);
 //        checkPermissionRequest(this);
-
         StartUp();
     }
 

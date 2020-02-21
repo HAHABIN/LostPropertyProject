@@ -9,9 +9,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleType;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.JsonUtil;
+import com.example.habin.lostpropertyproject.Util.StringUtils;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +71,16 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
-        //如果是全部订单
-        if (mType == 4) {
-
+        ArticleInfoEntity.ResultBean resultBean = mDataList.get(position);
+        viewHolder.mTvFindTime.setText(StringUtils.stampToDate(resultBean.getCreateTime()));
+        viewHolder.mTvNoteContext.setText(resultBean.getDescription());
+        viewHolder.mIvResult.setBackgroundResource(ResultPic[resultBean.getRecordStatus()-1]);
+        if (resultBean.getImgStr()!=null){
+            List<UploadPhotoParams> uploadPhotoParams = JsonUtil.fromJson(resultBean.getImgStr(), new TypeToken<List<UploadPhotoParams>>() {
+            });
+            UiUtils.GildeLoad(viewHolder.mIvImg,uploadPhotoParams.get(0).getImgStr());
         }
-        viewHolder.mIvResult.setBackgroundResource(ResultPic[mDataList.get(position).getRecordStatus()-1]);
+
         viewHolder.itemView.setOnClickListener(v -> {
             if (mOnitemClick != null) {
                 mOnitemClick.onItemClick(position);
@@ -87,7 +101,8 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
         ImageView mIvResult;
         @BindView(R.id.tv_note_context)
         TextView mTvNoteContext;
-
+        @BindView(R.id.iv_img)
+        ImageView mIvImg;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

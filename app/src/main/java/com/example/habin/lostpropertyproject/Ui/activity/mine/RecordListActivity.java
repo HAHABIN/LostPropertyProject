@@ -67,9 +67,9 @@ public class RecordListActivity extends BaseActivity implements RecordListAdapte
         setShowBack(View.VISIBLE);
         setBackOnClick().setOnClickListener(v -> finish());
 
-        recordStatus = getIntent().getIntExtra("type",1);
+        recordStatus = getIntent().getIntExtra("type", 1);
         titlelist = getResources().getStringArray(R.array.record_list_name);
-        setTitleText(titlelist[recordStatus-1]);
+        setTitleText(titlelist[recordStatus - 1]);
         mReListAdapter = new RecordListAdapter(mContext, this, recordStatus);
         //设置LayoutManager为LinearLayoutManager
         mRvRecord.setLayoutManager(new LinearLayoutManager(this));
@@ -78,24 +78,19 @@ public class RecordListActivity extends BaseActivity implements RecordListAdapte
     }
 
     private void load() {
-        ProgressUtils.show(mContext,"加载中....");
-        HashMap<String,Object> hashMap = new HashMap<>();
-        hashMap.put("userId",MyApplication.getUserId(mContext));
-        if (recordStatus<=3){
-            hashMap.put("recordStatus",recordStatus);
+        ProgressUtils.show(mContext, "加载中....");
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userId", MyApplication.getUserId(mContext));
+        if (recordStatus<4){
+            hashMap.put("recordStatus", recordStatus);
         }
-        if (recordStatus == 1){
-            hashMap.put("recordStatus",1);
-        } else if (recordStatus ==2){
-            hashMap.put("recordStatus",1);
-        }
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.QueryArticleInfo,RecordListActivity.this,hashMap);
+        HttpClient.getSingleton().startTask(HttpHelper.TaskType.QueryArticleInfo, RecordListActivity.this, hashMap);
     }
 
 
     @Override
     public void onItemClick(int position) {
-        RecordDetailsActivity.StartAct(mContext,false,result.get(position));
+        RecordDetailsActivity.StartAct(mContext, false, result.get(position));
     }
 
 
@@ -113,16 +108,16 @@ public class RecordListActivity extends BaseActivity implements RecordListAdapte
     @Override
     public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
         ProgressUtils.dismiss();
-        switch (type){
+        switch (type) {
             case QueryArticleInfo:
                 ArticleInfoEntity articleInfoEntity = JsonUtil.JSONObjectToBean(object, ArticleInfoEntity.class);
                 if (articleInfoEntity != null) {
-                    if (result == null){
+                    if (result == null) {
                         result = new ArrayList<>();
                     }
                     result.clear();
                     result = articleInfoEntity.getResult();
-                    if (result != null && !result.isEmpty()){
+                    if (result != null && !result.isEmpty()) {
                         mReListAdapter.setData(result);
                     }
                 }

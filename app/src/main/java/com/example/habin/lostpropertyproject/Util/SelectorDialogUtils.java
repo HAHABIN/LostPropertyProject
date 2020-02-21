@@ -116,6 +116,9 @@ public class SelectorDialogUtils {
                 .selectionMedia(selectList)// 是否传入已选图片
                 .enableCrop(crop)
                 .compress(true)
+                .withAspectRatio(1,1)//int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .scaleEnabled(true)//裁剪是否可放大缩小图片 true or false
+                .withAspectRatio(1,1)
                 .minimumCompressSize(100)// 小于100kb的图片不压缩
                 .previewImage(false)// 是否可预览图片
                 .circleDimmedLayer(isheader)
@@ -130,6 +133,8 @@ public class SelectorDialogUtils {
                 .maxSelectNum(maxSelectNum)// 最大图片选择数量
                 .selectionMedia(selectList)// 是否传入已选图片
                 .enableCrop(crop)
+                .withAspectRatio(1,1)//int 裁剪比例 如16:9 3:2 3:4 1:1 可自定义
+                .scaleEnabled(true)//裁剪是否可放大缩小图片 true or false
                 .compress(true)
                 .isCamera(false)// 是否显示拍照按钮
                 .minimumCompressSize(100)// 小于100kb的图片不压缩
@@ -137,6 +142,7 @@ public class SelectorDialogUtils {
                 .circleDimmedLayer(isheader)
                 .showCropFrame(!isheader)// 是否显示裁剪矩形边框 圆形裁剪时建议设为false
                 .showCropGrid(!isheader)// 是否显示裁剪矩形网格 圆形裁剪时建议设为false
+                .isDragFrame(false)// 是否可拖动裁剪框(固定)
                 .forResult(PictureConfig.CHOOSE_REQUEST);//结果回调onActivityResult code
     }
 

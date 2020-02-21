@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
+import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
@@ -18,6 +19,7 @@ import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.activity.mine.UserInfoPresenter;
 import com.example.habin.lostpropertyproject.Presenter.activity.contract.UserInfoContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Ui.activity.OpenPicActivity;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
@@ -33,6 +35,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -48,6 +51,8 @@ import io.reactivex.schedulers.Schedulers;
  * 用户信息页面
  */
 public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter> implements UserInfoContract.View {
+
+
 
     public static void StartAct(Context context) {
         context.startActivity(new Intent(context, UserInfoActivity.class));
@@ -105,12 +110,20 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
         UiUtils.GildeLoad(mCivAvatar,mUserInfo.getProfileImg());
     }
 
-    @OnClick({R.id.ll_avatar, R.id.ll_nickname, R.id.ll_gender, R.id.ll_area, R.id.ll_email})
+    @OnClick({R.id.ll_avatar, R.id.civ_avatar,R.id.ll_nickname, R.id.ll_gender, R.id.ll_area, R.id.ll_email})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_avatar:
 //                showPop();
                  SelectorDialogUtils.getInstance().openForHeaderInActivity(mActivity);
+                break;
+            case R.id.civ_avatar:
+
+                List<LocalMedia> mediaList = new ArrayList<>();
+                LocalMedia localMedia = new LocalMedia();
+                localMedia.setPath(mUserInfo.getProfileImg());
+                mediaList.add(localMedia);
+                OpenPicActivity.StartAct(mContext,0,mediaList);
                 break;
             case R.id.ll_nickname:
                 EditNicknameActivity.StartAct(mActivity);
@@ -195,7 +208,7 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
                         ProgressUtils.show(mContext,"正在加载图片。。。");
                         String profileimg = object.getString("result");
                         //保存图片地址
-                        SharedPreferenceHandler.saveInfo(mContext,profileimg,SharedPreferenceHandler.InfoType.ProfileImg);
+                        SharedPreferenceHandler.saveInfo(mContext, profileimg,SharedPreferenceHandler.InfoType.ProfileImg);
                         mPresenter.updateInfo(profileimg);
                     }
                 } catch (JSONException e) {

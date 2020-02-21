@@ -23,6 +23,9 @@ public class Constants {
 //    public static final int NickName_REQUEST = 1000;
 //    public static final int NickName_REQUEST = 1000;
 
+    //查看图片
+    public static final String OpenPicPosition = "position";
+    public static final String OpenPicMEDIALIST = "mediaList";
 
 }
 

@@ -161,21 +161,6 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
             if (media.isCut()) {
                 Log.i("裁剪地址::", media.getCutPath());
             }
-//            long duration = media.getDuration();
-//            viewHolder.tv_duration.setVisibility(pictureType == PictureConfig.TYPE_VIDEO
-//                    ? View.VISIBLE : View.GONE);
-//            if (mimeType == PictureMimeType.ofAudio()) {
-//                viewHolder.tv_duration.setVisibility(View.VISIBLE);
-//                Drawable drawable = ContextCompat.getDrawable(context, R.drawable.picture_audio);
-//                StringUtils.modifyTextViewDrawable(viewHolder.tv_duration, drawable, 0);
-//            } else {
-//                Drawable drawable = ContextCompat.getDrawable(context, R.drawable.video_icon);
-//                StringUtils.modifyTextViewDrawable(viewHolder.tv_duration, drawable, 0);
-//            }
-//            viewHolder.tv_duration.setText(DateUtils.timeParse(duration));
-//            if (mimeType == PictureMimeType.ofAudio()) {
-//                viewHolder.mImg.setImageResource(R.drawable.audio_placeholder);
-//            } else {
                 RequestOptions options = new RequestOptions()
                         .centerCrop()
                         .placeholder(R.color.white_f6)
