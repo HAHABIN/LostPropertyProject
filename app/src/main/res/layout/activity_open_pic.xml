@@ -43,10 +43,30 @@
             android:visibility="gone"
             />
     </RelativeLayout>
+    <com.example.habin.lostpropertyproject.view.PhotoViewPager
+        android:id="@+id/vp_avatar"
+        android:layout_below="@+id/ll_basetitle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
     <com.luck.picture.lib.photoview.PhotoView
         android:id="@+id/pv_avatar"
         android:layout_below="@+id/ll_basetitle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:visibility="gone"
         android:src="@drawable/ttt"/>
+
+    <TextView
+        android:id="@+id/tv_vpNum"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="gone"/>
+
 </RelativeLayout>

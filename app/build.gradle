@@ -65,6 +65,6 @@ dependencies {
     //PickerView 选择弹出
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
-    //查看
-    implementation 'com.github.chrisbanes:PhotoView:1.2.6'
+    //查看图片  由于PictureSelector里面自带PhotoView 所以不用重新引用
+//    implementation 'com.github.chrisbanes:PhotoView:1.2.6'
 }

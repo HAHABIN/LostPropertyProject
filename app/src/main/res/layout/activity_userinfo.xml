@@ -299,12 +299,4 @@
         android:layout_marginHorizontal="15dp"
         android:layout_marginTop="5dp"
         android:background="@color/white_eb" />
-    <com.luck.picture.lib.photoview.PhotoView
-        android:id="@+id/pv_avatar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:src="@drawable/ttt"
-        android:background="#302F2F"
-        />
 </LinearLayout>

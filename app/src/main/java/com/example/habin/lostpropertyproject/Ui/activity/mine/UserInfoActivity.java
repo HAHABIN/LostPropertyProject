@@ -118,12 +118,9 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
                  SelectorDialogUtils.getInstance().openForHeaderInActivity(mActivity);
                 break;
             case R.id.civ_avatar:
-
-                List<LocalMedia> mediaList = new ArrayList<>();
-                LocalMedia localMedia = new LocalMedia();
-                localMedia.setPath(mUserInfo.getProfileImg());
-                mediaList.add(localMedia);
-                OpenPicActivity.StartAct(mContext,0,mediaList);
+                List<String> imgList = new ArrayList<>();
+                imgList.add(mUserInfo.getProfileImg());
+                OpenPicActivity.StartAct(mContext,0,imgList);
                 break;
             case R.id.ll_nickname:
                 EditNicknameActivity.StartAct(mActivity);

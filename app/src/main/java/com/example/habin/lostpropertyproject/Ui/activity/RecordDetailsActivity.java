@@ -10,9 +10,12 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.view.CircleImageView;
 
 import java.io.Serializable;
@@ -79,6 +82,10 @@ public class RecordDetailsActivity extends BaseActivity {
         data = (ArticleInfoEntity.ResultBean) getIntent().getSerializableExtra("data");
         if (isVis){
             mLlBomHelp.setVisibility(View.VISIBLE);
+        } else {
+            PersonInfoEntity.ResultBean userInfo = MyApplication.getUserInfo(mContext);
+            UiUtils.GildeLoad(mCivPic,userInfo.getProfileImg());
+            mTvNickname.setText(userInfo.getName());
         }
 
     }
