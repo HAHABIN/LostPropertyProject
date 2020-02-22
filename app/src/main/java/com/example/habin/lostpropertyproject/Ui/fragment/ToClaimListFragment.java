@@ -31,13 +31,6 @@ public class ToClaimListFragment extends BaseFragment implements ToClaimListAdap
         fragment.setArguments(bundle);
         return fragment;
     }
-//    public static ToClaimListFragment newInstance(String address) {
-//        ToClaimListFragment fragment = new ToClaimListFragment();
-//        Bundle bundle = new Bundle();
-//        bundle.putString("address", address);
-//        fragment.setArguments(bundle);
-//        return fragment;
-//    }
 
 
 

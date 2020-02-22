@@ -31,16 +31,4 @@ public class ReleasePresenter extends RxPresenter<ReleaseContract.View> implemen
         HttpClient.getInstance().startTask(HttpHelper.TaskType.UploadPhoto, this, hashMap);
     }
 
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
-        super.taskFinished(type, object);
-        mView.onSuccess(type,object);
-    }
-
-    @Override
-    public void taskError(HttpHelper.TaskType type, ApiError error) {
-        super.taskError(type, error);
-        mView.onFailure(type,error);
-    }
 }

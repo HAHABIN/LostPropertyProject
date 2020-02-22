@@ -30,35 +30,17 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("username",username);
         hashMap.put("password",password);
-
         HttpClient.getInstance().startTask(HttpHelper.TaskType.Login,this,hashMap, PersonInfoEntity.class);
 
     }
 
     @Override
     public void signup(String username, String password, String email) {
-
-
-
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("username",username);
         hashMap.put("password",password);
         hashMap.put("email",email);
         HttpClient.getInstance().startTask(HttpHelper.TaskType.Regin,this,hashMap, PersonInfoEntity.class);
     }
-
-    @Override
-    public void taskError(HttpHelper.TaskType type, ApiError error) {
-        super.taskError(type, error);
-        mView.onFailure(type,error);
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
-        super.taskFinished(type, item);
-        mView.onSuccess(type,item);
-    }
-
-
 
 }

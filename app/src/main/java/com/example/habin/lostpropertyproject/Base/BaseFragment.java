@@ -41,6 +41,11 @@ public abstract class BaseFragment extends Fragment {
     protected abstract int getLayoutId();
 
 
+    /**
+     * 逻辑使用区
+     */
+    protected void processLogic(){
+    }
 
     protected abstract void initView(View view);
 
@@ -49,11 +54,7 @@ public abstract class BaseFragment extends Fragment {
     protected abstract void initData();
 
 
-    /**
-     * 逻辑使用区
-     */
-    protected void processLogic(){
-    }
+
 
 
 
@@ -71,10 +72,12 @@ public abstract class BaseFragment extends Fragment {
         mRoot = inflater.from(getActivity()).inflate(getLayoutId(),container,false);
         mUnBinder = ButterKnife.bind(this, mRoot);
         TAG=getName();
+        //绑定Presenter
+        processLogic();
         initView(mRoot);
         initListener();
         initData();
-        processLogic();
+
         return mRoot;
     }
 

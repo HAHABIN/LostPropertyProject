@@ -7,11 +7,14 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
+import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.TaskListener;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.EditEmailContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.mine.EditEmailPresenter;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
@@ -24,7 +27,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 
-public class EditEmailActivity extends BaseActivity implements TaskListener {
+public class EditEmailActivity extends BaseMVPActivity<EditEmailContract.Presenter> implements EditEmailContract.View {
 
     public static void StartAct(Activity activity) {
         activity.startActivityForResult(new Intent(activity, EditEmailActivity.class),1000);
@@ -61,10 +64,7 @@ public class EditEmailActivity extends BaseActivity implements TaskListener {
                 return;
             }
             ProgressUtils.show(mContext, "提交中.....");
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("userId", SharedPreferenceHandler.getUserId(mContext));
-            hashMap.put("email", email);
-            HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo, this, hashMap, HttpItem.class);
+            mPresenter.updateEmail(email);
         });
     }
 
@@ -78,25 +78,8 @@ public class EditEmailActivity extends BaseActivity implements TaskListener {
         setShowBack(View.VISIBLE);
         setRightText("保存");
     }
-
     @Override
-    public void taskStarted(HttpHelper.TaskType type) {
-
-    }
-
-    @Override
-    public void taskError(HttpHelper.TaskType type, ApiError error) {
-        ProgressUtils.dismiss();
-        ToastUtils.show_s("邮箱修改失败");
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
-
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
         ProgressUtils.dismiss();
         switch (type){
             case UpdateInfo:
@@ -105,5 +88,21 @@ public class EditEmailActivity extends BaseActivity implements TaskListener {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
+
+    }
+
+    @Override
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        ProgressUtils.dismiss();
+        ToastUtils.show_s("邮箱修改失败");
+    }
+
+    @Override
+    protected EditEmailContract.Presenter bindPresenter() {
+        return new EditEmailPresenter();
     }
 }

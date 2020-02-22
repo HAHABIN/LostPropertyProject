@@ -22,6 +22,7 @@ import butterknife.ButterKnife;
  * 首页列表适配器
  */
 public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.ViewHolder> {
+
     private Context mContext;
     private OnitemClick mOnitemClick;
     private int mType;

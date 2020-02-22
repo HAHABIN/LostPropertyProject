@@ -8,11 +8,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
+import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.TaskListener;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.EditPasswordContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.land.EditPasswordPresenter;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
@@ -29,7 +32,7 @@ import butterknife.BindView;
 /**
  * 修改密码模块
  */
-public class EditPasswordActivity extends BaseActivity implements TaskListener {
+public class EditPasswordActivity extends BaseMVPActivity<EditPasswordContract.Presenter> implements EditPasswordContract.View {
 
 
 
@@ -82,12 +85,7 @@ public class EditPasswordActivity extends BaseActivity implements TaskListener {
             }
             if (ReNp.equals(Np)) {
                 ProgressUtils.show(mContext, "正在提交修改");
-                HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("username", mSpusername);
-                hashMap.put("password", mEdOldPassword.getText().toString());
-                hashMap.put("newpassword", Np);
-
-                HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdatePasswordAuth, this, hashMap, HttpItem.class);
+                mPresenter.UpdatePasswordAuth(mSpusername,mEdOldPassword.getText().toString(),Np);
             } else {
                 SnackbarUtils.show(mActivity, "密码不相同，请重新输入");
             }
@@ -110,29 +108,26 @@ public class EditPasswordActivity extends BaseActivity implements TaskListener {
         mTvUsername.setText(mSpusername);
 
     }
-
     @Override
-    public void taskStarted(HttpHelper.TaskType type) {
-
-    }
-
-    @Override
-    public void taskError(HttpHelper.TaskType type, ApiError error) {
-        ProgressUtils.dismiss();
-        SnackbarUtils.show(mActivity, error.getMessage());
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
-
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
         ProgressUtils.dismiss();
         ToastUtils.show_s(mActivity, item.getMessage());
         finish();
     }
 
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
 
+    }
+
+    @Override
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        ProgressUtils.dismiss();
+        SnackbarUtils.show(mActivity, e.getMessage());
+    }
+
+    @Override
+    protected EditPasswordContract.Presenter bindPresenter() {
+        return new EditPasswordPresenter();
+    }
 }

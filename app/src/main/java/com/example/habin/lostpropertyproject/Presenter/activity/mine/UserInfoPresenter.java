@@ -4,6 +4,7 @@ import com.example.habin.lostpropertyproject.Base.RxPresenter;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.activity.contract.UserInfoContract;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
@@ -30,21 +31,9 @@ public class UserInfoPresenter extends RxPresenter<UserInfoContract.View> implem
     @Override
     public void updateInfo(String str) {
         HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("userId", SharedPreferenceHandler.getUserId(UiUtils.getContext()));
+        hashMap.put("userId", MyApplication.getUserId(UiUtils.getContext()));
         hashMap.put("profileimg",str);
         HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo, this, hashMap);
     }
 
-    @Override
-    public void taskError(HttpHelper.TaskType type, ApiError error) {
-        super.taskError(type, error);
-        mView.onFailure(type,error);
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
-        super.taskFinished(type, object);
-        mView.onSuccess(type,object);
-
-    }
 }

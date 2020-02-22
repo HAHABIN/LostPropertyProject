@@ -44,6 +44,7 @@ public class HttpClient {
 //        }
 //        return retrofitManager;
 //    }
+
     private static class Holder {
         static HttpClient client = new HttpClient();
     }

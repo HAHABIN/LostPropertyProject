@@ -82,16 +82,16 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
 
     @Override
     public void taskError(HttpHelper.TaskType type, ApiError error) {
-
+        mView.onFailure(type,error);
     }
 
     @Override
     public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
-
+        mView.onSuccess(type,object);
     }
 
     @Override
     public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
-
+        mView.onSuccess(type,item);
     }
 }

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
+import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.Common.Constants;
@@ -16,6 +17,8 @@ import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.TaskListener;
 import com.example.habin.lostpropertyproject.MyApplication;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.RecordListContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.mine.RecordListPresenter;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Ui.activity.RecordDetailsActivity;
 import com.example.habin.lostpropertyproject.Ui.adapter.RecordListAdapter;
@@ -35,7 +38,7 @@ import butterknife.BindView;
 /**
  * 记录列表页面
  */
-public class RecordListActivity extends BaseActivity implements RecordListAdapter.OnitemClick, TaskListener {
+public class RecordListActivity extends BaseMVPActivity<RecordListContract.Presenter> implements RecordListContract.View,RecordListAdapter.OnitemClick {
 
 
     private List<ArticleInfoEntity.ResultBean> result;
@@ -102,12 +105,7 @@ public class RecordListActivity extends BaseActivity implements RecordListAdapte
 
     private void load() {
         ProgressUtils.show(mContext, "加载中....");
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("userId", MyApplication.getUserId(mContext));
-        if (recordStatus<4){
-            hashMap.put("recordStatus", recordStatus);
-        }
-        HttpClient.getInstance().startTask(HttpHelper.TaskType.QueryArticleInfo, RecordListActivity.this, hashMap);
+        mPresenter.QueryArticleInfo(MyApplication.getUserId(mContext),recordStatus);
     }
 
 
@@ -121,18 +119,12 @@ public class RecordListActivity extends BaseActivity implements RecordListAdapte
 
 
     @Override
-    public void taskStarted(HttpHelper.TaskType type) {
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
 
     }
 
     @Override
-    public void taskError(HttpHelper.TaskType type, ApiError error) {
-        ProgressUtils.dismiss();
-        ToastUtils.show_s(error.getMessage());
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
         ProgressUtils.dismiss();
         switch (type) {
             case QueryArticleInfo:
@@ -149,11 +141,16 @@ public class RecordListActivity extends BaseActivity implements RecordListAdapte
                 }
                 break;
         }
-
     }
 
     @Override
-    public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        ProgressUtils.dismiss();
+        ToastUtils.show_s(e.getMessage());
+    }
 
+    @Override
+    protected RecordListContract.Presenter bindPresenter() {
+        return new RecordListPresenter();
     }
 }

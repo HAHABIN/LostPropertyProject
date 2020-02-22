@@ -7,11 +7,14 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
+import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.TaskListener;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.EditNicknameContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.mine.EditNickNamePresenter;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
@@ -23,7 +26,7 @@ import java.util.HashMap;
 
 import butterknife.BindView;
 
-public class EditNicknameActivity extends BaseActivity implements TaskListener {
+public class EditNicknameActivity extends BaseMVPActivity<EditNicknameContract.Presenter> implements EditNicknameContract.View {
 
 
     @BindView(R.id.ed_nickname)
@@ -68,33 +71,15 @@ public class EditNicknameActivity extends BaseActivity implements TaskListener {
                 ToastUtils.show_s("昵称不能为空");
                 return;
             }
-            String name = nickname;
             ProgressUtils.show(mContext,"提交中.....");
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("userId", SharedPreferenceHandler.getUserId(mContext));
-            hashMap.put("nickname", nickname);
-            HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo,this,hashMap,HttpItem.class);
+            mPresenter.updateNickName(nickname);
         });
     }
 
-    @Override
-    public void taskStarted(HttpHelper.TaskType type) {
 
-    }
 
     @Override
-    public void taskError(HttpHelper.TaskType type, ApiError error) {
-        ProgressUtils.dismiss();
-        ToastUtils.show_s(error.getMessage());
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
-
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
         ProgressUtils.dismiss();
         switch (type){
             case UpdateInfo:
@@ -105,5 +90,19 @@ public class EditNicknameActivity extends BaseActivity implements TaskListener {
         }
     }
 
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
 
+    }
+
+    @Override
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        ProgressUtils.dismiss();
+        ToastUtils.show_s(e.getMessage());
+    }
+
+    @Override
+    protected EditNicknameContract.Presenter bindPresenter() {
+        return new EditNickNamePresenter();
+    }
 }

@@ -7,11 +7,14 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
+import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.TaskListener;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.EditGenderContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.mine.EditGenderPresenter;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
@@ -24,7 +27,7 @@ import java.util.HashMap;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class EditGenderActivity extends BaseActivity implements TaskListener {
+public class EditGenderActivity extends BaseMVPActivity<EditGenderContract.Presenter> implements EditGenderContract.View {
 
     public static void StartAct(Activity activity) {
         activity.startActivityForResult(new Intent(activity, EditGenderActivity.class),1000);
@@ -57,7 +60,11 @@ public class EditGenderActivity extends BaseActivity implements TaskListener {
 
     @Override
     protected void initListener() {
-
+        setBackOnClick().setOnClickListener(v -> finish());
+        setRightOnClick().setOnClickListener(v -> {
+            ProgressUtils.show(mContext,"提交中.....");
+            mPresenter.updateGender(ismale);
+        });
     }
 
     @Override
@@ -66,20 +73,10 @@ public class EditGenderActivity extends BaseActivity implements TaskListener {
     }
 
 
-
-
     private void setTitleStatus() {
         setTitleText("设置性别");
         setShowBack(View.VISIBLE);
         setRightText("保存");
-        setBackOnClick().setOnClickListener(v -> finish());
-        setRightOnClick().setOnClickListener(v -> {
-            ProgressUtils.show(mContext,"提交中.....");
-            HashMap<String, Object> hashMap = new HashMap<>();
-            hashMap.put("userId", SharedPreferenceHandler.getUserId(mContext));
-            hashMap.put("gender", ismale);
-            HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo,this,hashMap,HttpItem.class);
-        });
     }
 
 
@@ -99,24 +96,11 @@ public class EditGenderActivity extends BaseActivity implements TaskListener {
         }
     }
 
-    @Override
-    public void taskStarted(HttpHelper.TaskType type) {
 
-    }
+
 
     @Override
-    public void taskError(HttpHelper.TaskType type, ApiError error) {
-        ProgressUtils.dismiss();
-        ToastUtils.show_s(error.getMessage());
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, JSONObject object) {
-
-    }
-
-    @Override
-    public void taskFinished(HttpHelper.TaskType type, HttpItem item) {
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
         ProgressUtils.dismiss();
         switch (type){
             case UpdateInfo:
@@ -125,5 +109,21 @@ public class EditGenderActivity extends BaseActivity implements TaskListener {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
+
+    }
+
+    @Override
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        ProgressUtils.dismiss();
+        ToastUtils.show_s(e.getMessage());
+    }
+
+    @Override
+    protected EditGenderContract.Presenter bindPresenter() {
+        return new EditGenderPresenter();
     }
 }

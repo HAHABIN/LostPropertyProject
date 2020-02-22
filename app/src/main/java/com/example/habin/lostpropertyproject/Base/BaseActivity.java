@@ -58,11 +58,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         initMainLayout();
         //View注入
         mUnBinder = ButterKnife.bind(this);
+        processLogic();
         initParam();
         initView();
         initListener();
         initData();
-        processLogic();
+
     }
 
     private void initMainLayout() {
