@@ -18,6 +18,7 @@ import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
 
 import org.json.JSONObject;
 
@@ -29,6 +30,8 @@ import butterknife.BindView;
  * 修改密码模块
  */
 public class EditPasswordActivity extends BaseActivity implements TaskListener {
+
+
 
 
     public static void StartAct(Context context) {
@@ -44,6 +47,8 @@ public class EditPasswordActivity extends BaseActivity implements TaskListener {
     @BindView(R.id.ed_re_new_password)
     EditText mEdReNewPassword;
 
+    private String mSpusername;
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_edit_password;
@@ -55,27 +60,19 @@ public class EditPasswordActivity extends BaseActivity implements TaskListener {
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView() {
         setTitleStatus();
-
     }
-    //设置标题与标题点击事件
-    private void setTitleStatus() {
-        //获取保存的用户名
-        String Spusername = SharedPreferenceHandler.getUserName(mContext);
-        setTitleText("修改密码");
-        setShowBack(View.VISIBLE);
-        setRightText("保存");
-        //设置用户名
-        mTvUsername.setText(Spusername);
+
+    @Override
+    protected void initListener() {
         setBackOnClick().setOnClickListener(v -> finish());
         setRightOnClick().setOnClickListener(v -> {
-            hideSoftKeyboardNoView(mActivity);
+            UiUtils.hideSoftKeyboardNoView(mActivity);
             String oldPassword = mEdOldPassword.getText().toString().trim();
             String Np = mEdNewPassword.getText().toString().trim();
             String ReNp = mEdReNewPassword.getText().toString().trim();
-            if (Spusername.length() == 0 || oldPassword.length() == 0 || Np.length() == 0 || ReNp.length() == 0) {
+            if (mSpusername.length() == 0 || oldPassword.length() == 0 || Np.length() == 0 || ReNp.length() == 0) {
                 ToastUtils.show_s("请填写必要信息");
                 return;
             }
@@ -86,16 +83,32 @@ public class EditPasswordActivity extends BaseActivity implements TaskListener {
             if (ReNp.equals(Np)) {
                 ProgressUtils.show(mContext, "正在提交修改");
                 HashMap<String, Object> hashMap = new HashMap<>();
-                hashMap.put("username", Spusername);
+                hashMap.put("username", mSpusername);
                 hashMap.put("password", mEdOldPassword.getText().toString());
                 hashMap.put("newpassword", Np);
 
-                HttpClient.getSingleton().startTask(HttpHelper.TaskType.UpdatePasswordAuth, this, hashMap, HttpItem.class);
+                HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdatePasswordAuth, this, hashMap, HttpItem.class);
             } else {
                 SnackbarUtils.show(mActivity, "密码不相同，请重新输入");
             }
 
         });
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+    //设置标题与标题点击事件
+    private void setTitleStatus() {
+        //获取保存的用户名
+        mSpusername = SharedPreferenceHandler.getUserName(mContext);
+        setTitleText("修改密码");
+        setShowBack(View.VISIBLE);
+        setRightText("保存");
+        //设置用户名
+        mTvUsername.setText(mSpusername);
+
     }
 
     @Override

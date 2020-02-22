@@ -1,11 +1,9 @@
 package com.example.habin.lostpropertyproject;
 
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
-import com.example.habin.lostpropertyproject.Base.BaseObserver;
+
 
 import org.junit.Test;
 
-import io.reactivex.disposables.Disposable;
 
 /**
  * Example local unit test, which will execute on the development machine (host).

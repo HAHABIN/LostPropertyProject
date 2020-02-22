@@ -2,9 +2,11 @@ package com.example.habin.lostpropertyproject.Base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ActivityManagerUtils;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
+import com.luck.picture.lib.tools.DoubleUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -43,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private TextView mTvsubmit;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         mActivity = this;
@@ -55,10 +58,10 @@ public abstract class BaseActivity extends AppCompatActivity {
         initMainLayout();
         //View注入
         mUnBinder = ButterKnife.bind(this);
-        initData(savedInstanceState);
-        initWidget();
-        initEvent();
-        initClick();
+        initParam();
+        initView();
+        initListener();
+        initData();
         processLogic();
     }
 
@@ -73,8 +76,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             //获得布局
             int contentViewId = getLayoutId();
             //设置基类布局
-            RelativeLayout.LayoutParams lp
-                    = new RelativeLayout.LayoutParams(
+            RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
                     RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
             //表示 RelativeLayout 中的相应节点放置在一个 id 值为 ll_basetitle 的兄弟节点的下面。
             lp.addRule(RelativeLayout.BELOW, R.id.ll_basetitle);
@@ -88,14 +90,34 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-
     @LayoutRes
     protected abstract int getLayoutId();
 
+    /**
+     * 初始化参数,包括intent传递过来的参数
+     */
+    protected void initParam(){}
 
-    /**-----------------状态栏--------------*/
+    /**
+     * 初始化view,包括初始化些控件
+     */
+    protected abstract void initView();
 
+    /**
+     * 初始化监听器,各种listener事件
+     */
+    protected abstract void initListener();
 
+    /**
+     * 初始化数据
+     */
+    protected abstract void initData();
+
+    /**
+     * 执行逻辑
+     */
+    protected void processLogic() {
+    }
 
 
     /**
@@ -146,37 +168,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     /**-----------------------------------------------------*/
 
-    /**
-     * 初始化数据
-     *
-     * @param savedInstanceState
-     */
-    protected void initData(Bundle savedInstanceState) {
-    }
 
-    /**
-     * 初始化零件
-     */
-    protected void initWidget() {
-    }
-
-    /**
-     * 初始化事件
-     */
-    protected void initEvent() {
-    }
-
-    /**
-     * 初始化点击事件
-     */
-    private void initClick() {
-    }
-
-    /**
-     * 执行逻辑
-     */
-    protected void processLogic() {
-    }
 
 
     @Override
@@ -187,45 +179,27 @@ public abstract class BaseActivity extends AppCompatActivity {
         Log.d(TAG, "onDestroy: " + TAG);
     }
 
-    /**
-     * 隐藏软键盘(无输入框或者说无法获取输入框。比如，微信支付时处于未登录状态，此时输入框
-     * 是微信的，返回再隐藏键盘)
-     * @param context
-     */
-    public static void hideSoftKeyboard(@NonNull Activity context)
-    {
-        View view = context.getWindow().peekDecorView();
-        if (view != null) {
-            InputMethodManager inputmanger = (InputMethodManager) context
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
-        }
-    }
-    /**
-     * 隐藏软键盘(无输入框或者说无法获取输入框。比如，微信支付时处于未登录状态，此时输入框
-     * 是微信的，返回再隐藏键盘)
-     * @param context
-     */
-    public static void hideSoftKeyboardNoView(@NonNull Activity context)
-    {
-        View view = context.getWindow().peekDecorView();
-        if (view != null) {
-            InputMethodManager inputmanger = (InputMethodManager) context
-                    .getSystemService(Context.INPUT_METHOD_SERVICE);
-            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+
+
+    public void startActivity(Class clz, Bundle bundle) {
+        if (!DoubleUtils.isFastDoubleClick()) {
+            Intent intent = new Intent();
+            intent.setClass(this, clz);
+            if (bundle!=null) {
+                intent.putExtras(bundle);
+            }
+            startActivity(intent);
         }
     }
 
-    /**
-     * 隐藏软键盘(有输入框)
-     * @param context
-     * @param mEditText
-     */
-    public static void hideSoftKeyboard(@NonNull Context context,
-                                        @NonNull EditText mEditText)
-    {
-        InputMethodManager inputmanger = (InputMethodManager) context
-                .getSystemService(Context.INPUT_METHOD_SERVICE);
-        inputmanger.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
+    public void startActivity(Class clz, Bundle bundle, int requestCode) {
+        if (!DoubleUtils.isFastDoubleClick()) {
+            Intent intent = new Intent();
+            intent.setClass(this, clz);
+            if (bundle!=null) {
+                intent.putExtras(bundle);
+            }
+            startActivityForResult(intent, requestCode);
+        }
     }
 }

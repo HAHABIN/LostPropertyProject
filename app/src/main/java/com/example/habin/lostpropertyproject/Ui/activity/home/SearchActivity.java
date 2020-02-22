@@ -53,14 +53,12 @@ public class SearchActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView() {
+
     }
 
     @Override
-    protected void initEvent() {
-        super.initEvent();
-
+    protected void initListener() {
         //监控输入框
         mEtSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -101,6 +99,10 @@ public class SearchActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void initData() {
+
+    }
 
 
     @OnClick({R.id.et_search, R.id.iv_clean, R.id.tv_out})

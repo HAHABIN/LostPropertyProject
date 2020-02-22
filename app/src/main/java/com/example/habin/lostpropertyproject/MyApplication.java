@@ -8,6 +8,7 @@ import com.example.habin.lostpropertyproject.Bean.entity.City;
 import com.example.habin.lostpropertyproject.Bean.entity.County;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.Province;
+import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
@@ -36,6 +37,7 @@ public class MyApplication extends Application {
         super.onCreate();
         application = this;
         context = getApplicationContext();
+        HttpClient.getInstance().setContext(this);
         //配置LitePal数据库
 //        LitePal.initialize(this);
         ToastUtils.init(this);

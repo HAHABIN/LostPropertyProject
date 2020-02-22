@@ -13,6 +13,7 @@ import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
+import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.MyApplication;
@@ -35,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,12 +53,6 @@ import io.reactivex.schedulers.Schedulers;
  * 用户信息页面
  */
 public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter> implements UserInfoContract.View {
-
-
-
-    public static void StartAct(Context context) {
-        context.startActivity(new Intent(context, UserInfoActivity.class));
-    }
 
     @BindView(R.id.tv_nickname)
     TextView mTvNickname;
@@ -88,15 +84,26 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
         return true;
     }
 
-
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView() {
         setTitleText("个人信息");
         setShowBack(View.VISIBLE);
         setBackOnClick().setOnClickListener(v -> finish());
         setInfo();
     }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+
+
     /**
      * 设置用户信息
      * */
@@ -107,7 +114,7 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
         mTvGender.setText(mUserInfo.getGender() != null ? mUserInfo.getGender() : "未设置");
         mTvHelptimes.setText(String.valueOf(mUserInfo.getHelpTimes()));
         mTvUserid.setText(String.valueOf(mUserInfo.getUserId()));
-        UiUtils.GildeLoad(mCivAvatar,mUserInfo.getProfileImg());
+        UiUtils.GildeLoad(mContext,mCivAvatar,mUserInfo.getProfileImg());
     }
 
     @OnClick({R.id.ll_avatar, R.id.civ_avatar,R.id.ll_nickname, R.id.ll_gender, R.id.ll_area, R.id.ll_email})
@@ -120,18 +127,23 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
             case R.id.civ_avatar:
                 List<String> imgList = new ArrayList<>();
                 imgList.add(mUserInfo.getProfileImg());
-                OpenPicActivity.StartAct(mContext,0,imgList);
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constants.OPEN_PIC_POSITION,0);
+                bundle.putSerializable(Constants.OPEN_PIC_MEDIALAST,(Serializable)imgList);
+                startActivity(OpenPicActivity.class,bundle);
+//                OpenPicActivity.StartAct(mContext,0,imgList);
+                this.overridePendingTransition(R.anim.a5, 0);
                 break;
             case R.id.ll_nickname:
-                EditNicknameActivity.StartAct(mActivity);
+                startActivity(EditNicknameActivity.class,null, Constants.NICKNAME_REQUEST);
                 break;
             case R.id.ll_gender:
-                EditGenderActivity.StartAct(mActivity);
+                startActivity(EditGenderActivity.class,null, Constants.NICKNAME_REQUEST);
                 break;
             case R.id.ll_area:
                 break;
             case R.id.ll_email:
-                EditEmailActivity.StartAct(mActivity);
+                startActivity(EditEmailActivity.class,null, Constants.NICKNAME_REQUEST);
                 break;
         }
     }

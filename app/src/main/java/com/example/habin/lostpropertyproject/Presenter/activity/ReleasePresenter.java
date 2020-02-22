@@ -20,7 +20,7 @@ import java.util.HashMap;
 public class ReleasePresenter extends RxPresenter<ReleaseContract.View> implements ReleaseContract.Presenter {
     @Override
     public void InsertArInfo(HashMap<String, Object> hashMap) {
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.InsertArInfo,this,hashMap);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.InsertArInfo,this,hashMap);
     }
 
     @Override
@@ -28,7 +28,7 @@ public class ReleasePresenter extends RxPresenter<ReleaseContract.View> implemen
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("imgStr", imgStr);
         hashMap.put("resourceType", "release");
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.UploadPhoto, this, hashMap);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.UploadPhoto, this, hashMap);
     }
 
 

@@ -24,7 +24,7 @@ public class UserInfoPresenter extends RxPresenter<UserInfoContract.View> implem
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("imgStr", imgStr);
         hashMap.put("resourceType", "avatar");
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.UploadPhoto, this, hashMap);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.UploadPhoto, this, hashMap);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class UserInfoPresenter extends RxPresenter<UserInfoContract.View> implem
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("userId", SharedPreferenceHandler.getUserId(UiUtils.getContext()));
         hashMap.put("profileimg",str);
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.UpdateInfo, this, hashMap);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo, this, hashMap);
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.example.habin.lostpropertyproject.Ui.activity;
 
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
-import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
+import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Widget.PublishDialog;
@@ -25,18 +23,6 @@ import butterknife.BindView;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
-
-    private static final String RESULT = "result";
-
-    public static void StartAct(Context context) {
-        context.startActivity(new Intent(context, MainActivity.class));
-    }
-
-    public static void StartAct(Context context, PersonInfoEntity.ResultBean result) {
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra(RESULT, result);
-        context.startActivity(intent);
-    }
 
     @BindView(R.id.iv_home)
     ImageView mIvHome;
@@ -82,13 +68,23 @@ public class MainActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView() {
         mImageList = new ImageView[]{mIvHome, mIvType, mIvMessage, mIvMine};
         mTextList = new TextView[]{mTvHome, mTvType, mTvMessage, mTvMine};
         //默认
         getSupportFragmentManager().beginTransaction().add(R.id.fl_content, HomePageFragment.newInstance()).commit();
     }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
 
 
     @OnClick({R.id.rl_home, R.id.rl_type, R.id.btn_add, R.id.rl_message, R.id.rl_mine})
@@ -97,23 +93,26 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_add:
                 //登录判断
                 if (MyApplication.isLogin(mContext)) {
-                    LandActivity.StartAct(mContext);
+                    startActivity(LandActivity.class,null);
                     return;
                 }
                 if (publishDialog == null) {
                     publishDialog = new PublishDialog(MainActivity.this);
                     publishDialog.setLostClickListener(v -> {
-                        ReleaseActivity.StartAct(mContext, "2");
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants.RELEASE_TYPE,"2");
+                        startActivity(ReleaseActivity.class,bundle);
                         publishDialog.outDia();
                     });
                     publishDialog.setFindClickListener(v -> {
-                        ReleaseActivity.StartAct(mContext, "1");
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants.RELEASE_TYPE,"1");
+                        startActivity(ReleaseActivity.class,bundle);
                         publishDialog.outDia();
                     });
                     publishDialog.setPingguClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            LandActivity.StartAct(mContext);
                         }
                     });
                 }

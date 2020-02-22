@@ -52,7 +52,7 @@ public class HomePagePresenter extends RxPresenter<HomePageContract.View> implem
         if (type != 0) {
             hashMap.put("type", type);
         }
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.QueryCity, this, hashMap);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.QueryCity, this, hashMap);
     }
 
     @Override

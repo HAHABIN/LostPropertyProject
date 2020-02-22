@@ -30,23 +30,35 @@ public class SettingActivity extends BaseActivity {
     }
 
     @Override
+    protected void initView() {
+        setTitleText("设置");
+        setShowBack(View.VISIBLE);
+
+    }
+
+    @Override
+    protected void initListener() {
+        setBackOnClick().setOnClickListener(v -> finish());
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
     protected boolean showTitle() {
         return true;
     }
 
-    @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
-        setTitleText("设置");
-        setShowBack(View.VISIBLE);
-        setBackOnClick().setOnClickListener(v -> finish());
-    }
+
 
     @OnClick({R.id.ll_clear_data, R.id.ll_exit,R.id.ll_edit_pass})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_edit_pass:
-                EditPasswordActivity.StartAct(mContext);
+//                EditPasswordActivity.StartAct(mContext);
+                startActivity(EditPasswordActivity.class,null);
                 break;
             case R.id.ll_clear_data:
                 break;
@@ -64,7 +76,7 @@ public class SettingActivity extends BaseActivity {
                     @Override
                     public void confirmClick(AlertDialogView dialog) {
                         SharedPreferenceHandler.cleanUserInfo(mContext);
-                        MainActivity.StartAct(mContext);
+                        startActivity(MainActivity.class,null);
                         mActivity.finish();
                     }
                 });

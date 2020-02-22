@@ -1,6 +1,7 @@
 package com.example.habin.lostpropertyproject.Ui.adapter;
 
 import android.app.Activity;
+import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,22 +22,22 @@ import java.util.List;
 public class ImageAdapter extends PagerAdapter {
     public static final String TAG = ImageAdapter.class.getSimpleName();
     private List<String> imageUrls;
-    private Activity activity;
+    private Context mContext;
 
-    public ImageAdapter(List<String> imageUrls, Activity activity) {
+    public ImageAdapter(List<String> imageUrls, Context context) {
         this.imageUrls = imageUrls;
-        this.activity = activity;
+        this.mContext = context;
     }
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
         String url = imageUrls.get(position);
-        PhotoView photoView = new PhotoView(activity);
+        PhotoView photoView = new PhotoView(mContext);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-//        UiUtils.GildeLoad(photoView,url);
-        Glide.with(activity)
-                .load(Constants.BASE_URL+url)
-                .into(photoView);
+        UiUtils.GildeLoad(mContext,photoView,url);
+//        Glide.with(activity)
+//                .load(Constants.BASE_URL+url)
+//                .into(photoView);
         container.addView(photoView);
         return photoView;
     }

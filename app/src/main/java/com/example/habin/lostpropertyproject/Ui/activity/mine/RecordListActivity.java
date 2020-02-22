@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
+import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
@@ -28,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import butterknife.BindArray;
 import butterknife.BindView;
 
 /**
@@ -40,13 +42,15 @@ public class RecordListActivity extends BaseActivity implements RecordListAdapte
 
     public static void StartAct(Context context, int type) {
         Intent intent = new Intent(context, RecordListActivity.class);
-        intent.putExtra("type", type);//1为丢失记录 2为拾物记录 3完成记录 4全部记录
+        intent.putExtra(Constants.RECORD_STATUS, type);//1为丢失记录 2为拾物记录 3完成记录 4全部记录
         context.startActivity(intent);
     }
 
     @BindView(R.id.rv_record)
     RecyclerView mRvRecord;
-    private String[] titlelist;
+    @BindArray(R.array.record_list_name)
+    String[] titlelist;
+
     private RecordListAdapter mReListAdapter;
     private int recordStatus;//1为丢失记录 2为拾物记录 3完成记录 4全部记录
 
@@ -61,20 +65,39 @@ public class RecordListActivity extends BaseActivity implements RecordListAdapte
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initParam() {
+        super.initParam();
+        Intent intent = getIntent();
+        if (intent != null) {
+            recordStatus = intent.getIntExtra(Constants.RECORD_STATUS,1);
+        }
 
-        setShowBack(View.VISIBLE);
-        setBackOnClick().setOnClickListener(v -> finish());
+    }
 
-        recordStatus = getIntent().getIntExtra("type", 1);
-        titlelist = getResources().getStringArray(R.array.record_list_name);
-        setTitleText(titlelist[recordStatus - 1]);
+    @Override
+    protected void initView() {
+        setTitle();
         mReListAdapter = new RecordListAdapter(mContext, this, recordStatus);
         //设置LayoutManager为LinearLayoutManager
         mRvRecord.setLayoutManager(new LinearLayoutManager(this));
         mRvRecord.setAdapter(mReListAdapter);
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
         load();
+    }
+
+
+    private void setTitle() {
+        setShowBack(View.VISIBLE);
+        setBackOnClick().setOnClickListener(v -> finish());
+        setTitleText(titlelist[recordStatus - 1]);
     }
 
     private void load() {
@@ -84,13 +107,16 @@ public class RecordListActivity extends BaseActivity implements RecordListAdapte
         if (recordStatus<4){
             hashMap.put("recordStatus", recordStatus);
         }
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.QueryArticleInfo, RecordListActivity.this, hashMap);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.QueryArticleInfo, RecordListActivity.this, hashMap);
     }
 
 
     @Override
     public void onItemClick(int position) {
-        RecordDetailsActivity.StartAct(mContext, false, result.get(position));
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Constants.IS_SHOW,false);
+        bundle.putSerializable(Constants.ACTICLEINFO_DATA,result.get(position));
+        startActivity(RecordDetailsActivity.class,bundle);
     }
 
 

@@ -2,13 +2,17 @@ package com.example.habin.lostpropertyproject.Base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.luck.picture.lib.tools.DoubleUtils;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -21,9 +25,6 @@ import io.reactivex.disposables.Disposable;
 public abstract class BaseFragment extends Fragment {
 
     protected String TAG;
-
-    protected CompositeDisposable mDisposable;
-
     protected Activity mActivity;
     protected Context mContext;
     private Unbinder mUnBinder;
@@ -39,23 +40,14 @@ public abstract class BaseFragment extends Fragment {
     @LayoutRes
     protected abstract int getLayoutId();
 
-    /*******************************init area*********************************/
-    protected void addDisposable(Disposable d){
-        if (mDisposable == null){
-            mDisposable = new CompositeDisposable();
-        }
-        mDisposable.add(d);
-    }
 
 
-    protected void initData(Bundle savedInstanceState){
-    }
+    protected abstract void initView(View view);
 
-    /**
-     * 初始化点击事件
-     */
-    protected void initClick(){
-    }
+    protected abstract void initListener();
+
+    protected abstract void initData();
+
 
     /**
      * 逻辑使用区
@@ -63,21 +55,12 @@ public abstract class BaseFragment extends Fragment {
     protected void processLogic(){
     }
 
-    /**
-     * 初始化零件
-     */
-    protected void initWidget(Bundle savedInstanceState){
-    }
 
-    protected void beforeDestroy(){
-
-    }
 
     /******************************lifecycle area*****************************************/
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        int resId = getLayoutId();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         if (mRoot != null) {
             ViewGroup parent = (ViewGroup) mRoot.getParent();
             if (parent != null) {
@@ -85,28 +68,37 @@ public abstract class BaseFragment extends Fragment {
             }
             return mRoot;
         }
-        mRoot = LayoutInflater.from(getActivity()).inflate(getLayoutId(),container,false);
-//        mRoot = inflater.inflate(resId,container,false);
+        mRoot = inflater.from(getActivity()).inflate(getLayoutId(),container,false);
+        mUnBinder = ButterKnife.bind(this, mRoot);
+        TAG=getName();
+        initView(mRoot);
+        initListener();
+        initData();
+        processLogic();
         return mRoot;
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        mUnBinder = ButterKnife.bind(this, view);
-        initData(savedInstanceState);
-        TAG=getName();
-        initWidget(savedInstanceState);
-        initClick();
-        processLogic();
+
+
+    protected void startActivity(Class clz, Bundle bundle) {
+        if (!DoubleUtils.isFastDoubleClick()) {
+            Intent intent = new Intent();
+            intent.setClass(mActivity, clz);
+            if (bundle!=null) {
+                intent.putExtras(bundle);
+            }
+            startActivity(intent);
+        }
     }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        beforeDestroy();
-        if (mDisposable != null){
-            mDisposable.clear();
+    protected void startActivity(Class clz, Bundle bundle, int requestCode) {
+        if (!DoubleUtils.isFastDoubleClick()) {
+            Intent intent = new Intent();
+            intent.setClass(mActivity, clz);
+            if (bundle!=null) {
+                intent.putExtras(bundle);
+            }
+            startActivityForResult(intent, requestCode);
         }
     }
 

@@ -23,7 +23,7 @@ public class MineTpyePresenter extends RxPresenter<MinePageContract.View> implem
     public void getData(int userId) {
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("userId",userId);
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.QueryArticleInfo,this,hashMap, ArticleInfoEntity.class);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.QueryArticleInfo,this,hashMap, ArticleInfoEntity.class);
     }
 
     @Override

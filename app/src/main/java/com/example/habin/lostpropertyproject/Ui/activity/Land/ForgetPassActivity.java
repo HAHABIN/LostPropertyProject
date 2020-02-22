@@ -23,10 +23,21 @@ public class ForgetPassActivity extends BaseActivity {
         return true;
     }
 
+
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView() {
         setTitleStatus();
+    }
+
+    @Override
+    protected void initListener() {
+        setBackOnClick().setOnClickListener(v -> finish());
+        setRightOnClick().setOnClickListener(v -> {
+        });
+    }
+
+    @Override
+    protected void initData() {
 
     }
 
@@ -34,9 +45,5 @@ public class ForgetPassActivity extends BaseActivity {
         setTitleText("忘记密码");
         setShowBack(View.VISIBLE);
         setRightText("保存");
-        setBackOnClick().setOnClickListener(v -> finish());
-        setRightOnClick().setOnClickListener(v -> {
-
-        });
     }
 }

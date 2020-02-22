@@ -48,13 +48,25 @@ public class EditGenderActivity extends BaseActivity implements TaskListener {
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView() {
         setTitleStatus();
         //默认选择男
         mIvMale.setVisibility(View.VISIBLE);
         ismale = "男";
     }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+
+
 
     private void setTitleStatus() {
         setTitleText("设置性别");
@@ -66,7 +78,7 @@ public class EditGenderActivity extends BaseActivity implements TaskListener {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("userId", SharedPreferenceHandler.getUserId(mContext));
             hashMap.put("gender", ismale);
-            HttpClient.getSingleton().startTask(HttpHelper.TaskType.UpdateInfo,this,hashMap,HttpItem.class);
+            HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo,this,hashMap,HttpItem.class);
         });
     }
 

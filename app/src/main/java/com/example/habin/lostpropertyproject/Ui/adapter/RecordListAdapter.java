@@ -78,7 +78,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
         if (resultBean.getImgStr()!=null){
             List<UploadPhotoParams> uploadPhotoParams = JsonUtil.fromJson(resultBean.getImgStr(), new TypeToken<List<UploadPhotoParams>>() {
             });
-            UiUtils.GildeLoad(viewHolder.mIvImg,uploadPhotoParams.get(0).getImgStr());
+            UiUtils.GildeLoad(mContext,viewHolder.mIvImg,uploadPhotoParams.get(0).getImgStr());
         }
 
         viewHolder.itemView.setOnClickListener(v -> {

@@ -34,31 +34,27 @@ public class EditEmailActivity extends BaseActivity implements TaskListener {
     EditText mEdEmail;
     private String email;
     @Override
+    protected boolean showTitle() {
+        return true;
+    }
+    @Override
     protected int getLayoutId() {
         return R.layout.activity_edit_email;
     }
 
     @Override
-    protected boolean showTitle() {
-        return true;
-    }
-
-    @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView() {
         setTitleStatus();
     }
 
-    private void setTitleStatus() {
-        setTitleText("修改邮箱");
-        setShowBack(View.VISIBLE);
-        setRightText("保存");
+    @Override
+    protected void initListener() {
         setBackOnClick().setOnClickListener(v -> finish());
         setRightOnClick().setOnClickListener(v -> {
             email = mEdEmail.getText().toString().trim();
             if (!StringUtils.checkEmail(email)) {
-                    ToastUtils.show_s("请输入正确的邮箱格式");
-                    return;
+                ToastUtils.show_s("请输入正确的邮箱格式");
+                return;
             }
             if (email.isEmpty()) {
                 ToastUtils.show_s("邮箱不能为空");
@@ -68,8 +64,19 @@ public class EditEmailActivity extends BaseActivity implements TaskListener {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("userId", SharedPreferenceHandler.getUserId(mContext));
             hashMap.put("email", email);
-            HttpClient.getSingleton().startTask(HttpHelper.TaskType.UpdateInfo, this, hashMap, HttpItem.class);
+            HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo, this, hashMap, HttpItem.class);
         });
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    private void setTitleStatus() {
+        setTitleText("修改邮箱");
+        setShowBack(View.VISIBLE);
+        setRightText("保存");
     }
 
     @Override

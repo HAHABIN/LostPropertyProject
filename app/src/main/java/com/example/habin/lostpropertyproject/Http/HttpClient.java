@@ -33,17 +33,23 @@ public class HttpClient {
 
     private Context mContext;
     private ArrayList<HttpTask> mTaskArray;
-    private int userId ;
 
 
-    //无参的单利模式
-    public static HttpClient getSingleton() {
-        if (retrofitManager == null) {
-            synchronized (HttpClient.class) {
-                retrofitManager = new HttpClient();
-            }
-        }
-        return retrofitManager;
+//    //无参的单利模式
+//    public static HttpClient getSingleton() {
+//        if (retrofitManager == null) {
+//            synchronized (HttpClient.class) {
+//                retrofitManager = new HttpClient();
+//            }
+//        }
+//        return retrofitManager;
+//    }
+    private static class Holder {
+        static HttpClient client = new HttpClient();
+    }
+
+    public static HttpClient getInstance() {
+        return Holder.client;
     }
 
     public void setContext(Context context) {

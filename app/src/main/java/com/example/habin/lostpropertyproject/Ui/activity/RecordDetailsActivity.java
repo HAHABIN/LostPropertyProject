@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
+import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
@@ -51,19 +52,6 @@ public class RecordDetailsActivity extends BaseActivity {
     private boolean isVis;
     private ArticleInfoEntity.ResultBean data;
 
-    public static void StartAct(Context context,boolean isVis) {
-        Intent intent = new Intent(context, RecordDetailsActivity.class);
-        //是否显示底部栏
-        intent.putExtra("isVis",isVis);
-        context.startActivity(intent);
-    }
-    public static void StartAct(Context context, boolean isVis, ArticleInfoEntity.ResultBean data) {
-        Intent intent = new Intent(context, RecordDetailsActivity.class);
-        //是否显示底部栏
-        intent.putExtra("isVis",isVis);
-        intent.putExtra("data",data);
-        context.startActivity(intent);
-    }
     @Override
     protected int getLayoutId() {
         return R.layout.activity_record_detail;
@@ -75,29 +63,43 @@ public class RecordDetailsActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initParam() {
+        super.initParam();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            //是否显示底部栏
+            isVis =  extras.getBoolean(Constants.IS_SHOW, false);
+            data = (ArticleInfoEntity.ResultBean)extras.getSerializable(Constants.ACTICLEINFO_DATA);
+        }
+    }
+
+    @Override
+    protected void initView() {
         StatusBarUtils.transparencyBar(mActivity);
-        isVis = getIntent().getBooleanExtra("isVis", false);
-        data = (ArticleInfoEntity.ResultBean) getIntent().getSerializableExtra("data");
+
         if (isVis){
             mLlBomHelp.setVisibility(View.VISIBLE);
         } else {
             PersonInfoEntity.ResultBean userInfo = MyApplication.getUserInfo(mContext);
-            UiUtils.GildeLoad(mCivPic,userInfo.getProfileImg());
+            UiUtils.GildeLoad(mContext,mCivPic,userInfo.getProfileImg());
             mTvNickname.setText(userInfo.getName());
         }
-
-    }
-
-    @Override
-    protected void initEvent() {
-        super.initEvent();
         mTvReleaseTime.setText(StringUtils.stampToDate(data.getCreateTime()));
         mTvAddress.setText(data.getAddressContent());
         mTvFindTime.setText(StringUtils.stampToDate(data.getFindTime()));
         mTvNoteContext.setText(data.getDescription());
     }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
 
     @OnClick({R.id.iv_back, R.id.civ_pic,R.id.btn_help, R.id.btn_private_chat})
     public void onViewClicked(View view) {

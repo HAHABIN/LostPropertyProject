@@ -23,9 +23,20 @@ public class Constants {
 //    public static final int NickName_REQUEST = 1000;
 //    public static final int NickName_REQUEST = 1000;
 
+    //结果
+    public static final String RESULT = "RESULT";
     //查看图片
-    public static final String OpenPicPosition = "position";
-    public static final String OpenPicMEDIALIST = "mediaList";
+    public static final String OPEN_PIC_POSITION = "OPEN_PIC_POSITION";
+    public static final String OPEN_PIC_MEDIALAST = "OPEN_PIC_MEDIALAST";
+
+    //物品详细
+    public static final String IS_SHOW = "IS_SHOW";
+    //物品数据
+    public static final String ACTICLEINFO_DATA = "ACTICLEINFO";
+    //发布类型
+    public static final String RELEASE_TYPE = "RELEASE_TYPE";
+    //记录类型
+    public static final String RECORD_STATUS = "RECORD_STATUS";
 
 }
 

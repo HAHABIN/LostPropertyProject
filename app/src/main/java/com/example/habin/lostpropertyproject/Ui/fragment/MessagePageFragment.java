@@ -2,6 +2,7 @@ package com.example.habin.lostpropertyproject.Ui.fragment;
 
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
@@ -38,12 +39,22 @@ public class MessagePageFragment  extends BaseMVPFragment<MessagePageContract.Pr
         return R.layout.fragment_page_message;
     }
 
-
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView(View view) {
 
     }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+
 
     @Override
     public void onSuccess(HttpHelper.TaskType type, HttpItem item) {

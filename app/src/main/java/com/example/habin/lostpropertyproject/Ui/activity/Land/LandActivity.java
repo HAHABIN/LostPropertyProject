@@ -27,6 +27,7 @@ import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Ui.activity.MainActivity;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
 
 import org.json.JSONObject;
 
@@ -95,8 +96,23 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView() {
+        setTitle();
+        //初始化验证码图
+        setCode();
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    private void setTitle() {
         setTitleText("");
         setShowBack(View.VISIBLE);
         setBackOnClick().setOnClickListener(v -> finish());
@@ -104,8 +120,6 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
         if (username != null) {
             mEtUsername.setText(username);
         }
-        //初始化验证码图
-        setCode();
     }
 
     public void setCode(){
@@ -220,7 +234,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
                         e.printStackTrace();
                     }
                     SnackbarUtils.show(mActivity, item.getMessage());
-                    MainActivity.StartAct(mContext);
+                    startActivity(MainActivity.class,null);
                     finish();
                 }
                 break;
@@ -248,7 +262,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
     @OnClick({R.id.login_btn_login, R.id.login_tv_sign, R.id.tv_forget_pass,R.id.iv_code})
     public void onViewClicked(View view) {
         //关闭键盘
-        hideSoftKeyboardNoView(mActivity);
+        UiUtils.hideSoftKeyboardNoView(mActivity);
         switch (view.getId()) {
             case R.id.login_btn_login:
                 if (isLogin) {

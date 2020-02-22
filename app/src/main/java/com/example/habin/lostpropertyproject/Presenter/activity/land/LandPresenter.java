@@ -31,7 +31,7 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
         hashMap.put("username",username);
         hashMap.put("password",password);
 
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.Login,this,hashMap, PersonInfoEntity.class);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.Login,this,hashMap, PersonInfoEntity.class);
 
     }
 
@@ -44,7 +44,7 @@ public class LandPresenter extends RxPresenter<LandContract.View> implements Lan
         hashMap.put("username",username);
         hashMap.put("password",password);
         hashMap.put("email",email);
-        HttpClient.getSingleton().startTask(HttpHelper.TaskType.Regin,this,hashMap, PersonInfoEntity.class);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.Regin,this,hashMap, PersonInfoEntity.class);
     }
 
     @Override

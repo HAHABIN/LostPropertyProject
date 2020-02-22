@@ -100,9 +100,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
-
+    protected void initView(View view) {
         //初始化列表
         mFragmentList = new ArrayList<>();
         mFragmentList.add(ToClaimListFragment.newInstance(0));//丢丢 type 0
@@ -117,13 +115,11 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
         mVpContent.setOffscreenPageLimit(1);
         //设置标题栏内容
         setTitle();
-
     }
 
     @Override
-    protected void initClick() {
-        super.initClick();
-        //监听地址栏
+    protected void initListener() {
+//监听地址栏
         mTvAddress.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -150,6 +146,13 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
             }
         });
     }
+
+    @Override
+    protected void initData() {
+
+    }
+
+
 
     @Override
     protected HomePageContract.Presenter bindPresenter() {
@@ -179,7 +182,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
                 fragment1.updateDate(mTvAddress.getText().toString());
                 break;
             case R.id.iv_search:
-                SearchActivity.StartAct(mContext);
+                startActivity(SearchActivity.class,null);
                 break;
 
         }

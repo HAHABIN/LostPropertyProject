@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
@@ -59,10 +60,10 @@ import io.reactivex.schedulers.Schedulers;
  */
 public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> implements ReleaseContract.View {
 
-
+    //弃用
     public static void StartAct(Context context, String type) {
         Intent intent = new Intent(context, ReleaseActivity.class);
-        intent.putExtra("type", type);//1为发布丢失 2为发布拾物
+        intent.putExtra(Constants.RELEASE_TYPE, type);//1为发布丢失 2为发布拾物
         context.startActivity(intent);
     }
 
@@ -96,7 +97,6 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
     private Disposable mSubscribe;
     private int mIndex = 0;
 
-    ArrayList<String> mAddressList;
 
 
     @Override
@@ -110,21 +110,18 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
-        setTitle();
-
-        mAddressList = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            mAddressList.add("地址" + i);
+    protected void initParam() {
+        super.initParam();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            statusType = extras.getString(Constants.RELEASE_TYPE);
         }
 
     }
 
-
     @Override
-    protected void initWidget() {
-        super.initWidget();
+    protected void initView() {
+        setTitle();
         FullyGridLayoutManager manager = new FullyGridLayoutManager(this, 3, GridLayoutManager.VERTICAL, false);
         mRlImage.setLayoutManager(manager);
         adapter = new GridImageAdapter(this, onAddPicClickListener);
@@ -132,6 +129,10 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
         adapter.setSelectMax(maxSelectNum);
         mRlImage.setAdapter(adapter);
         mRlImage.setLayoutManager(new GridLayoutManager(mContext, 4, LinearLayoutManager.VERTICAL, false));
+    }
+
+    @Override
+    protected void initListener() {
         adapter.setOnItemClickListener(new GridImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position, View v) {
@@ -152,6 +153,12 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
         });
     }
 
+    @Override
+    protected void initData() {
+
+    }
+
+
     private GridImageAdapter.onAddPicClickListener onAddPicClickListener = new GridImageAdapter.onAddPicClickListener() {
 
         @SuppressLint("CheckResult")
@@ -170,8 +177,7 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
             load();
         });
         setBackOnClick().setOnClickListener(v -> finish());
-        Intent intent = getIntent();
-        statusType = intent.getStringExtra("type");
+
         switch (statusType) {
             case "1":
                 setTitleText("编辑丢失物品");

@@ -30,12 +30,21 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView() {
         //全屏透明状态栏
         StatusBarUtils.transparencyBar(mActivity);
 //        checkPermissionRequest(this);
         StartUp();
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     private void StartUp() {
@@ -52,8 +61,7 @@ public class SplashActivity extends BaseActivity {
             //动画结束
             @Override
             public void onAnimationEnd(Animation animation) {
-                //页面的跳转
-                MainActivity.StartAct(SplashActivity.this);
+                startActivity(MainActivity.class,null);
                 finish();
             }
 

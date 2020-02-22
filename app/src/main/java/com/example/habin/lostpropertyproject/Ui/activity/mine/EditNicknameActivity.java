@@ -30,10 +30,6 @@ public class EditNicknameActivity extends BaseActivity implements TaskListener {
     EditText edNickname;
     private String nickname = null;
 
-    public static void StartAct(Activity activity) {
-        activity.startActivityForResult(new Intent(activity, EditNicknameActivity.class),1000);
-    }
-
 
     @Override
     protected int getLayoutId() {
@@ -41,15 +37,25 @@ public class EditNicknameActivity extends BaseActivity implements TaskListener {
     }
 
     @Override
+    protected void initView() {
+        setTitleStatus();
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+    @Override
     protected boolean showTitle() {
         return true;
     }
 
-    @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
-        setTitleStatus();
-    }
 
     private void setTitleStatus() {
         setTitleText("修改昵称");
@@ -67,7 +73,7 @@ public class EditNicknameActivity extends BaseActivity implements TaskListener {
             HashMap<String, Object> hashMap = new HashMap<>();
             hashMap.put("userId", SharedPreferenceHandler.getUserId(mContext));
             hashMap.put("nickname", nickname);
-            HttpClient.getSingleton().startTask(HttpHelper.TaskType.UpdateInfo,this,hashMap,HttpItem.class);
+            HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo,this,hashMap,HttpItem.class);
         });
     }
 

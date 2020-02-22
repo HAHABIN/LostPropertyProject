@@ -1,8 +1,10 @@
 package com.example.habin.lostpropertyproject.Ui.fragment;
 
 import android.os.Bundle;
+import android.view.View;
 
 import com.example.habin.lostpropertyproject.Base.BaseFragment;
+import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
@@ -58,8 +60,7 @@ public class ToClaimListFragment extends BaseFragment implements ToClaimListAdap
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView(View view) {
         Bundle arguments = this.getArguments();
         if (arguments != null) {
 //            mAddress = arguments.getString("address", null);
@@ -68,13 +69,28 @@ public class ToClaimListFragment extends BaseFragment implements ToClaimListAdap
         mSw.setAdapter(new ToClaimListAdapter(mContext,this,mType));
     }
 
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
+    }
+
+
 
     @Override
     public void onItemClick(int position) {
         if (MyApplication.isLogin(mContext)) {
-            LandActivity.StartAct(mContext);
+            startActivity(LandActivity.class,null);
             return;
         }
-        RecordDetailsActivity.StartAct(mContext,true);
+        ToastUtils.show_s(mActivity,"正在开发中");
+//        Bundle bundle = new Bundle();
+//        bundle.putBoolean(Constants.IS_SHOW,true);
+//        bundle.putSerializable(Constants.ACTICLEINFO_DATA,null);
+//        startActivity(RecordDetailsActivity.class,bundle);
     }
 }

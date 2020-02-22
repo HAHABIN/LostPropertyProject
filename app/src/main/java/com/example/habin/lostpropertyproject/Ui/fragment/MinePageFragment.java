@@ -8,12 +8,14 @@ import android.widget.TextView;
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
+import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.fragment.MineTpyePresenter;
 import com.example.habin.lostpropertyproject.Presenter.fragment.contract.MinePageContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Ui.activity.ReleaseActivity;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
@@ -52,15 +54,25 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     }
 
     @Override
-    protected void initData(Bundle savedInstanceState) {
-        super.initData(savedInstanceState);
+    protected void initView(View view) {
+
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
         PersonInfoEntity.ResultBean mPersonInfo = MyApplication.getUserInfo(mContext);
         if (mPersonInfo != null) {
             mTvName.setText(mPersonInfo.getName());
         }
-        UiUtils.GildeLoad(mCivPic,mPersonInfo.getProfileImg());
-
+        UiUtils.GildeLoad(mContext,mCivPic,mPersonInfo.getProfileImg());
     }
+
 
     @Override
     protected MinePageContract.Presenter bindPresenter() {
@@ -87,9 +99,10 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_top:
-                UserInfoActivity.StartAct(mContext);
+                startActivity(UserInfoActivity.class,null);
                 break;
             case R.id.ll_record_lost:
+
                 RecordListActivity.StartAct(mContext, 1);
                 break;
             case R.id.ll_record_find:
@@ -118,7 +131,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
         PersonInfoEntity.ResultBean personInfo = MyApplication.getUserInfo(mContext);
         if (personInfo != null) {
             mTvName.setText(personInfo.getName());
-            UiUtils.GildeLoad(mCivPic,personInfo.getProfileImg());
+            UiUtils.GildeLoad(mContext,mCivPic,personInfo.getProfileImg());
         }
     }
 

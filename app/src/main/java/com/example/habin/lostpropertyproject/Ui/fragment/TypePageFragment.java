@@ -1,6 +1,8 @@
 package com.example.habin.lostpropertyproject.Ui.fragment;
 
 
+import android.view.View;
+
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
@@ -32,6 +34,21 @@ public class TypePageFragment extends BaseMVPFragment<TypePageContract.Presenter
     @Override
     protected int getLayoutId() {
         return R.layout.fragment_page_type;
+    }
+
+    @Override
+    protected void initView(View view) {
+
+    }
+
+    @Override
+    protected void initListener() {
+
+    }
+
+    @Override
+    protected void initData() {
+
     }
 
     @Override

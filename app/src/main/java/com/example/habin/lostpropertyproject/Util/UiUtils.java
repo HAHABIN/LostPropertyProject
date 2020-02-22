@@ -1,5 +1,6 @@
 package com.example.habin.lostpropertyproject.Util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -9,10 +10,13 @@ import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -132,15 +136,65 @@ public class UiUtils {
         return false;
     }
 
-    public static void GildeLoad( View view,String imgStr){
+    public static void GildeLoad(Context context, View view, String imgStr){
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.ic_placeholder)//图片加载出来前，显示的图片
                 .fallback( R.drawable.ic_placeholder) //url为空的时候,显示的图片
                 .error(R.drawable.ic_picfail);//图片加载失败后，显示的图片
-        Glide.with(view.getContext())
+        Glide.with(context)
                 .load(Constants.BASE_URL+imgStr)
                 .apply(options)
                 .into((ImageView) view);
+    }
+    public static void SavePic(Context context,View view,String imgStr){
+
+        Glide.with(view.getContext())
+                .load(Constants.BASE_URL+imgStr)
+                .into((ImageView) view);
+    }
+
+    /**
+     * 隐藏软键盘(无输入框或者说无法获取输入框。比如，微信支付时处于未登录状态，此时输入框
+     * 是微信的，返回再隐藏键盘)
+     * @param context
+     */
+    public static void hideSoftKeyboardNoView(@NonNull Activity context)
+    {
+        View view = context.getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputmanger = (InputMethodManager) context
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+
+    /**
+     * 隐藏软键盘(无输入框或者说无法获取输入框。比如，微信支付时处于未登录状态，此时输入框
+     * 是微信的，返回再隐藏键盘)
+     * @param context
+     */
+    public static void hideSoftKeyboard(@NonNull Activity context)
+    {
+        View view = context.getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputmanger = (InputMethodManager) context
+                    .getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * 隐藏软键盘(有输入框)
+     * @param context
+     * @param mEditText
+     */
+    public static void hideSoftKeyboard(@NonNull Context context,
+                                        @NonNull EditText mEditText)
+    {
+        InputMethodManager inputmanger = (InputMethodManager) context
+                .getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputmanger.hideSoftInputFromWindow(mEditText.getWindowToken(), 0);
     }
 
 }
