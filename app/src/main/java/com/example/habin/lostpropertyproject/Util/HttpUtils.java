@@ -1,6 +1,6 @@
 package com.example.habin.lostpropertyproject.Util;
 
-import com.example.habin.lostpropertyproject.Common.Constants;
+import com.example.habin.lostpropertyproject.Http.Constants;
 
 import okhttp3.FormBody;
 import okhttp3.OkHttpClient;

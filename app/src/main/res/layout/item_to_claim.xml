@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp">
 
-            <com.example.habin.lostpropertyproject.view.CircleImageView
+            <com.example.habin.lostpropertyproject.Widget.CircleImageView
                 android:id="@+id/civ_pic"
                 android:layout_width="50dp"
                 android:layout_height="50dp"

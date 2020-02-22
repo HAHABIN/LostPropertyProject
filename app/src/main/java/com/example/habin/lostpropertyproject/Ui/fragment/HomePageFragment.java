@@ -1,7 +1,6 @@
 package com.example.habin.lostpropertyproject.Ui.fragment;
 
 
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -24,8 +23,7 @@ import com.example.habin.lostpropertyproject.Ui.adapter.VpAdapter;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
-import com.example.habin.lostpropertyproject.Util.UiUtils;
-import com.example.habin.lostpropertyproject.view.NoScrollViewPager;
+import com.example.habin.lostpropertyproject.Widget.NoScrollViewPager;
 
 import org.json.JSONObject;
 
@@ -112,7 +110,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
         //设置禁止左右滑动
         mVpContent.setNoScroll(true);
         //预加载
-        mVpContent.setOffscreenPageLimit(1);
+//        mVpContent.setOffscreenPageLimit(1);
         //设置标题栏内容
         setTitle();
     }
@@ -141,7 +139,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
                     fragment = (ToClaimListFragment) mVpAdapter.getFragment(1);
 
                 }
-                fragment.updateDate(mTvAddress.getText().toString());
+                fragment.updateDate(mTvAddress.getText().toString().trim());
 
             }
         });
@@ -172,14 +170,14 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
                 //顶部导航栏点击回调
                 mVpContent.setCurrentItem(0);
                 ToClaimListFragment fragment0 = (ToClaimListFragment) mVpAdapter.getFragment(0);
-                fragment0.updateDate(mTvAddress.getText().toString());
+                fragment0.updateDate(mTvAddress.getText().toString().trim());
                 break;
             case R.id.tv_find:
                 isLostFind = false;
                 setTitle();
                 mVpContent.setCurrentItem(1);
                 ToClaimListFragment fragment1 = (ToClaimListFragment) mVpAdapter.getFragment(1);
-                fragment1.updateDate(mTvAddress.getText().toString());
+                fragment1.updateDate(mTvAddress.getText().toString().trim());
                 break;
             case R.id.iv_search:
                 startActivity(SearchActivity.class,null);

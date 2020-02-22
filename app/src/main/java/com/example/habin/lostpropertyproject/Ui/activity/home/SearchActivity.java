@@ -2,7 +2,6 @@ package com.example.habin.lostpropertyproject.Ui.activity.home;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -15,7 +14,7 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.R;
-import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
+import com.example.habin.lostpropertyproject.Widget.SwipeRecyclerView;
 
 import butterknife.BindView;
 import butterknife.OnClick;

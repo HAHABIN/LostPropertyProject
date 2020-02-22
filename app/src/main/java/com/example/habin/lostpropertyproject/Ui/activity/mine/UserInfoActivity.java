@@ -1,6 +1,5 @@
 package com.example.habin.lostpropertyproject.Ui.activity.mine;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,9 +10,8 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
-import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
-import com.example.habin.lostpropertyproject.Common.Constants;
+import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.MyApplication;
@@ -27,7 +25,7 @@ import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
-import com.example.habin.lostpropertyproject.view.CircleImageView;
+import com.example.habin.lostpropertyproject.Widget.CircleImageView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;

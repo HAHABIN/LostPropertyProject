@@ -26,16 +26,9 @@ public abstract class BaseFragment extends Fragment {
 
     protected String TAG;
     protected Activity mActivity;
-    protected Context mContext;
     private Unbinder mUnBinder;
-    private View mRoot = null;
+    private View mRoot;
 
-    @Override
-    public void onAttach(Context context) {
-        mActivity = (Activity) context;
-        mContext = context;
-        super.onAttach(context);
-    }
 
     @LayoutRes
     protected abstract int getLayoutId();
@@ -56,12 +49,11 @@ public abstract class BaseFragment extends Fragment {
 
 
 
-
-
     /******************************lifecycle area*****************************************/
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        mActivity = getActivity();
         if (mRoot != null) {
             ViewGroup parent = (ViewGroup) mRoot.getParent();
             if (parent != null) {

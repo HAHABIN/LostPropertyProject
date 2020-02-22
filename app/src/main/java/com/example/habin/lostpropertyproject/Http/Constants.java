@@ -1,7 +1,4 @@
-package com.example.habin.lostpropertyproject.Common;
-
-import com.bumptech.glide.request.RequestOptions;
-import com.example.habin.lostpropertyproject.R;
+package com.example.habin.lostpropertyproject.Http;
 
 /**
  * Create by HABIN on 2019/11/4

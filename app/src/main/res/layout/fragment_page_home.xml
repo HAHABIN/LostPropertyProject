@@ -71,7 +71,7 @@
             android:visibility="visible" />
     </RelativeLayout>
 
-    <com.example.habin.lostpropertyproject.view.NoScrollViewPager
+    <com.example.habin.lostpropertyproject.Widget.NoScrollViewPager
         android:id="@+id/vp_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

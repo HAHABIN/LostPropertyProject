@@ -4,6 +4,7 @@ import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Http.TaskListener;
+import com.example.habin.lostpropertyproject.Util.ToastUtils;
 
 import org.json.JSONObject;
 
@@ -82,6 +83,7 @@ public class RxPresenter<T extends BaseContract.BaseView> implements BaseContrac
 
     @Override
     public void taskError(HttpHelper.TaskType type, ApiError error) {
+        ToastUtils.show_s(error.getMessage());
         mView.onFailure(type,error);
     }
 

@@ -43,7 +43,7 @@
             android:visibility="gone"
             />
     </RelativeLayout>
-    <com.example.habin.lostpropertyproject.view.PhotoViewPager
+    <com.example.habin.lostpropertyproject.Widget.PhotoViewPager
         android:id="@+id/vp_avatar"
         android:layout_below="@+id/ll_basetitle"
         android:layout_width="match_parent"

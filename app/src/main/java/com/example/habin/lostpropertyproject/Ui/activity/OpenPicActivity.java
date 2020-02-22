@@ -1,25 +1,19 @@
 package com.example.habin.lostpropertyproject.Ui.activity;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.FutureTarget;
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
-import com.example.habin.lostpropertyproject.Common.Constants;
+import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Ui.adapter.ImageAdapter;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
-import com.example.habin.lostpropertyproject.view.PhotoViewPager;
-import com.luck.picture.lib.entity.LocalMedia;
+import com.example.habin.lostpropertyproject.Widget.PhotoViewPager;
 import com.luck.picture.lib.photoview.PhotoView;
 
 import java.util.List;

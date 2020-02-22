@@ -11,12 +11,12 @@
 <!--        android:text="丢都"-->
 <!--        />-->
 
-    <com.example.habin.lostpropertyproject.view.SwipeRecyclerView
+    <com.example.habin.lostpropertyproject.Widget.SwipeRecyclerView
         android:id="@+id/swipeRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white">
 
-    </com.example.habin.lostpropertyproject.view.SwipeRecyclerView>
+    </com.example.habin.lostpropertyproject.Widget.SwipeRecyclerView>
 
 </LinearLayout>

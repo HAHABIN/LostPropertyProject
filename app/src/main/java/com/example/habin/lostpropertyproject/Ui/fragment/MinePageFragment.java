@@ -1,29 +1,24 @@
 package com.example.habin.lostpropertyproject.Ui.fragment;
 
 
-import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
-import com.example.habin.lostpropertyproject.Common.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.fragment.MineTpyePresenter;
 import com.example.habin.lostpropertyproject.Presenter.fragment.contract.MinePageContract;
 import com.example.habin.lostpropertyproject.R;
-import com.example.habin.lostpropertyproject.Ui.activity.ReleaseActivity;
-import com.example.habin.lostpropertyproject.Util.ProgressUtils;
-import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.Ui.activity.Land.LandActivity;
 import com.example.habin.lostpropertyproject.Ui.activity.mine.RecordListActivity;
 import com.example.habin.lostpropertyproject.Ui.activity.mine.SettingActivity;
 import com.example.habin.lostpropertyproject.Ui.activity.mine.UserInfoActivity;
-import com.example.habin.lostpropertyproject.view.CircleImageView;
+import com.example.habin.lostpropertyproject.Widget.CircleImageView;
 
 import org.json.JSONObject;
 
@@ -66,11 +61,11 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
 
     @Override
     protected void initData() {
-        PersonInfoEntity.ResultBean mPersonInfo = MyApplication.getUserInfo(mContext);
+        PersonInfoEntity.ResultBean mPersonInfo = MyApplication.getUserInfo(mActivity);
         if (mPersonInfo != null) {
             mTvName.setText(mPersonInfo.getName());
         }
-        UiUtils.GildeLoad(mContext,mCivPic,mPersonInfo.getProfileImg());
+        UiUtils.GildeLoad(mActivity,mCivPic,mPersonInfo.getProfileImg());
     }
 
 
@@ -102,25 +97,24 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
                 startActivity(UserInfoActivity.class,null);
                 break;
             case R.id.ll_record_lost:
-
-                RecordListActivity.StartAct(mContext, 1);
+                RecordListActivity.StartAct(mActivity, 1);
                 break;
             case R.id.ll_record_find:
-                RecordListActivity.StartAct(mContext, 2);
+                RecordListActivity.StartAct(mActivity, 2);
                 break;
             case R.id.ll_record_complete:
-                RecordListActivity.StartAct(mContext, 3);
+                RecordListActivity.StartAct(mActivity, 3);
                 break;
             case R.id.ll_record_mine:
-                RecordListActivity.StartAct(mContext, 4);
+                RecordListActivity.StartAct(mActivity, 4);
                 break;
             case R.id.ll_setting:
-                SettingActivity.StartAct(mContext);
+                SettingActivity.StartAct(mActivity);
                 break;
             case R.id.ll_about:
 //                String  username = SharedPreferenceHandler.getUserName(mContext);
 //                SnackbarUtils.show(mActivity,username);
-                LandActivity.StartAct(mContext);
+                LandActivity.StartAct(mActivity);
                 break;
         }
     }
@@ -128,10 +122,10 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     @Override
     public void onResume() {
         super.onResume();
-        PersonInfoEntity.ResultBean personInfo = MyApplication.getUserInfo(mContext);
+        PersonInfoEntity.ResultBean personInfo = MyApplication.getUserInfo(mActivity);
         if (personInfo != null) {
             mTvName.setText(personInfo.getName());
-            UiUtils.GildeLoad(mContext,mCivPic,personInfo.getProfileImg());
+            UiUtils.GildeLoad(mActivity,mCivPic,personInfo.getProfileImg());
         }
     }
 

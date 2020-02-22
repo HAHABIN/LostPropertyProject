@@ -2,8 +2,6 @@ package com.example.habin.lostpropertyproject.Http;
 
 import android.content.Context;
 
-import com.example.habin.lostpropertyproject.Common.Constants;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;

@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.view;
+package com.example.habin.lostpropertyproject.Widget;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;

@@ -1,7 +1,5 @@
 package com.example.habin.lostpropertyproject.Ui.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,15 +9,13 @@ import android.widget.TextView;
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
-import com.example.habin.lostpropertyproject.Common.Constants;
+import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
-import com.example.habin.lostpropertyproject.view.CircleImageView;
-
-import java.io.Serializable;
+import com.example.habin.lostpropertyproject.Widget.CircleImageView;
 
 import butterknife.BindView;
 import butterknife.OnClick;

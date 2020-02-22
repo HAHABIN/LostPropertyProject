@@ -7,15 +7,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
-import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
-import com.example.habin.lostpropertyproject.Common.Constants;
+import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
-import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
-import com.example.habin.lostpropertyproject.Http.TaskListener;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.activity.contract.RecordListContract;
 import com.example.habin.lostpropertyproject.Presenter.activity.mine.RecordListPresenter;
@@ -29,7 +26,6 @@ import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import butterknife.BindArray;

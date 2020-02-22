@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
-import com.example.habin.lostpropertyproject.Common.Constants;
+import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Widget.PublishDialog;

@@ -9,8 +9,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.R;
-import com.example.habin.lostpropertyproject.view.CircleImageView;
+import com.example.habin.lostpropertyproject.Util.JsonUtil;
+import com.example.habin.lostpropertyproject.Util.StringUtils;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
+import com.example.habin.lostpropertyproject.Widget.CircleImageView;
+import com.google.gson.reflect.TypeToken;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,18 +35,27 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
     private Context mContext;
     private OnitemClick mOnitemClick;
     private int mType;
+    private List<ArticleInfoEntity.ResultBean> mDataList;
     //图片选中样式集合
     private int[] ResultPic = {R.mipmap.ic_result_seeking, R.mipmap.ic_result_pickuping};
 
-    public ToClaimListAdapter(Context context) {
-        mContext = context;
-    }
+
     public ToClaimListAdapter(Context context,OnitemClick onitemClick,int type) {
         mContext = context;
         mOnitemClick = onitemClick;
         mType = type;
     }
 
+    public void setData(List<ArticleInfoEntity.ResultBean> dataList){
+        if (mDataList == null){
+            mDataList = new ArrayList<>();
+            mDataList.addAll(dataList);
+        } else {
+            mDataList.clear();
+            mDataList.addAll(dataList);
+        }
+        notifyDataSetChanged();
+    }
     //定义设置点击事件监听的方法
     public void setOnitemClickLintener(OnitemClick onitemClick) {
         this.mOnitemClick = onitemClick;
@@ -51,6 +69,16 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+        ArticleInfoEntity.ResultBean resultBean = mDataList.get(position);
+        viewHolder.mTvReleaseTime.setText(StringUtils.stampToDate(resultBean.getCreateTime()));
+        viewHolder.mTvFindTime.setText(StringUtils.stampToDate(resultBean.getFindTime()));
+        viewHolder.mTvAddress.setText(resultBean.getAddressContent());
+        viewHolder.mTvNoteContext.setText(resultBean.getDescription());
+        if (resultBean.getImgStr()!=null){
+            List<UploadPhotoParams> uploadPhotoParams = JsonUtil.fromJson(resultBean.getImgStr(), new TypeToken<List<UploadPhotoParams>>() {
+            });
+            UiUtils.GildeLoad(mContext,viewHolder.mIvContentPic,uploadPhotoParams.get(0).getImgStr());
+        }
         viewHolder.mIvResult.setBackgroundResource(ResultPic[mType]);
         viewHolder.itemView.setOnClickListener(v -> {
             if (mOnitemClick!=null){
@@ -61,7 +89,7 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
 
     @Override
     public int getItemCount() {
-        return 10;
+        return mDataList == null ? 0 : mDataList.size();
     }
 
 

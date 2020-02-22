@@ -20,7 +20,6 @@ import com.example.habin.lostpropertyproject.Bean.entity.County;
 import com.example.habin.lostpropertyproject.Bean.entity.Province;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Widget.SelectDialog;
-import com.example.habin.lostpropertyproject.view.SwipeRecyclerView;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
