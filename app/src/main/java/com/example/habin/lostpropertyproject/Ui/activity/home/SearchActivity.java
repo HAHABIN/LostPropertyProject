@@ -12,14 +12,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.habin.lostpropertyproject.Base.BaseActivity;
+import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
+import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.SearchContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.home.SearchPresenter;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Ui.adapter.ToClaimListAdapter;
+import com.example.habin.lostpropertyproject.Util.JsonUtil;
+import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Widget.SwipeRecyclerView;
+
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> implements SearchContract.View,ToClaimListAdapter.OnitemClick {
+
 
 
     public static void StartAct(Context context) {
@@ -36,7 +51,8 @@ public class SearchActivity extends BaseActivity {
     @BindView(R.id.ll_no_order)
     LinearLayout mllNoOrder;
 
-
+    private ToClaimListAdapter mAdapter;
+    List<ArticleInfoEntity.ResultBean> mDataList;
     private String mKey;
     private int mPageNo = 1;
     private int mPageSize = 10;
@@ -53,7 +69,8 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        mAdapter = new ToClaimListAdapter(mContext, this);
+        mSw.setAdapter(mAdapter);
     }
 
     @Override
@@ -87,7 +104,9 @@ public class SearchActivity extends BaseActivity {
                     String searchKey = mEtSearch.getText().toString().trim();
                     if (!TextUtils.isEmpty(searchKey)) {
                         mKey = searchKey;
-//                        initload();
+                        mDataList.clear();
+                        mPageNo=1;
+                        mSw.setRefreshing(true);
                     }
 
                 }
@@ -96,6 +115,25 @@ public class SearchActivity extends BaseActivity {
             }
         });
 
+        mSw.setOnLoadListener(new SwipeRecyclerView.OnLoadListener() {
+            @Override
+            public void onRefresh() {
+                mPageNo = 1;
+                load();
+            }
+
+            @Override
+            public void onLoadMore() {
+                mPageNo++;
+                load();
+            }
+        });
+
+        mSw.addLoadMoreView();
+    }
+
+    private void load() {
+        mPresenter.SearchInfo(mEtSearch.getText().toString().trim(),mPageNo,mPageSize);
     }
 
     @Override
@@ -108,6 +146,7 @@ public class SearchActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_search:
+                load();
                 break;
             case R.id.iv_clean:
                 mEtSearch.setText("");
@@ -116,5 +155,64 @@ public class SearchActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
+
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
+        mSw.stopLoad();
+        switch (type) {
+            case SearchArInfo:
+                ArticleInfoEntity articleInfoEntity = JsonUtil.JSONObjectToBean(object, ArticleInfoEntity.class);
+                if (mDataList == null) {
+                    mDataList = new ArrayList<>();
+                }
+                if (articleInfoEntity != null) {
+                    List<ArticleInfoEntity.ResultBean> result = articleInfoEntity.getResult();
+                    if (result.size() == 0) {
+                        if (mDataList.size() > 0) {
+                            ToastUtils.show_s("已经到底.....");
+                        } else {
+                            ToastUtils.show_s("查询不到");
+                        }
+
+                    }
+                    //当页面为第一页时 清理原先的数据
+                    if (mPageNo == 1) {
+                        mDataList.clear();
+                    }
+                    //判断返回的数据是否为空
+                    if (result != null && !result.isEmpty()) {
+                        mDataList.addAll(result);
+                        //当返回数量少于页面最大值  设置没有更多不能上拉刷新
+                        if (result.size() < mPageSize) {
+                            mSw.noMoreData();
+                        }
+                    }
+                    mAdapter.setData(mDataList);
+                }
+                break;
+
+        }
+
+    }
+
+    @Override
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        mSw.stopLoad();
+    }
+
+    @Override
+    protected SearchContract.Presenter bindPresenter() {
+        return new SearchPresenter();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }

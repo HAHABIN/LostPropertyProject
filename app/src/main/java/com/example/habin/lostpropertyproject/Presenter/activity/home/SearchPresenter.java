@@ -18,6 +18,6 @@ public class SearchPresenter extends RxPresenter<SearchContract.View> implements
         hashMap.put("description", description);
         hashMap.put("pageNo", pageNo);
         hashMap.put("pageSize", pageSize);
-        HttpClient.getInstance().startTask(HttpHelper.TaskType.QueryArticleInfo, this, hashMap);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.SearchArInfo, this, hashMap);
     }
 }
