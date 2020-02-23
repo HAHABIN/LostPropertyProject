@@ -254,7 +254,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
         ProgressUtils.dismiss();
         //更新验证码
         setCode();
-//        SnackbarUtils.show(mActivity, e.getMessage());
+        SnackbarUtils.show(mActivity, e.getMessage());
 
     }
 

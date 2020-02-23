@@ -235,7 +235,7 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
-//        ToastUtils.show_l(e.getMessage());
+        ToastUtils.show_l(e.getMessage());
     }
 
     @Override

@@ -34,14 +34,16 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
 
     private Context mContext;
     private OnitemClick mOnitemClick;
+    private int mType;
     private List<ArticleInfoEntity.ResultBean> mDataList;
     //图片选中样式集合
     private int[] ResultPic = {R.mipmap.ic_result_seeking, R.mipmap.ic_result_pickuping};
 
 
-    public ToClaimListAdapter(Context context,OnitemClick onitemClick) {
+    public ToClaimListAdapter(Context context,OnitemClick onitemClick,int type) {
         mContext = context;
         mOnitemClick = onitemClick;
+        mType = type;
     }
 
     public void setData(List<ArticleInfoEntity.ResultBean> dataList){
@@ -77,7 +79,7 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
             });
             UiUtils.GildeLoad(mContext,viewHolder.mIvContentPic,uploadPhotoParams.get(0).getImgStr());
         }
-        viewHolder.mIvResult.setBackgroundResource(ResultPic[resultBean.getStatus()-1]);
+        viewHolder.mIvResult.setBackgroundResource(ResultPic[mType]);
         viewHolder.itemView.setOnClickListener(v -> {
             if (mOnitemClick!=null){
                 mOnitemClick.onItemClick(position);

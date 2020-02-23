@@ -98,7 +98,7 @@ public class EditNicknameActivity extends BaseMVPActivity<EditNicknameContract.P
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
-//        ToastUtils.show_s(e.getMessage());
+        ToastUtils.show_s(e.getMessage());
     }
 
     @Override

@@ -1,7 +1,6 @@
 package com.example.habin.lostpropertyproject.Presenter.activity.mine;
 
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
-import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.MyApplication;
@@ -20,6 +19,6 @@ public class EditEmailPresenter extends RxPresenter<EditEmailContract.View> impl
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("userId", MyApplication.getUserId(UiUtils.getContext()));
         hashMap.put("email",email);
-        HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo, this, hashMap, HttpItem.class);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.UpdateInfo, this, hashMap);
     }
 }

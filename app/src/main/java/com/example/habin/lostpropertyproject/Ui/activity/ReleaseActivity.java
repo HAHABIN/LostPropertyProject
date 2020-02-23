@@ -346,7 +346,7 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
-//        ToastUtils.show_s(mContext, e.getMessage());
+        ToastUtils.show_s(mContext, e.getMessage());
     }
 
     @Override

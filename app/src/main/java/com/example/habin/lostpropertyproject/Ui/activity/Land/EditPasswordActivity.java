@@ -123,7 +123,7 @@ public class EditPasswordActivity extends BaseMVPActivity<EditPasswordContract.P
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
-//        SnackbarUtils.show(mActivity, e.getMessage());
+        SnackbarUtils.show(mActivity, e.getMessage());
     }
 
     @Override

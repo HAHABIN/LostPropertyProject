@@ -47,8 +47,8 @@ public class ApiError {
 
 
         ApiError_UnknownHostException("网络似乎出现了点问题，请稍后再试...",3),
-        ApiError_TimeOut("连接超时，请稍后再试...",1),
-        ApiError_Unknown("服务器维修中，请稍后再试...",0),
+        ApiError_TimeOut("网络似乎出现了点问题，请稍后再试...",1),
+        ApiError_Unknown("网络似乎出现了点问题，请稍后再试...",0),
 
         //自定义
         ApiError_NetworkDisconnected("网络似乎出现了点问题，请稍后再试...",-1),
