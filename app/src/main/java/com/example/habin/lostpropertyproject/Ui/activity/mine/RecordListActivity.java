@@ -142,7 +142,7 @@ public class RecordListActivity extends BaseMVPActivity<RecordListContract.Prese
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
-        ToastUtils.show_s(e.getMessage());
+//        ToastUtils.show_s(e.getMessage());
     }
 
     @Override

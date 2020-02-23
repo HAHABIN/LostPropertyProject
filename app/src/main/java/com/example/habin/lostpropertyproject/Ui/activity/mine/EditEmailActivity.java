@@ -98,7 +98,6 @@ public class EditEmailActivity extends BaseMVPActivity<EditEmailContract.Present
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         ProgressUtils.dismiss();
-        ToastUtils.show_s("邮箱修改失败");
     }
 
     @Override

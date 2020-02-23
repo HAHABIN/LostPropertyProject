@@ -1,7 +1,6 @@
 package com.example.habin.lostpropertyproject.Http;
 
 
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 
 import org.json.JSONObject;

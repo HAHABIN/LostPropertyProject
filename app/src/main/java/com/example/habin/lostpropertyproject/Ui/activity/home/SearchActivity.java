@@ -12,14 +12,23 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.habin.lostpropertyproject.Base.BaseActivity;
+import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
+import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.SearchContract;
+import com.example.habin.lostpropertyproject.Presenter.activity.home.SearchPresenter;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Ui.adapter.ToClaimListAdapter;
 import com.example.habin.lostpropertyproject.Widget.SwipeRecyclerView;
+
+import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class SearchActivity extends BaseActivity {
+public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> implements SearchContract.View,ToClaimListAdapter.OnitemClick {
+
 
 
     public static void StartAct(Context context) {
@@ -36,6 +45,7 @@ public class SearchActivity extends BaseActivity {
     @BindView(R.id.ll_no_order)
     LinearLayout mllNoOrder;
 
+    private ToClaimListAdapter mAdapter;
 
     private String mKey;
     private int mPageNo = 1;
@@ -53,7 +63,8 @@ public class SearchActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
+        mAdapter = new ToClaimListAdapter(mContext, this);
+        mSw.setAdapter(mAdapter);
     }
 
     @Override
@@ -87,7 +98,7 @@ public class SearchActivity extends BaseActivity {
                     String searchKey = mEtSearch.getText().toString().trim();
                     if (!TextUtils.isEmpty(searchKey)) {
                         mKey = searchKey;
-//                        initload();
+                        load();
                     }
 
                 }
@@ -95,7 +106,25 @@ public class SearchActivity extends BaseActivity {
 
             }
         });
+        mSw.setOnLoadListener(new SwipeRecyclerView.OnLoadListener() {
+            @Override
+            public void onRefresh() {
+                mPageNo = 1;
+                load();
+            }
 
+            @Override
+            public void onLoadMore() {
+                mPageNo++;
+                load();
+            }
+        });
+        mSw.addLoadMoreView();
+//        mSw.setEnabled(false);
+    }
+
+    private void load() {
+        mPresenter.SearchInfo(mEtSearch.getText().toString().trim(),mPageNo,mPageSize);
     }
 
     @Override
@@ -108,6 +137,7 @@ public class SearchActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.et_search:
+                load();
                 break;
             case R.id.iv_clean:
                 mEtSearch.setText("");
@@ -116,5 +146,30 @@ public class SearchActivity extends BaseActivity {
                 finish();
                 break;
         }
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
+        mSw.stopLoad();
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
+        mSw.stopLoad();
+    }
+
+    @Override
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        mSw.stopLoad();
+    }
+
+    @Override
+    protected SearchContract.Presenter bindPresenter() {
+        return new SearchPresenter();
+    }
+
+    @Override
+    public void onItemClick(int position) {
+
     }
 }
