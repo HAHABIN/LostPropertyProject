@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
@@ -22,7 +23,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
 
-public class OpenPicActivity extends BaseActivity {
+public class OpenPicActivity extends BaseActivity implements ImageAdapter.PicCallBack {
 
     @BindView(R.id.iv_back)
     ImageView mIvBack;
@@ -73,8 +74,9 @@ public class OpenPicActivity extends BaseActivity {
             setViewPage();
         } else {
             mPvAvatar.setVisibility(View.VISIBLE);
-            //设置当前点击位置
-            UiUtils.GildeLoad(mActivity,mPvAvatar, mImgList.get(mPosition));
+
+                UiUtils.GildeLoad(mActivity,mPvAvatar, mImgList.get(mPosition));
+
         }
     }
 
@@ -121,5 +123,11 @@ public class OpenPicActivity extends BaseActivity {
         ToastUtils.show_s("头像长按");
 
         return true;
+    }
+
+    @Override
+    public void onPicClick() {
+        finish();
+        overridePendingTransition(0, R.anim.a3);
     }
 }

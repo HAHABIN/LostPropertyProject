@@ -35,6 +35,7 @@ public class Constants {
     //记录类型
     public static final String RECORD_STATUS = "RECORD_STATUS";
 
+
 }
 
 

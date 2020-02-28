@@ -2,6 +2,7 @@ package com.example.habin.lostpropertyproject.Ui.activity.home;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -16,10 +17,12 @@ import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.activity.contract.SearchContract;
 import com.example.habin.lostpropertyproject.Presenter.activity.home.SearchPresenter;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Ui.activity.RecordDetailsActivity;
 import com.example.habin.lostpropertyproject.Ui.adapter.ToClaimListAdapter;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
@@ -33,6 +36,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
+
+/**
+*@author HABIN
+*create at
+*/
 public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> implements SearchContract.View,ToClaimListAdapter.OnitemClick {
 
 
@@ -104,7 +112,9 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> im
                     String searchKey = mEtSearch.getText().toString().trim();
                     if (!TextUtils.isEmpty(searchKey)) {
                         mKey = searchKey;
-                        mDataList.clear();
+                        if (mDataList != null){
+                            mDataList.clear();
+                        }
                         mPageNo=1;
                         mSw.setRefreshing(true);
                     }
@@ -211,8 +221,12 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> im
         return new SearchPresenter();
     }
 
-    @Override
-    public void onItemClick(int position) {
 
+    @Override
+    public void onItemClick(int position, ArticleInfoEntity.ResultBean resultBean) {
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Constants.IS_SHOW,true);
+        bundle.putSerializable(Constants.ACTICLEINFO_DATA,resultBean);
+        startActivity(RecordDetailsActivity.class,bundle);
     }
 }

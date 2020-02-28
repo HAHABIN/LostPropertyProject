@@ -15,9 +15,11 @@ import com.example.habin.lostpropertyproject.Bean.entity.County;
 import com.example.habin.lostpropertyproject.Bean.entity.Province;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.fragment.HomePagePresenter;
 import com.example.habin.lostpropertyproject.Presenter.fragment.contract.HomePageContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Ui.activity.Land.LandActivity;
 import com.example.habin.lostpropertyproject.Ui.activity.home.SearchActivity;
 import com.example.habin.lostpropertyproject.Ui.adapter.VpAdapter;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
@@ -180,6 +182,10 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
                 fragment1.updateDate(mTvAddress.getText().toString().trim());
                 break;
             case R.id.iv_search:
+                if (MyApplication.isLogin(mActivity)) {
+                    startActivity(LandActivity.class, null);
+                    return;
+                }
                 startActivity(SearchActivity.class,null);
                 break;
 

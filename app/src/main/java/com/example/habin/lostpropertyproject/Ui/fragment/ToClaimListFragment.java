@@ -7,12 +7,15 @@ import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.Http.ApiError;
+import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.fragment.ToClainListPresenter;
 import com.example.habin.lostpropertyproject.Presenter.fragment.contract.ToClaimListContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Ui.activity.RecordDetailsActivity;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
+import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Ui.activity.Land.LandActivity;
 import com.example.habin.lostpropertyproject.Ui.adapter.ToClaimListAdapter;
@@ -108,12 +111,16 @@ public class ToClaimListFragment extends BaseMVPFragment<ToClaimListContract.Pre
 
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(int position, ArticleInfoEntity.ResultBean resultBean) {
         if (MyApplication.isLogin(mActivity)) {
             startActivity(LandActivity.class, null);
             return;
         }
-        ToastUtils.show_s(mActivity, "正在开发中");
+//        ToastUtils.show_s(mActivity, "正在开发中");
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(Constants.IS_SHOW,true);
+        bundle.putSerializable(Constants.ACTICLEINFO_DATA,resultBean);
+        startActivity(RecordDetailsActivity.class,bundle);
     }
 
 

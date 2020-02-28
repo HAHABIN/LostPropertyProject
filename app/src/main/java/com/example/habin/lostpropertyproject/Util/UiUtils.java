@@ -11,6 +11,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -19,6 +20,8 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.R;
@@ -138,6 +141,7 @@ public class UiUtils {
                 .placeholder(R.drawable.ic_placeholder)//图片加载出来前，显示的图片
                 .fallback( R.drawable.ic_placeholder) //url为空的时候,显示的图片
                 .error(R.drawable.ic_picfail);//图片加载失败后，显示的图片
+
         Glide.with(context)
                 .load(Constants.BASE_URL+imgStr)
                 .apply(options)

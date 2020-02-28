@@ -97,14 +97,6 @@ public class MyApplication extends Application {
         }
     }
 
-//    public static ArrayList<Province> getProviceList(){
-//        return options1Items;
-//    }
-//    public static ArrayList<ArrayList<City>> getProviceList(){
-//        return options2Items;
-//    }
-
-
     /**
      * 获取上下文
      *

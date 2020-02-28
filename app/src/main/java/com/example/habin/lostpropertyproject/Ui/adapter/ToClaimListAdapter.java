@@ -9,16 +9,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
+import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.Widget.CircleImageView;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -68,19 +71,31 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
         ArticleInfoEntity.ResultBean resultBean = mDataList.get(position);
-        viewHolder.mTvReleaseTime.setText(StringUtils.stampToDate(resultBean.getCreateTime()));
+        String profileImg = resultBean.getPersonInfo().getProfileImg();
+        if (profileImg!=null){
+            UiUtils.GildeLoad(mContext,viewHolder.mCivPic,profileImg);
+        }
+
+        viewHolder.mTvNickNmae.setText(resultBean.getPersonInfo().getName());
+//        viewHolder.mTvReleaseTime.setText(StringUtils.stampToDate(resultBean.getCreateTime()));
+        viewHolder.mTvReleaseTime.setText(StringUtils.getTimeFormatText(resultBean.getCreateTime()));
         viewHolder.mTvFindTime.setText(StringUtils.stampToDate(resultBean.getFindTime()));
         viewHolder.mTvAddress.setText(resultBean.getAddressContent());
         viewHolder.mTvNoteContext.setText(resultBean.getDescription());
+        //设置Tag 防止图片重用
+        viewHolder.mIvContentPic.setTag(R.id.iv_content_pic,position);
         if (resultBean.getImgStr()!=null){
             List<UploadPhotoParams> uploadPhotoParams = JsonUtil.fromJson(resultBean.getImgStr(), new TypeToken<List<UploadPhotoParams>>() {
             });
             UiUtils.GildeLoad(mContext,viewHolder.mIvContentPic,uploadPhotoParams.get(0).getImgStr());
+        } else {
+            //清除原有图片 防止重复显示
+            Glide.with(mContext).clear(viewHolder.mIvContentPic);
         }
         viewHolder.mIvResult.setBackgroundResource(ResultPic[resultBean.getStatus()-1]);
         viewHolder.itemView.setOnClickListener(v -> {
             if (mOnitemClick!=null){
-                mOnitemClick.onItemClick(position);
+                mOnitemClick.onItemClick(position,resultBean);
             }
         });
     }
@@ -89,7 +104,6 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
     public int getItemCount() {
         return mDataList == null ? 0 : mDataList.size();
     }
-
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.civ_pic)
@@ -116,6 +130,6 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
 
     //定义一个点击事件的接口
     public interface OnitemClick {
-        void onItemClick(int position);
+        void onItemClick(int position, ArticleInfoEntity.ResultBean resultBean);
     }
 }

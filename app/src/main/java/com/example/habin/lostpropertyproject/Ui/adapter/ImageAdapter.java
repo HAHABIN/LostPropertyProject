@@ -20,10 +20,12 @@ public class ImageAdapter extends PagerAdapter {
     public static final String TAG = ImageAdapter.class.getSimpleName();
     private List<String> imageUrls;
     private Context mContext;
+    private PicCallBack mPicCallBack;
 
     public ImageAdapter(List<String> imageUrls, Context context) {
         this.imageUrls = imageUrls;
         this.mContext = context;
+        this.mPicCallBack = (PicCallBack) context;
     }
 
     @Override
@@ -31,7 +33,15 @@ public class ImageAdapter extends PagerAdapter {
         String url = imageUrls.get(position);
         PhotoView photoView = new PhotoView(mContext);
         photoView.setScaleType(ImageView.ScaleType.FIT_CENTER);
-        UiUtils.GildeLoad(mContext,photoView,url);
+        photoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mPicCallBack != null) {
+                    mPicCallBack.onPicClick();
+                }
+            }
+        });
+        UiUtils.GildeLoad(mContext, photoView, url);
 //        Glide.with(activity)
 //                .load(Constants.BASE_URL+url)
 //                .into(photoView);
@@ -57,6 +67,11 @@ public class ImageAdapter extends PagerAdapter {
     @Override
     public int getItemPosition(Object object) {
         return POSITION_NONE;
+    }
+
+    //图片点击事件
+    public interface PicCallBack {
+        void onPicClick();
     }
 }
 

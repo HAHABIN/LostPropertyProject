@@ -55,14 +55,14 @@ public class ArticleInfoEntity extends HttpItem {
         //最后修改信息时间
         private long lastEditTime;
 
-        private PersonInfoEntity personInfoEntity;
+        private PersonInfoEntity.ResultBean personInfo;
 
-        public PersonInfoEntity getPersonInfoEntity() {
-            return personInfoEntity;
+        public PersonInfoEntity.ResultBean getPersonInfo() {
+            return personInfo;
         }
 
-        public void setPersonInfoEntity(PersonInfoEntity personInfoEntity) {
-            this.personInfoEntity = personInfoEntity;
+        public void setPersonInfo(PersonInfoEntity.ResultBean personInfo) {
+            this.personInfo = personInfo;
         }
 
         public int getId() {
