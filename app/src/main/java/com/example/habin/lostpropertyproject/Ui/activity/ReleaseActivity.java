@@ -30,6 +30,7 @@ import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.google.gson.Gson;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
@@ -172,6 +173,8 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
         setShowBack(View.VISIBLE);
         setRightText("发布");
         setRightOnClick().setOnClickListener(v -> {
+            //关闭键盘
+            UiUtils.hideSoftKeyboardNoView(mActivity);
             load();
         });
         setBackOnClick().setOnClickListener(v -> finish());
@@ -229,12 +232,15 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
             case R.id.rl_image:
                 break;
             case R.id.ll_address:
+                UiUtils.hideSoftKeyboardNoView(mActivity);
                 SelectorDialogUtils.getInstance().ShowCity(mActivity, mTvAddress);
                 break;
             case R.id.ll_time:
+                UiUtils.hideSoftKeyboardNoView(mActivity);
                 SelectorDialogUtils.getInstance().ShowTime(mActivity, mTvTime);
                 break;
             case R.id.ll_type:
+                UiUtils.hideSoftKeyboardNoView(mActivity);
                 SelectorDialogUtils.getInstance().ShowType(mActivity, MyApplication.getTypeList(), mTvType);
                 break;
         }

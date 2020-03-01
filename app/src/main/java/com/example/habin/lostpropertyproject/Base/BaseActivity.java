@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -67,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initMainLayout() {
-
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
         //是否显示标题栏
         if (!showTitle()) {
             setContentView(getLayoutId());

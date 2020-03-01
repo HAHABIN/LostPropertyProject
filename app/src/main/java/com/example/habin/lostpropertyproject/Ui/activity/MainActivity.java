@@ -119,21 +119,34 @@ public class MainActivity extends BaseActivity {
                 publishDialog.show();
                 break;
             case R.id.rl_home:
+                //如果是当前位置 不刷新
+                if (mIsCheck==0){
+                    return;
+                }
                 mIsCheck = 0;
                 fragment = HomePageFragment.newInstance();//首页
                 setStaus();
                 break;
             case R.id.rl_type:
+                if (mIsCheck==1){
+                    return;
+                }
                 mIsCheck = 1;
                 fragment = TypePageFragment.newInstance();//分类
                 setStaus();
                 break;
             case R.id.rl_message:
+                if (mIsCheck==2){
+                    return;
+                }
                 fragment = MessagePageFragment.newInstance();//消息
                 mIsCheck = 2;
                 setStaus();
                 break;
             case R.id.rl_mine:
+                if (mIsCheck==3){
+                    return;
+                }
                 //登录判断
                 if (MyApplication.isLogin(mContext)) {
                     LandActivity.StartAct(mContext);
