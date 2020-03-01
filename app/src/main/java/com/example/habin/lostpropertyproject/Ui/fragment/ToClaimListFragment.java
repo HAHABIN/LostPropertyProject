@@ -1,7 +1,11 @@
 package com.example.habin.lostpropertyproject.Ui.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
@@ -37,10 +41,11 @@ import butterknife.BindView;
 public class ToClaimListFragment extends BaseMVPFragment<ToClaimListContract.Presenter> implements ToClaimListContract.View,ToClaimListAdapter.OnitemClick {
 
 
-    public static ToClaimListFragment newInstance(int type) {
+    public static ToClaimListFragment newInstance(int type,int ClassType) {
         ToClaimListFragment fragment = new ToClaimListFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
+        bundle.putInt("ClassType", ClassType);
         fragment.setArguments(bundle);
         return fragment;
     }
@@ -50,7 +55,8 @@ public class ToClaimListFragment extends BaseMVPFragment<ToClaimListContract.Pre
     SwipeRecyclerView mSw;
 
     private ToClaimListAdapter mAdapter;
-    private int mType; //0为丢丢 1为拾拾
+    private int mClassType; //0为丢丢 1为拾拾
+    private int mType; //物品类型 为0时默认为全部
     private String mAddress;
     private int mPageNo = 1;
     private int mPageSize = 10;
@@ -71,11 +77,18 @@ public class ToClaimListFragment extends BaseMVPFragment<ToClaimListContract.Pre
         return R.layout.fragment_to_claim_list;
     }
 
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
     @Override
     protected void initView(View view) {
         Bundle arguments = this.getArguments();
         if (arguments != null) {
-            mType = arguments.getInt("type", 0);
+            mType = arguments.getInt("type",0);
+            mClassType = arguments.getInt("ClassType", 0);
         }
         mAdapter = new ToClaimListAdapter(getContext(), this);
         mSw.setAdapter(mAdapter);
@@ -101,7 +114,7 @@ public class ToClaimListFragment extends BaseMVPFragment<ToClaimListContract.Pre
     }
 
     private void load() {
-        mPresenter.QueryArticleInfo(mAddress,mType+1,mPageNo,mPageSize);
+        mPresenter.QueryArticleInfo(mAddress,mType,mClassType+1,mPageNo,mPageSize);
     }
 
     @Override
@@ -145,14 +158,6 @@ public class ToClaimListFragment extends BaseMVPFragment<ToClaimListContract.Pre
                 }
                 if (articleInfoEntity != null) {
                     List<ArticleInfoEntity.ResultBean> result = articleInfoEntity.getResult();
-                    if (result.size() == 0) {
-                        if (mDataList.size() > 0) {
-                            ToastUtils.show_s("已经到底.....");
-                        } else {
-                            ToastUtils.show_s("当前城市无发布信息");
-                        }
-
-                    }
                     //当页面为第一页时 清理原先的数据
                     if (mPageNo == 1) {
                         mDataList.clear();
@@ -167,6 +172,7 @@ public class ToClaimListFragment extends BaseMVPFragment<ToClaimListContract.Pre
                     }
                     mAdapter.setData(mDataList);
                 }
+
                 break;
 
         }

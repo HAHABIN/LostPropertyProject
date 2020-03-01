@@ -1,6 +1,9 @@
 package com.example.habin.lostpropertyproject.Presenter.fragment;
 
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleTypeEntity;
+import com.example.habin.lostpropertyproject.Http.HttpClient;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
 import com.example.habin.lostpropertyproject.Presenter.fragment.contract.TypePageContract;
 
 /**
@@ -11,7 +14,7 @@ import com.example.habin.lostpropertyproject.Presenter.fragment.contract.TypePag
  */
 public class TypePagePresenter extends RxPresenter<TypePageContract.View> implements TypePageContract.Presenter {
     @Override
-    public void getData(String username, String password) {
-
+    public void getType() {
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.queryType,this,null, ArticleTypeEntity.class);
     }
 }

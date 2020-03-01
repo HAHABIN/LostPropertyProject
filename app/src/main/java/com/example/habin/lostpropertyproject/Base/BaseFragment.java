@@ -59,17 +59,15 @@ public abstract class BaseFragment extends Fragment {
             if (parent != null) {
                 parent.removeView(mRoot);
             }
-            return mRoot;
         }
         mRoot = inflater.from(getActivity()).inflate(getLayoutId(),container,false);
         mUnBinder = ButterKnife.bind(this, mRoot);
         TAG=getName();
         //绑定Presenter
         processLogic();
+        initData();
         initView(mRoot);
         initListener();
-        initData();
-
         return mRoot;
     }
 

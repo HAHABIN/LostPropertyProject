@@ -13,7 +13,7 @@ public interface ToClaimListContract extends BaseContract {
     }
 
     interface Presenter extends BasePresenter<View>{
-        void QueryArticleInfo(String address,int status,int pageNo,int pageSize);
+        void QueryArticleInfo(String address,int type,int status,int pageNo,int pageSize);
     }
 
 }

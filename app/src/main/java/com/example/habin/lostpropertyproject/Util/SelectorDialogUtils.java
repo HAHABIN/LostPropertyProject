@@ -14,7 +14,7 @@ import com.bigkoo.pickerview.listener.OnOptionsSelectListener;
 import com.bigkoo.pickerview.listener.OnTimeSelectListener;
 import com.bigkoo.pickerview.view.OptionsPickerView;
 import com.bigkoo.pickerview.view.TimePickerView;
-import com.example.habin.lostpropertyproject.Bean.entity.ArticleType;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleTypeEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.City;
 import com.example.habin.lostpropertyproject.Bean.entity.County;
 import com.example.habin.lostpropertyproject.Bean.entity.Province;
@@ -173,7 +173,7 @@ public class SelectorDialogUtils {
         timePicker.show();
     }
     // 弹出条件选择器
-    public void ShowType(Activity activity, final ArrayList<ArticleType> dList, final TextView view) {
+    public void ShowType(Activity activity, final ArrayList<ArticleTypeEntity.ResultBean> dList, final TextView view) {
       OptionsPickerView pvOptions = new OptionsPickerBuilder(activity, new OnOptionsSelectListener() {
           @Override
           public void onOptionsSelect(int options1, int options2, int options3, View v) {

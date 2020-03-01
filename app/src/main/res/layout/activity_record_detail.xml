@@ -129,7 +129,33 @@
                         android:text="2019/12/30/17:10"
                         android:textColor="@color/grey_515151"
                         android:textSize="14sp" />
+                    <TextView
+                        android:id="@+id/tv_type_name"
+                        android:layout_marginLeft="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="钱包"
+                        android:textColor="@color/blue_4ED1D1"
+                        android:background="@drawable/type_text_shape"
+                        />
+                    <View
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"/>
 
+                    <Button
+                        android:id="@+id/btn_call"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/select_btn_help"
+                        android:drawableLeft="@mipmap/ic_phone"
+                        android:text="拨打电话"
+                        android:padding="5dp"
+                        android:layout_margin="10dp"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        />
                 </LinearLayout>
 
                 <View
@@ -222,7 +248,13 @@
                         android:layout_margin="5dp"
                         android:padding="5dp"
                         android:src="@mipmap/ic_address" />
-
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="遗失地址: "
+                        android:textColor="@color/grey_515151"
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tv_address"
                         android:layout_width="match_parent"
@@ -245,6 +277,13 @@
                         android:layout_margin="5dp"
                         android:padding="5dp"
                         android:src="@mipmap/ic_time" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="遗失时间: "
+                        android:textColor="@color/grey_515151"
+                        android:textSize="12sp" />
                     <TextView
                         android:id="@+id/tv_find_time"
                         android:layout_width="match_parent"

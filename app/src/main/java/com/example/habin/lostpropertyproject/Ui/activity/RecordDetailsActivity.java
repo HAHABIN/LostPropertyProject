@@ -1,31 +1,38 @@
 package com.example.habin.lostpropertyproject.Ui.activity;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
-import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.Bean.entity.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
+import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.Widget.CircleImageView;
 import com.google.gson.reflect.TypeToken;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.functions.Consumer;
 
 /**
  * created by habin
@@ -54,6 +61,9 @@ public class RecordDetailsActivity extends BaseActivity {
     LinearLayout mLlBomHelp;
     @BindView(R.id.tv_vpNum)
     TextView mTvVpNum;
+    @BindView(R.id.tv_type_name)
+    TextView mTvTypeName;
+
     private boolean isVis;
     private ArticleInfoEntity.ResultBean data;
     private List<String> imgList;
@@ -99,6 +109,7 @@ public class RecordDetailsActivity extends BaseActivity {
             UiUtils.GildeLoad(mContext, mIvContentPic, imgList.get(0));
             mTvVpNum.setText(String.format("%1$d/%2$d",1,imgList.size()));
         }
+        mTvTypeName.setText(StringUtils.typeIdToName(data.getTypeId()));
         mTvNickname.setText(data.getPersonInfo().getName());
         mTvReleaseTime.setText(StringUtils.getTimeFormatText(data.getCreateTime()));
         mTvAddress.setText(data.getAddressContent());
@@ -117,7 +128,7 @@ public class RecordDetailsActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.rl_content_pic, R.id.iv_back, R.id.civ_pic, R.id.btn_help, R.id.btn_private_chat})
+    @OnClick({R.id.rl_content_pic, R.id.iv_back,R.id.btn_call, R.id.civ_pic, R.id.btn_help, R.id.btn_private_chat})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_content_pic:
@@ -126,6 +137,7 @@ public class RecordDetailsActivity extends BaseActivity {
                     bundle.putInt(Constants.OPEN_PIC_POSITION, 0);
                     bundle.putSerializable(Constants.OPEN_PIC_MEDIALAST, (Serializable) imgList);
                     startActivity(OpenPicActivity.class, bundle);
+                    overridePendingTransition(R.anim.a5, 0);
                 } else {
                     ToastUtils.show_s("图片为空");
                 }
@@ -139,8 +151,34 @@ public class RecordDetailsActivity extends BaseActivity {
                 break;
             case R.id.btn_private_chat:
                 break;
+            case R.id.btn_call:
+                checkPermissionRequest(this);
+                break;
         }
     }
+    @SuppressLint("CheckResult")
+    public void checkPermissionRequest(FragmentActivity activity) {
+        RxPermissions permissions = new RxPermissions(activity);
+        permissions.setLogging(true);
+        permissions.request(Manifest.permission.CALL_PHONE)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            call();
+                        } else {
+                            SnackbarUtils.show(mActivity, "拒绝权限");
+                            call();
+                        }
 
+                    }
+                });
+    }
 
+    public void call() {
+        // 执行拨号动作
+        Intent mIntent = new Intent(Intent.ACTION_CALL);
+        mIntent.setData(Uri.parse("tel:" + data.getPhone()));
+        startActivity(mIntent);
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.habin.lostpropertyproject.Bean;
+package com.example.habin.lostpropertyproject.Bean.entity;
 
 /**
  * create by Vincent on 2019/7/4 15:28
@@ -24,7 +24,5 @@ public class UploadPhotoParams {
     public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
     }
-
-
 
 }

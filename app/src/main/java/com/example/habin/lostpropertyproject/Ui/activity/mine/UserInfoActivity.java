@@ -130,7 +130,7 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
                 bundle.putSerializable(Constants.OPEN_PIC_MEDIALAST,(Serializable)imgList);
                 startActivity(OpenPicActivity.class,bundle);
 //                OpenPicActivity.StartAct(mContext,0,imgList);
-                this.overridePendingTransition(R.anim.a5, 0);
+                overridePendingTransition(R.anim.a5, 0);
                 break;
             case R.id.ll_nickname:
                 startActivity(EditNicknameActivity.class,null, Constants.NICKNAME_REQUEST);

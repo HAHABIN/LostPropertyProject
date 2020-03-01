@@ -3,7 +3,7 @@ package com.example.habin.lostpropertyproject;
 import android.app.Application;
 import android.content.Context;
 
-import com.example.habin.lostpropertyproject.Bean.entity.ArticleType;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleTypeEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.City;
 import com.example.habin.lostpropertyproject.Bean.entity.County;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
@@ -30,7 +30,7 @@ public class MyApplication extends Application {
     private static ArrayList<Province> options1Items;
     private static ArrayList<ArrayList<City>> options2Items;
     private static ArrayList<ArrayList<ArrayList<County>>> options3Items;
-    private static ArrayList<ArticleType> jsonType;
+    private static ArrayList<ArticleTypeEntity.ResultBean> jsonType;
 
     @Override
     public void onCreate() {
@@ -47,7 +47,7 @@ public class MyApplication extends Application {
 
     private void initProvice() {
         //获取类型分类
-        jsonType = JsonUtil.JsontoListT(getContext(), "article.json", ArticleType.class);
+        jsonType = JsonUtil.JsontoListT(getContext(), "article.json", ArticleTypeEntity.ResultBean.class);
         if (options1Items == null) {
             options1Items = new ArrayList<>(); //省
             options2Items = new ArrayList<>();//市
@@ -140,7 +140,7 @@ public class MyApplication extends Application {
         return options3Items;
     }
 
-    public static ArrayList<ArticleType> getTypeList(){
+    public static ArrayList<ArticleTypeEntity.ResultBean> getTypeList(){
         return jsonType;
     }
 }

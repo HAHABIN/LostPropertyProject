@@ -143,7 +143,7 @@ public class UiUtils {
                 .error(R.drawable.ic_picfail);//图片加载失败后，显示的图片
 
         Glide.with(context)
-                .load(Constants.BASE_URL+imgStr)
+                .load(imgStr)
                 .apply(options)
                 .into((ImageView) view);
     }

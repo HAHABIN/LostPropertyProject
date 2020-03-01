@@ -29,7 +29,7 @@ public class ArticleInfoEntity extends HttpItem {
         //物品id
         private int id;
         //物品类型
-        private int type;
+        private int typeId;
         //联系电话
         private String phone;
         //发布者id
@@ -73,12 +73,12 @@ public class ArticleInfoEntity extends HttpItem {
             this.id = id;
         }
 
-        public int getType() {
-            return type;
+        public int getTypeId() {
+            return typeId;
         }
 
-        public void setType(int type) {
-            this.type = type;
+        public void setTypeId(int typeId) {
+            this.typeId = typeId;
         }
 
         public String getPhone() {

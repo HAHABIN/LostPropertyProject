@@ -38,11 +38,10 @@ import butterknife.OnClick;
 
 
 /**
-*@author HABIN
-*create at
-*/
-public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> implements SearchContract.View,ToClaimListAdapter.OnitemClick {
-
+ * @author HABIN
+ * create at
+ */
+public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> implements SearchContract.View, ToClaimListAdapter.OnitemClick {
 
 
     public static void StartAct(Context context) {
@@ -110,14 +109,16 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> im
                 if ((actionId == 0 || actionId == 3) && event != null) {
                     //点击搜索要做的操作
                     String searchKey = mEtSearch.getText().toString().trim();
+                    mSw.setVisibility(View.VISIBLE);
                     if (!TextUtils.isEmpty(searchKey)) {
                         mKey = searchKey;
-                        if (mDataList != null){
+                        if (mDataList != null) {
                             mDataList.clear();
                         }
-                        mPageNo=1;
+                        mPageNo = 1;
                         mSw.setRefreshing(true);
                     }
+
 
                 }
                 return false;
@@ -138,12 +139,12 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> im
                 load();
             }
         });
-
         mSw.addLoadMoreView();
+        mSw.setVisibility(View.GONE);
     }
 
     private void load() {
-        mPresenter.SearchInfo(mEtSearch.getText().toString().trim(),mPageNo,mPageSize);
+        mPresenter.SearchInfo(mEtSearch.getText().toString().trim(), mPageNo, mPageSize);
     }
 
     @Override
@@ -174,6 +175,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> im
 
     @Override
     public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
+        mllNoOrder.setVisibility(View.GONE);
         mSw.stopLoad();
         switch (type) {
             case SearchArInfo:
@@ -182,6 +184,7 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> im
                     mDataList = new ArrayList<>();
                 }
                 if (articleInfoEntity != null) {
+                    mSw.setVisibility(View.VISIBLE);
                     List<ArticleInfoEntity.ResultBean> result = articleInfoEntity.getResult();
                     if (result.size() == 0) {
                         if (mDataList.size() > 0) {
@@ -202,8 +205,14 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> im
                         if (result.size() < mPageSize) {
                             mSw.noMoreData();
                         }
+                    } else {
+                        mSw.setVisibility(View.GONE);
+                        mllNoOrder.setVisibility(View.VISIBLE);
                     }
                     mAdapter.setData(mDataList);
+                } else {
+                    mSw.setVisibility(View.GONE);
+                    mllNoOrder.setVisibility(View.VISIBLE);
                 }
                 break;
 
@@ -214,6 +223,8 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> im
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
         mSw.stopLoad();
+        mSw.setVisibility(View.GONE);
+        mllNoOrder.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -225,8 +236,8 @@ public class SearchActivity extends BaseMVPActivity<SearchContract.Presenter> im
     @Override
     public void onItemClick(int position, ArticleInfoEntity.ResultBean resultBean) {
         Bundle bundle = new Bundle();
-        bundle.putBoolean(Constants.IS_SHOW,true);
-        bundle.putSerializable(Constants.ACTICLEINFO_DATA,resultBean);
-        startActivity(RecordDetailsActivity.class,bundle);
+        bundle.putBoolean(Constants.IS_SHOW, true);
+        bundle.putSerializable(Constants.ACTICLEINFO_DATA, resultBean);
+        startActivity(RecordDetailsActivity.class, bundle);
     }
 }

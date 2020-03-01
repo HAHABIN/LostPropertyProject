@@ -25,7 +25,8 @@
     <color name="white_eb">#EBEBEB</color>
     <color name="yellow_fc">#FCB660</color>
     <color name="white">#ffffff</color><!--白色 -->
-
+    <color name="blue_0AF3F3">#0AF3F3</color>
+    <color name="blue_4ED1D1">#4ED1D1</color>
     <color name="gray_text">#cccccc</color>
     <color name="gray_999">#999999</color>
     <color name="gray_666">#666666</color>

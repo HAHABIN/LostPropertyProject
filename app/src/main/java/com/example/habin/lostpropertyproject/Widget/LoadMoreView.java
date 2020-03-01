@@ -47,8 +47,8 @@ public class LoadMoreView extends LinearLayout {
                 break;
             case loadFinish:
                 indicatorView.setVisibility(GONE);
-//                titleView.setText("没有更多啦...");
-                titleView.setVisibility(GONE);
+                titleView.setText("没有更多啦...");
+                titleView.setVisibility(VISIBLE);
                 break;
         }
     }

@@ -37,6 +37,7 @@
     <string name="personal_helptiems">帮助次数</string>
 
     <string name="set_password_text">请修改账号密码，密码必须是8-16位的数字、字符组合（不能是纯数字）</string>
+    <string name="string_search">搜索地址，内容....</string>
 
 
 </resources>

@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPFragment;
@@ -103,8 +104,8 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
     protected void initView(View view) {
         //初始化列表
         mFragmentList = new ArrayList<>();
-        mFragmentList.add(ToClaimListFragment.newInstance(0));//丢丢 type 0
-        mFragmentList.add(ToClaimListFragment.newInstance(1));//拾拾 type 1
+        mFragmentList.add(ToClaimListFragment.newInstance(0,0));//丢丢 Classtype 0 type 为0时默认全部类型
+        mFragmentList.add(ToClaimListFragment.newInstance(0,1));//拾拾 Classtype 1
         //初始化适配器和数据源
         mVpAdapter = new VpAdapter(getFragmentManager(), mFragmentList);
         //设置适配器
@@ -119,7 +120,7 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
 
     @Override
     protected void initListener() {
-//监听地址栏
+        //监听地址栏
         mTvAddress.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -188,7 +189,6 @@ public class HomePageFragment extends BaseMVPFragment<HomePageContract.Presenter
                 }
                 startActivity(SearchActivity.class,null);
                 break;
-
         }
     }
 

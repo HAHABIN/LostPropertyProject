@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
-import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.Bean.entity.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
@@ -338,7 +338,6 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
                     hashMap.put("recordStatus", statusType);
                     mPresenter.InsertArInfo(hashMap);
                 }
-
                 break;
         }
     }

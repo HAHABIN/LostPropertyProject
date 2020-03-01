@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.util.Base64;
 
-import com.example.habin.lostpropertyproject.Bean.entity.ArticleType;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleTypeEntity;
 import com.example.habin.lostpropertyproject.MyApplication;
 
 import java.io.ByteArrayOutputStream;
@@ -147,17 +147,30 @@ public class StringUtils {
     public static int typeNameToId(String name){
         //默认11其他
         int id = 11;
-        ArrayList<ArticleType> typeList = MyApplication.getTypeList();
+        ArrayList<ArticleTypeEntity.ResultBean> typeList = MyApplication.getTypeList();
         //直接跳出多重循环 如果有多个for
-        loop:for (ArticleType type : typeList){
+        for (ArticleTypeEntity.ResultBean type : typeList){
             if (type.getTypeName().equals(name)){
                 id =  type.getTypeId();
-                break loop;
+                break;
             }
         }
         return id;
     }
-
+    //类别搜索返回
+    public static String typeIdToName(int TypeId){
+        //默认11其他
+        String name = "钱包";
+        ArrayList<ArticleTypeEntity.ResultBean> typeList = MyApplication.getTypeList();
+        //直接跳出多重循环 如果有多个for
+        for (ArticleTypeEntity.ResultBean type : typeList){
+            if (type.getTypeId() == TypeId){
+                name =  type.getTypeName();
+                break ;
+            }
+        }
+        return name;
+    }
 
     /**
      * 时间差

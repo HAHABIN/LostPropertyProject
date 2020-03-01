@@ -18,5 +18,4 @@
         android:background="@color/white">
 
     </com.example.habin.lostpropertyproject.Widget.SwipeRecyclerView>
-
 </LinearLayout>

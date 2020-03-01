@@ -19,7 +19,7 @@ public interface TypePageContract extends BaseContract{
         /**
          * 获取数据
          */
-        void getData(String username, String password);
+        void getType();
 
     }
 }

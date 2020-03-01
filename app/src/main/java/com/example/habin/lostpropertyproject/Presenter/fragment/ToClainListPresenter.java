@@ -14,14 +14,19 @@ import java.util.HashMap;
 public class ToClainListPresenter extends RxPresenter<ToClaimListContract.View> implements ToClaimListContract.Presenter {
 
     @Override
-    public void QueryArticleInfo(String address, int status, int pageNo, int pageSize) {
+    public void QueryArticleInfo(String address, int type, int status, int pageNo, int pageSize) {
         HashMap<String, Object> hashMap = new HashMap<>();
         if (address != null) {
             hashMap.put("addressContent", address);
         }
+        if (type != 0) {
+            hashMap.put("typeId", type);
+        } else {
+            hashMap.put("status", status);
+        }
         hashMap.put("pageNo", pageNo);
         hashMap.put("pageSize", pageSize);
-        hashMap.put("status", status);
+
         HttpClient.getInstance().startTask(HttpHelper.TaskType.QueryArticleInfo, this, hashMap);
     }
 }

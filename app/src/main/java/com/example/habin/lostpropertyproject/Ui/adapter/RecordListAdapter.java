@@ -9,18 +9,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.Bean.entity.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
-import com.example.habin.lostpropertyproject.Bean.entity.ArticleType;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;

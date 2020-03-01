@@ -10,18 +10,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.habin.lostpropertyproject.Bean.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.Bean.entity.UploadPhotoParams;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
-import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.Widget.CircleImageView;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -75,7 +73,7 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
         if (profileImg!=null){
             UiUtils.GildeLoad(mContext,viewHolder.mCivPic,profileImg);
         }
-
+        viewHolder.mTvTypeName.setText(StringUtils.typeIdToName(resultBean.getTypeId()));
         viewHolder.mTvNickNmae.setText(resultBean.getPersonInfo().getName());
 //        viewHolder.mTvReleaseTime.setText(StringUtils.stampToDate(resultBean.getCreateTime()));
         viewHolder.mTvReleaseTime.setText(StringUtils.getTimeFormatText(resultBean.getCreateTime()));
@@ -121,7 +119,9 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
         @BindView(R.id.tv_find_time)
         TextView mTvFindTime;           //发布时间
         @BindView(R.id.iv_result)
-        ImageView mIvResult;
+        ImageView mIvResult;            //发布类型
+        @BindView(R.id.tv_type_name)
+        TextView mTvTypeName;           //物品类型
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
