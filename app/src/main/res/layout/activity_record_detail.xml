@@ -48,7 +48,7 @@
 
                     <RelativeLayout
                         android:id="@+id/ib_back_layout"
-                        android:layout_width="50dp"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <ImageView
@@ -59,15 +59,28 @@
                             android:layout_marginLeft="10dp"
                             android:scaleType="fitCenter"
                             android:src="@drawable/ic_back" />
+                        <TextView
+                            android:id="@+id/tv_title"
+                            style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
+                            android:layout_centerVertical="true"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="详情"
+                            android:layout_centerHorizontal="true"
+                            android:textColor="@android:color/white" />
+                        <ImageView
+                            android:id="@+id/iv_edit"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="10dp"
+                            android:layout_alignParentRight="true"
+                            android:visibility="gone"
+                            android:src="@mipmap/ic_edit"/>
+
                     </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/tv_title"
-                        style="@style/TextAppearance.AppCompat.Widget.ActionBar.Title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="详情"
-                        android:textColor="@android:color/white" />
+
                 </android.support.v7.widget.Toolbar>
                 <RelativeLayout
                     android:layout_marginTop="60dp"
@@ -300,6 +313,38 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_bom_Set"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:visibility="gone"
+        >
+        <Button
+            android:id="@+id/btn_success"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/select_btn_help"
+            android:text="完成"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+
+        <Button
+            android:id="@+id/btn_quit"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/select_btn_private_chat"
+            android:text="取消"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            />
+    </LinearLayout>
+    <LinearLayout
         android:id="@+id/ll_bom_help"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -331,5 +376,4 @@
             android:textSize="18sp"
             />
     </LinearLayout>
-
 </RelativeLayout>

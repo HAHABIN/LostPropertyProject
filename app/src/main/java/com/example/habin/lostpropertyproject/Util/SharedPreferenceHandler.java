@@ -53,7 +53,7 @@ public class SharedPreferenceHandler {
         String object = settings.getString("userinfo", null);
         //获得用户信息
         PersonInfoEntity.ResultBean userinfo = gson.fromJson(object,PersonInfoEntity.ResultBean.class);
-        userinfo.setName(NickName);
+        userinfo.setNickname(NickName);
         //修改用户信息
         SharedPreferences.Editor editor = settings.edit();
         String string = gson.toJson(userinfo);
@@ -68,7 +68,7 @@ public class SharedPreferenceHandler {
         PersonInfoEntity.ResultBean userinfo = gson.fromJson(object,PersonInfoEntity.ResultBean.class);
         switch (type){
             case NickName:
-                userinfo.setName(Info);
+                userinfo.setNickname(Info);
                 break;
             case Gender:
                 userinfo.setGender(Info);

@@ -11,10 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.habin.lostpropertyproject.Base.BaseActivity;
-import com.example.habin.lostpropertyproject.Bean.entity.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
+import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
+import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.Constants;
+import com.example.habin.lostpropertyproject.Http.HttpHelper;
+import com.example.habin.lostpropertyproject.Presenter.activity.RecordDtailsPresenter;
+import com.example.habin.lostpropertyproject.Presenter.activity.contract.RecordDtailsContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
@@ -26,11 +30,14 @@ import com.example.habin.lostpropertyproject.Widget.CircleImageView;
 import com.google.gson.reflect.TypeToken;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import io.reactivex.functions.Consumer;
 
@@ -40,7 +47,7 @@ import io.reactivex.functions.Consumer;
  * Email 739115041@qq.com
  * 物品详细页面
  */
-public class RecordDetailsActivity extends BaseActivity {
+public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.Presenter> implements RecordDtailsContract.View {
 
 
     @BindView(R.id.civ_pic)
@@ -63,6 +70,10 @@ public class RecordDetailsActivity extends BaseActivity {
     TextView mTvVpNum;
     @BindView(R.id.tv_type_name)
     TextView mTvTypeName;
+    @BindView(R.id.ll_bom_Set)
+    LinearLayout mLlBomSet;
+    @BindView(R.id.iv_edit)
+    ImageView mIvEdit;
 
     private boolean isVis;
     private ArticleInfoEntity.ResultBean data;
@@ -87,11 +98,11 @@ public class RecordDetailsActivity extends BaseActivity {
             isVis = extras.getBoolean(Constants.IS_SHOW, false);
             data = (ArticleInfoEntity.ResultBean) extras.getSerializable(Constants.ACTICLEINFO_DATA);
             if (data != null && data.getImgStr() != null) {
-                List<UploadPhotoParams> uploadPhotoParams = JsonUtil.fromJson(data.getImgStr(), new TypeToken<List<UploadPhotoParams>>() {
+                List<String> imgStrList = JsonUtil.fromJson(data.getImgStr(), new TypeToken<List<String>>() {
                 });
                 imgList = new ArrayList<>();
-                for (UploadPhotoParams imgstr : uploadPhotoParams) {
-                    imgList.add(imgstr.getImgStr());
+                for (String imgstr : imgStrList) {
+                    imgList.add(imgstr);
                 }
             }
         }
@@ -103,14 +114,20 @@ public class RecordDetailsActivity extends BaseActivity {
 
         if (isVis) {
             mLlBomHelp.setVisibility(View.VISIBLE);
+        } else {
+            if (data.getRecordStatus() < 3) {
+                mLlBomSet.setVisibility(View.VISIBLE);
+                mIvEdit.setVisibility(View.VISIBLE);
+            }
+
         }
         UiUtils.GildeLoad(mContext, mCivPic, data.getPersonInfo().getProfileImg());
         if (imgList != null && imgList.size() > 0) {
             UiUtils.GildeLoad(mContext, mIvContentPic, imgList.get(0));
-            mTvVpNum.setText(String.format("%1$d/%2$d",1,imgList.size()));
+            mTvVpNum.setText(String.format("%1$d/%2$d", 1, imgList.size()));
         }
         mTvTypeName.setText(StringUtils.typeIdToName(data.getTypeId()));
-        mTvNickname.setText(data.getPersonInfo().getName());
+        mTvNickname.setText(data.getPersonInfo().getNickname());
         mTvReleaseTime.setText(StringUtils.getTimeFormatText(data.getCreateTime()));
         mTvAddress.setText(data.getAddressContent());
         mTvFindTime.setText(StringUtils.stampToDate(data.getFindTime()));
@@ -128,7 +145,7 @@ public class RecordDetailsActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.rl_content_pic, R.id.iv_back,R.id.btn_call, R.id.civ_pic, R.id.btn_help, R.id.btn_private_chat})
+    @OnClick({R.id.rl_content_pic, R.id.iv_back, R.id.btn_success, R.id.btn_quit, R.id.btn_call, R.id.civ_pic, R.id.btn_help, R.id.btn_private_chat})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_content_pic:
@@ -151,11 +168,21 @@ public class RecordDetailsActivity extends BaseActivity {
                 break;
             case R.id.btn_private_chat:
                 break;
+            case R.id.btn_success:
+                mPresenter.updateArticle(data.getId(), 3);
+                break;
+            case R.id.btn_quit:
+                mPresenter.updateArticle(data.getId(), 4);
+                break;
             case R.id.btn_call:
                 checkPermissionRequest(this);
                 break;
+            case R.id.iv_edit:
+                ToastUtils.show_s("修改页面");
+                break;
         }
     }
+
     @SuppressLint("CheckResult")
     public void checkPermissionRequest(FragmentActivity activity) {
         RxPermissions permissions = new RxPermissions(activity);
@@ -181,4 +208,32 @@ public class RecordDetailsActivity extends BaseActivity {
         mIntent.setData(Uri.parse("tel:" + data.getPhone()));
         startActivity(mIntent);
     }
+
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
+        switch (type) {
+            case updateArticleStatus:
+                ToastUtils.show_s(mContext, item.getMessage());
+                break;
+        }
+    }
+
+    @Override
+    public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
+
+    }
+
+    @Override
+    public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        ToastUtils.show_s(mContext, e.getMessage());
+    }
+
+    @Override
+    protected RecordDtailsContract.Presenter bindPresenter() {
+        return new RecordDtailsPresenter();
+    }
+
+
+
 }

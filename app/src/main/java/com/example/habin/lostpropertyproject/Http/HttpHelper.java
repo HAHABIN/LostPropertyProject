@@ -19,7 +19,9 @@ public class HttpHelper {
         InsertArInfo,  //发布信息
         QueryArticleInfo, //查询获取信息列表
         SearchArInfo, //搜索信息列表
-        queryType;
+        queryType,
+        updateArticle, //更新物品信息
+        updateArticleStatus,//更新物品状态
     }
 
     public static String getMethod(TaskType type) {
@@ -60,6 +62,12 @@ public class HttpHelper {
                 break;
             case queryType:
                 method = "articletype/queryAll";
+                break;
+            case updateArticle:
+                method = "articleInfo/updateArticle";
+                break;
+            case updateArticleStatus:
+                method = "articleInfo/updateArticleStatus";
                 break;
         }
         return method;

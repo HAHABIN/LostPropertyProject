@@ -42,7 +42,7 @@ public class PersonInfoEntity extends HttpItem {
         //ID
         private int userId;
         //名字
-        private String name;
+        private String nickname;
         //头像
         private String profileImg;
         //邮箱
@@ -66,12 +66,12 @@ public class PersonInfoEntity extends HttpItem {
             this.userId = userId;
         }
 
-        public String getName() {
-            return name;
+        public String getNickname() {
+            return nickname;
         }
 
-        public void setName(String name) {
-            this.name = name;
+        public void setNickname(String nickname) {
+            this.nickname = nickname;
         }
 
         public String getProfileImg() {

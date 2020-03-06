@@ -9,10 +9,8 @@ package com.example.habin.lostpropertyproject.Http;
 public class Constants {
 
     //网络请求
-//    public static final String BASE_URL = "http://192.168.199.221:8080/";
-    public static final String BASE_URL = "http://101.37.75.132:9090/LostFoundSsm/";
-    public static final String USER_LOGIN = "/LoginServlet";
-    public static final String USER_SIGN = "/KfaccountServlet";
+    public static final String BASE_URL = "http://192.168.199.221:8080/";
+//    public static final String BASE_URL = "http://101.37.75.132:9090/LostFoundSsm/";
 
     //返回结果
     public static final int NICKNAME_REQUEST = 1000;

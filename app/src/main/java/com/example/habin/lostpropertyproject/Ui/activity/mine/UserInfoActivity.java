@@ -19,6 +19,7 @@ import com.example.habin.lostpropertyproject.Presenter.activity.mine.UserInfoPre
 import com.example.habin.lostpropertyproject.Presenter.activity.contract.UserInfoContract;
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Ui.activity.OpenPicActivity;
+import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
@@ -26,6 +27,7 @@ import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.Widget.CircleImageView;
+import com.google.gson.reflect.TypeToken;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.entity.LocalMedia;
@@ -107,12 +109,15 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
      * */
     private void setInfo() {
         mUserInfo = MyApplication.getUserInfo(mContext);
-        mTvNickname.setText(mUserInfo.getName());
+        mTvNickname.setText(mUserInfo.getNickname());
         mTvEmail.setText(mUserInfo.getEmail() != null ? mUserInfo.getEmail() : "未设置");
         mTvGender.setText(mUserInfo.getGender() != null ? mUserInfo.getGender() : "未设置");
         mTvHelptimes.setText(String.valueOf(mUserInfo.getHelpTimes()));
         mTvUserid.setText(String.valueOf(mUserInfo.getUserId()));
-        UiUtils.GildeLoad(mContext,mCivAvatar,mUserInfo.getProfileImg());
+        if (mUserInfo.getProfileImg()!=null){
+            List<String> strings = JsonUtil.fromJson(mUserInfo.getProfileImg(), new TypeToken<List<String>>() {});
+            UiUtils.GildeLoad(mContext,mCivAvatar,strings.get(0));
+        }
     }
 
     @OnClick({R.id.ll_avatar, R.id.civ_avatar,R.id.ll_nickname, R.id.ll_gender, R.id.ll_area, R.id.ll_email})
@@ -123,11 +128,11 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
                  SelectorDialogUtils.getInstance().openForHeaderInActivity(mActivity);
                 break;
             case R.id.civ_avatar:
-                List<String> imgList = new ArrayList<>();
-                imgList.add(mUserInfo.getProfileImg());
+                List<String> imgStrList = JsonUtil.fromJson(mUserInfo.getProfileImg(), new TypeToken<List<String>>() {
+                });
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.OPEN_PIC_POSITION,0);
-                bundle.putSerializable(Constants.OPEN_PIC_MEDIALAST,(Serializable)imgList);
+                bundle.putSerializable(Constants.OPEN_PIC_MEDIALAST,(Serializable)imgStrList);
                 startActivity(OpenPicActivity.class,bundle);
 //                OpenPicActivity.StartAct(mContext,0,imgList);
                 overridePendingTransition(R.anim.a5, 0);
@@ -214,9 +219,12 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
                     if (object.getInt("code") == 1){
                         ProgressUtils.show(mContext,"正在加载图片。。。");
                         String profileimg = object.getString("result");
+                        List<String> imgList = new ArrayList<>();
+                        imgList.add(profileimg);
+                        String imgStr = JsonUtil.toJson(imgList);
                         //保存图片地址
-                        SharedPreferenceHandler.saveInfo(mContext, profileimg,SharedPreferenceHandler.InfoType.ProfileImg);
-                        mPresenter.updateInfo(profileimg);
+                        SharedPreferenceHandler.saveInfo(mContext, imgStr,SharedPreferenceHandler.InfoType.ProfileImg);
+                        mPresenter.updateInfo(imgStr);
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();

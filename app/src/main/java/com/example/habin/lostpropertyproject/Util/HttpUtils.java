@@ -16,7 +16,7 @@ public class HttpUtils {
                 .add("loginPassword",password)
                 .build();
         Request request = new Request.Builder()
-                .url(Constants.BASE_URL+Constants.USER_LOGIN)
+                .url(Constants.BASE_URL)
                 .post(body)
                 .build();
         client.newCall(request).enqueue(callback);

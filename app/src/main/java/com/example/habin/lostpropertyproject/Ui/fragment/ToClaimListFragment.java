@@ -44,8 +44,8 @@ public class ToClaimListFragment extends BaseMVPFragment<ToClaimListContract.Pre
     public static ToClaimListFragment newInstance(int type,int ClassType) {
         ToClaimListFragment fragment = new ToClaimListFragment();
         Bundle bundle = new Bundle();
-        bundle.putInt("type", type);
-        bundle.putInt("ClassType", ClassType);
+        bundle.putInt("type", type); //物品类型 为0时默认为全部
+        bundle.putInt("ClassType", ClassType); //0为丢丢 1为拾拾
         fragment.setArguments(bundle);
         return fragment;
     }

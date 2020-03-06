@@ -91,7 +91,7 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
 
     private int maxSelectNum = 3;
     private List<LocalMedia> mSelectList = new ArrayList<>();
-    private List<UploadPhotoParams> uploadPhotoList;
+    private List<String> uploadPhotoList;
     private GridImageAdapter adapter;
     private Disposable mSubscribe;
     private int mIndex = 0;
@@ -312,19 +312,17 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
                 if (uploadPhotoList == null) {
                     uploadPhotoList = new ArrayList<>();
                 }
-                UploadPhotoParams params = new UploadPhotoParams();
+                String profileimgs = null;
                 try {
                     if (object.getInt("code") == 1) {
-                        String profileimgs = object.optString("result");
-                        params.setImgStr(profileimgs);
-                        params.setResourceType("release");
+                         profileimgs = object.optString("result");
+
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-
-                uploadPhotoList.add(mIndex, params);
+                uploadPhotoList.add(mIndex, profileimgs);
                 mIndex++;
                 if (mIndex != mSelectList.size()) {
                     uploadPhoto();

@@ -13,14 +13,18 @@ import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.fragment.MineTpyePresenter;
 import com.example.habin.lostpropertyproject.Presenter.fragment.contract.MinePageContract;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.example.habin.lostpropertyproject.Ui.activity.Land.LandActivity;
 import com.example.habin.lostpropertyproject.Ui.activity.mine.RecordListActivity;
 import com.example.habin.lostpropertyproject.Ui.activity.mine.SettingActivity;
 import com.example.habin.lostpropertyproject.Ui.activity.mine.UserInfoActivity;
 import com.example.habin.lostpropertyproject.Widget.CircleImageView;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -63,9 +67,12 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
     protected void initData() {
         PersonInfoEntity.ResultBean mPersonInfo = MyApplication.getUserInfo(mActivity);
         if (mPersonInfo != null) {
-            mTvName.setText(mPersonInfo.getName());
+            mTvName.setText(mPersonInfo.getNickname());
         }
-        UiUtils.GildeLoad(mActivity,mCivPic,mPersonInfo.getProfileImg());
+        if (mPersonInfo.getProfileImg()!=null){
+            List<String> strings = JsonUtil.fromJson(mPersonInfo.getProfileImg(), new TypeToken<List<String>>() {});
+            UiUtils.GildeLoad(mActivity,mCivPic,strings.get(0));
+        }
     }
 
 
@@ -124,8 +131,11 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
         super.onResume();
         PersonInfoEntity.ResultBean personInfo = MyApplication.getUserInfo(mActivity);
         if (personInfo != null) {
-            mTvName.setText(personInfo.getName());
-            UiUtils.GildeLoad(mActivity,mCivPic,personInfo.getProfileImg());
+            mTvName.setText(personInfo.getNickname());
+            if (personInfo.getProfileImg()!=null){
+                List<String> strings = JsonUtil.fromJson(personInfo.getProfileImg(), new TypeToken<List<String>>() {});
+                UiUtils.GildeLoad(mActivity,mCivPic,strings.get(0));
+            }
         }
     }
 

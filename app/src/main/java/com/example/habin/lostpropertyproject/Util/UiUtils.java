@@ -139,7 +139,7 @@ public class UiUtils {
     public static void GildeLoad(Context context, View view, String imgStr){
         RequestOptions options = new RequestOptions()
                 .placeholder(R.drawable.ic_placeholder)//图片加载出来前，显示的图片
-                .fallback( R.drawable.ic_placeholder) //url为空的时候,显示的图片
+                .fallback(R.drawable.ic_placeholder) //url为空的时候,显示的图片
                 .error(R.drawable.ic_picfail);//图片加载失败后，显示的图片
 
         Glide.with(context)

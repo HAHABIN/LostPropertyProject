@@ -18,7 +18,7 @@ public interface LandContract extends BaseContract {
 
 
 
-    interface View extends BaseContract.BaseView{
+    interface View extends BaseView{
 
     }
 

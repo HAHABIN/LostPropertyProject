@@ -71,10 +71,15 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
         ArticleInfoEntity.ResultBean resultBean = mDataList.get(position);
         String profileImg = resultBean.getPersonInfo().getProfileImg();
         if (profileImg!=null){
-            UiUtils.GildeLoad(mContext,viewHolder.mCivPic,profileImg);
+            List<String> strings = JsonUtil.fromJson(profileImg, new TypeToken<List<String>>() {
+            });
+            UiUtils.GildeLoad(mContext,viewHolder.mCivPic,strings.get(0));
+        } else {
+            //清除原有图片 防止重复显示
+            Glide.with(mContext).clear(viewHolder.mCivPic);
         }
         viewHolder.mTvTypeName.setText(StringUtils.typeIdToName(resultBean.getTypeId()));
-        viewHolder.mTvNickNmae.setText(resultBean.getPersonInfo().getName());
+        viewHolder.mTvNickNmae.setText(resultBean.getPersonInfo().getNickname());
 //        viewHolder.mTvReleaseTime.setText(StringUtils.stampToDate(resultBean.getCreateTime()));
         viewHolder.mTvReleaseTime.setText(StringUtils.getTimeFormatText(resultBean.getCreateTime()));
         viewHolder.mTvFindTime.setText(StringUtils.stampToDate(resultBean.getFindTime()));
@@ -83,9 +88,10 @@ public class ToClaimListAdapter extends RecyclerView.Adapter<ToClaimListAdapter.
         //设置Tag 防止图片重用
         viewHolder.mIvContentPic.setTag(R.id.iv_content_pic,position);
         if (resultBean.getImgStr()!=null){
-            List<UploadPhotoParams> uploadPhotoParams = JsonUtil.fromJson(resultBean.getImgStr(), new TypeToken<List<UploadPhotoParams>>() {
-            });
-            UiUtils.GildeLoad(mContext,viewHolder.mIvContentPic,uploadPhotoParams.get(0).getImgStr());
+                List<String> strings = JsonUtil.fromJson(resultBean.getImgStr(), new TypeToken<List<String>>() {
+                });
+                UiUtils.GildeLoad(mContext,viewHolder.mIvContentPic,strings.get(0));
+
         } else {
             //清除原有图片 防止重复显示
             Glide.with(mContext).clear(viewHolder.mIvContentPic);
