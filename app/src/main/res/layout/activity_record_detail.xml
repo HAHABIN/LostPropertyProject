@@ -53,8 +53,8 @@
 
                         <ImageView
                             android:id="@+id/iv_back"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_centerVertical="true"
                             android:layout_marginLeft="10dp"
                             android:scaleType="fitCenter"
@@ -70,8 +70,8 @@
                             android:textColor="@android:color/white" />
                         <ImageView
                             android:id="@+id/iv_edit"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_centerVertical="true"
                             android:layout_marginRight="10dp"
                             android:layout_alignParentRight="true"
@@ -306,7 +306,37 @@
                         android:textColor="@color/grey_515151"
                         android:textSize="12sp" />
                 </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/ll_back_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginHorizontal="5dp"
+                    android:orientation="horizontal"
+                    android:visibility="gone"
+                    >
 
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_margin="5dp"
+                        android:padding="5dp"
+                        android:src="@mipmap/ic_sctime" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="完成时间: "
+                        android:textColor="@color/money"
+                        android:textSize="12sp" />
+                    <TextView
+                        android:id="@+id/tv_backTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="2019/12/30/17:10"
+                        android:textColor="@color/money"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.design.widget.CoordinatorLayout>

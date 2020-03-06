@@ -74,7 +74,10 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
     LinearLayout mLlBomSet;
     @BindView(R.id.iv_edit)
     ImageView mIvEdit;
-
+    @BindView(R.id.ll_back_time)
+    LinearLayout mLlBackTime;
+    @BindView(R.id.tv_backTime)
+    TextView mTvBackTime;
     private boolean isVis;
     private ArticleInfoEntity.ResultBean data;
     private List<String> imgList;
@@ -118,10 +121,16 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
             if (data.getRecordStatus() < 3) {
                 mLlBomSet.setVisibility(View.VISIBLE);
                 mIvEdit.setVisibility(View.VISIBLE);
+            } else {
+                mLlBackTime.setVisibility(View.VISIBLE);
             }
 
         }
-        UiUtils.GildeLoad(mContext, mCivPic, data.getPersonInfo().getProfileImg());
+        if (data.getPersonInfo().getProfileImg()!=null) {
+            List<String> strings = JsonUtil.fromJson(data.getPersonInfo().getProfileImg(), new TypeToken<List<String>>() {
+            });
+            UiUtils.GildeLoad(mContext, mCivPic, strings.get(0));
+        }
         if (imgList != null && imgList.size() > 0) {
             UiUtils.GildeLoad(mContext, mIvContentPic, imgList.get(0));
             mTvVpNum.setText(String.format("%1$d/%2$d", 1, imgList.size()));
@@ -132,6 +141,10 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
         mTvAddress.setText(data.getAddressContent());
         mTvFindTime.setText(StringUtils.stampToDate(data.getFindTime()));
         mTvNoteContext.setText(data.getDescription());
+        if (data.getBackTime()!=0){
+            mTvBackTime.setText(StringUtils.stampToDate(data.getBackTime()));
+        }
+
     }
 
     @Override
@@ -145,7 +158,7 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
     }
 
 
-    @OnClick({R.id.rl_content_pic, R.id.iv_back, R.id.btn_success, R.id.btn_quit, R.id.btn_call, R.id.civ_pic, R.id.btn_help, R.id.btn_private_chat})
+    @OnClick({R.id.rl_content_pic,R.id.iv_edit, R.id.iv_back, R.id.btn_success, R.id.btn_quit, R.id.btn_call, R.id.civ_pic, R.id.btn_help, R.id.btn_private_chat})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_content_pic:
