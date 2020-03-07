@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
-import com.example.habin.lostpropertyproject.Bean.entity.UploadPhotoParams;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
@@ -25,6 +25,7 @@ import com.example.habin.lostpropertyproject.Presenter.activity.contract.Release
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Ui.adapter.GridImageAdapter;
 import com.example.habin.lostpropertyproject.Util.FullyGridLayoutManager;
+import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SelectorDialogUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
@@ -32,6 +33,7 @@ import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureConfig;
 import com.luck.picture.lib.config.PictureMimeType;
@@ -51,6 +53,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+
 /**
  * created by habin
  * on 2020/1/2
@@ -58,6 +61,8 @@ import io.reactivex.schedulers.Schedulers;
  * 发布模块
  */
 public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> implements ReleaseContract.View {
+
+    private ArticleInfoEntity.ResultBean data;
 
     //弃用
     public static void StartAct(Context context, String type) {
@@ -87,15 +92,16 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
     EditText mEtAddressDetail;
     @BindView(R.id.et_description)
     EditText mEtDescription;
+    @BindView(R.id.tv_hint)
+    TextView mTvHint;
     private String statusType;
 
     private int maxSelectNum = 3;
     private List<LocalMedia> mSelectList = new ArrayList<>();
-    private List<String> uploadPhotoList;
+    private List<String> imgStrList;
     private GridImageAdapter adapter;
     private Disposable mSubscribe;
     private int mIndex = 0;
-
 
 
     @Override
@@ -114,6 +120,7 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             statusType = extras.getString(Constants.RELEASE_TYPE);
+            data = (ArticleInfoEntity.ResultBean) extras.getSerializable(Constants.ACTICLEINFO_DATA);
         }
 
     }
@@ -128,6 +135,34 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
         adapter.setSelectMax(maxSelectNum);
         mRlImage.setAdapter(adapter);
         mRlImage.setLayoutManager(new GridLayoutManager(mContext, 4, LinearLayoutManager.VERTICAL, false));
+        //修改填写信息
+        setData();
+    }
+
+    private void setData() {
+        if (data != null) {
+//            if (mSelectList== null){
+//                mSelectList = new ArrayList<>();
+//            }
+//            imgStrList = new ArrayList<>();
+//            imgStrList = JsonUtil.fromJson(data.getImgStr(),
+//                    new TypeToken<List<String>>() {
+//                    });
+//            for (String s : imgStrList) {
+//                LocalMedia localMedia = new LocalMedia();
+//                localMedia.setPath(s);
+//                mSelectList.add(localMedia);
+//            }
+//            adapter.setList(mSelectList);
+            mTvHint.setVisibility(View.VISIBLE);
+            mEtDescription.setText(data.getDescription());
+            String[] address = data.getAddressContent().split(" ");
+            mTvAddress.setText(address[0]);
+            mEtAddressDetail.setText(address[1]);
+            mTvTime.setText(StringUtils.stampToDate(data.getFindTime()));
+            mTvType.setText(StringUtils.typeIdToName(data.getTypeId()));
+            mEtPhone.setText(data.getPhone());
+        }
     }
 
     @Override
@@ -171,11 +206,16 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
     //顶部设置
     private void setTitle() {
         setShowBack(View.VISIBLE);
-        setRightText("发布");
+        if (data == null) {
+            setRightText("发布");
+        } else {
+            setRightText("修改");
+        }
+
         setRightOnClick().setOnClickListener(v -> {
             //关闭键盘
             UiUtils.hideSoftKeyboardNoView(mActivity);
-            load();
+            inspect();
         });
         setBackOnClick().setOnClickListener(v -> finish());
 
@@ -189,11 +229,12 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
         }
     }
 
-    //上传发布信息
-    private void load() {
+    //检查
+    private void inspect() {
         String typename = mTvType.getText().toString();
         String time = mTvTime.getText().toString();
         String address = mTvAddress.getText().toString();
+        String addressDetail = mEtAddressDetail.getText().toString();
         String description = mEtDescription.getText().toString().trim();
         String phone = mEtPhone.getText().toString().trim();
         if (!StringUtils.checkPhoneNumber(phone)) {
@@ -207,6 +248,10 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
             ToastUtils.show_s("请选择丢失范围");
             return;
         }
+        if (addressDetail.length() == 0) {
+            ToastUtils.show_s("请填写详细信息");
+            return;
+        }
         if (time.equals("丢失时间")) {
             ToastUtils.show_s("请填写大概丢失日");
             return;
@@ -215,9 +260,15 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
             ToastUtils.show_s("请选择类别");
             return;
         }
+
         if (mSelectList.size() == 0) {
-            ToastUtils.show_s("请至少选一张照片");
-            return;
+            if (data == null) {
+                ToastUtils.show_s("请至少选一张照片");
+                return;
+            } else {
+                //更新内容
+                load();
+            }
         } else {
             uploadPhoto();
         }
@@ -225,6 +276,33 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
 
     }
 
+    private void load() {
+        //将图片地址转化为json字符串
+        String imgStr = JsonUtil.toJson(imgStrList);
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("userId", MyApplication.getUserId(mContext));
+        hashMap.put("typeId", StringUtils.typeNameToId(mTvType.getText().toString()));
+        hashMap.put("phone", mEtPhone.getText().toString().trim());
+        hashMap.put("findTime", StringUtils.dateToStamp(mTvTime.getText().toString()));
+        hashMap.put("addressContent", String.format("%s %s", mTvAddress.getText().toString(), mEtAddressDetail.getText().toString()));
+        hashMap.put("description", mEtDescription.getText().toString().trim());
+        hashMap.put("recordStatus", statusType);
+        //如果不为空 则为发布新消息 否则是修改
+        if (data != null) {
+            //如果mIndex不为空 则说明图片改变，则上传
+            if (mIndex != 0) {
+                //新图片
+                hashMap.put("imgStr",imgStr);
+            }
+            hashMap.put("id", data.getId());
+            mPresenter.UploadArInfo(hashMap);
+        } else {
+            hashMap.put("imgStr", imgStr);
+            hashMap.put("status", statusType);
+            mPresenter.InsertArInfo(hashMap);
+        }
+
+    }
 
     @OnClick({R.id.rl_image, R.id.ll_address, R.id.ll_time, R.id.ll_type})
     public void onViewClicked(View view) {
@@ -308,39 +386,34 @@ public class ReleaseActivity extends BaseMVPActivity<ReleaseContract.Presenter> 
                 ToastUtils.show_s("发布成功");
                 finish();
                 break;
+            case updateArticle:
+                try {
+                    ToastUtils.show_s(object.getString("message"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                finish();
+                break;
             case UploadPhoto:
-                if (uploadPhotoList == null) {
-                    uploadPhotoList = new ArrayList<>();
+                if (imgStrList == null) {
+                    imgStrList = new ArrayList<>();
                 }
                 String profileimgs = null;
                 try {
                     if (object.getInt("code") == 1) {
-                         profileimgs = object.optString("result");
+                        profileimgs = object.optString("result");
 
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
-                uploadPhotoList.add(mIndex, profileimgs);
+                imgStrList.add(mIndex, profileimgs);
                 mIndex++;
                 if (mIndex != mSelectList.size()) {
                     uploadPhoto();
                 } else {
-                    Gson g = new Gson();
-                    //将图片地址转化为json字符串
-                    String imgStr = g.toJson(uploadPhotoList);
-                    HashMap<String, Object> hashMap = new HashMap<>();
-                    hashMap.put("userId", MyApplication.getUserId(mContext));
-                    hashMap.put("typeId", StringUtils.typeNameToId(mTvType.getText().toString()));
-                    hashMap.put("phone", mEtPhone.getText().toString().trim());
-                    hashMap.put("findTime", StringUtils.dateToStamp(mTvTime.getText().toString()));
-                    hashMap.put("addressContent", String.format("%s", mTvAddress.getText().toString()));
-                    hashMap.put("description", mEtDescription.getText().toString().trim());
-                    hashMap.put("status", statusType);
-                    hashMap.put("imgStr", imgStr);
-                    hashMap.put("recordStatus", statusType);
-                    mPresenter.InsertArInfo(hashMap);
+                    load();
                 }
                 break;
         }

@@ -80,7 +80,6 @@
 
                     </RelativeLayout>
 
-
                 </android.support.v7.widget.Toolbar>
                 <RelativeLayout
                     android:layout_marginTop="60dp"

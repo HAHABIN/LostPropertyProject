@@ -35,6 +35,22 @@
                 android:overScrollMode="never" />
 
         </LinearLayout>
+        <TextView
+            android:id="@+id/tv_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="20dp"
+            android:text="如果图片不想改变，就不做变化......"
+            android:textColor="@color/gray"
+            android:visibility="gone"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/white_eb" />
 
         <LinearLayout
 
@@ -225,7 +241,7 @@
                 android:hint="请填写详细地址"
                 android:singleLine="true"
                 android:textSize="14sp"
-                android:visibility="gone"/>
+                />
 
 
             <View

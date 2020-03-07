@@ -31,4 +31,9 @@ public class ReleasePresenter extends RxPresenter<ReleaseContract.View> implemen
         HttpClient.getInstance().startTask(HttpHelper.TaskType.UploadPhoto, this, hashMap);
     }
 
+    @Override
+    public void UploadArInfo(HashMap<String, Object> hashMap) {
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.updateArticle,this,hashMap);
+    }
+
 }

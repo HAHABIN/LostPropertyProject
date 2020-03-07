@@ -16,12 +16,17 @@ public interface ReleaseContract extends BaseContract {
 
     interface Presenter extends BasePresenter<View>{
         /**
-         * 图片上传
+         * 发布信息
          */
         void InsertArInfo(HashMap<String, Object> hashMap);
         /**
          * 图片上传
          */
         void UploadPhoto(String imgStr);
+
+        /**
+         * 修改物品信息
+         */
+        void UploadArInfo(HashMap<String,Object> hashMap);
     }
 }

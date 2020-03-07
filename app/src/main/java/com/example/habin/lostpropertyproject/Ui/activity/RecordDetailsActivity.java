@@ -192,6 +192,10 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
                 break;
             case R.id.iv_edit:
                 ToastUtils.show_s("修改页面");
+                Bundle bundle = new Bundle();
+                bundle.putString(Constants.RELEASE_TYPE,String.valueOf(data.getStatus()));
+                bundle.putSerializable(Constants.ACTICLEINFO_DATA,data);
+                startActivity(ReleaseActivity.class,bundle);
                 break;
         }
     }

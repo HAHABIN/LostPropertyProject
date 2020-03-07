@@ -188,7 +188,7 @@ public class GridImageAdapter extends RecyclerView.Adapter<GridImageAdapter.View
     public interface OnItemClickListener {
         void onItemClick(int position, View v);
     }
-
+    //图片点击
     public void setOnItemClickListener(OnItemClickListener listener) {
         this.mItemClickListener = listener;
     }
