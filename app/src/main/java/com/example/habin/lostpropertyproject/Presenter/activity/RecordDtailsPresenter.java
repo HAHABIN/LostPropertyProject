@@ -18,6 +18,8 @@ import java.util.HashMap;
  * Email:739115041@qq.com
  */
 public class RecordDtailsPresenter extends RxPresenter<RecordDtailsContract.View> implements RecordDtailsContract.Presenter {
+    //获取当前用户信息
+    private PersonInfoEntity.ResultBean userInfo = MyApplication.getUserInfo(UiUtils.getContext());
     @Override
     public void updateArticle(int id, int recordStatus) {
         HashMap<String,Object> hashMap = new HashMap<>();
@@ -27,9 +29,15 @@ public class RecordDtailsPresenter extends RxPresenter<RecordDtailsContract.View
     }
 
     @Override
+    public void reArticle(int articleId) {
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("id",articleId);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.QueryArticleInfo,this,hashMap);
+    }
+
+    @Override
     public void addComment(int articleId, String content) {
-        //获取当前用户信息
-        PersonInfoEntity.ResultBean userInfo = MyApplication.getUserInfo(UiUtils.getContext());
+
         HashMap<String,Object> hashMap = new HashMap<>();
         hashMap.put("userId",userInfo.getUserId());
         hashMap.put("articleId",articleId);
@@ -37,5 +45,21 @@ public class RecordDtailsPresenter extends RxPresenter<RecordDtailsContract.View
         hashMap.put("nickName",userInfo.getNickname());
         hashMap.put("imgStr",userInfo.getProfileImg());
         HttpClient.getInstance().startTask(HttpHelper.TaskType.AddComment,this,hashMap, HttpItem.class);
+    }
+
+    @Override
+    public void AddLike(int articleId) {
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("userId",userInfo.getUserId());
+        hashMap.put("articleId",articleId);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.AddGreat,this,hashMap, HttpItem.class);
+    }
+
+    @Override
+    public void CancelLike(int articleId) {
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("userId",userInfo.getUserId());
+        hashMap.put("articleId",articleId);
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.DeleteGreat,this,hashMap, HttpItem.class);
     }
 }

@@ -24,6 +24,8 @@ public class HttpHelper {
         updateArticleStatus,//更新物品状态
 
         AddComment,//添加评论
+        AddGreat,//点赞
+        DeleteGreat, //取消点赞
     }
 
     public static String getMethod(TaskType type) {
@@ -73,6 +75,12 @@ public class HttpHelper {
                 break;
             case AddComment:
                 method = "Comment/addComment";
+                break;
+            case AddGreat:
+                method = "Great/addGreat";
+                break;
+            case DeleteGreat:
+                method = "Great/deleteGreat";
                 break;
         }
         return method;

@@ -27,6 +27,7 @@ import com.example.habin.lostpropertyproject.Base.BaseMVPActivity;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.CommentEntity;
+import com.example.habin.lostpropertyproject.Bean.entity.Great;
 import com.example.habin.lostpropertyproject.Http.ApiError;
 import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
@@ -36,6 +37,7 @@ import com.example.habin.lostpropertyproject.Presenter.activity.contract.RecordD
 import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Ui.adapter.CommentAdapter;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
+import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
 import com.example.habin.lostpropertyproject.Util.StringUtils;
@@ -103,8 +105,13 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
     RecyclerView mRvCommentList; //评论列表
     @BindView(R.id.tv_comment_total)
     TextView mTvCommentTotal; //评论数
+    @BindView(R.id.tv_great_num)
+    TextView mTvGreatNum;//点赞数
+    @BindView(R.id.iv_great)
+    ImageView mIvGreat;
 
     private boolean isVis; //判断是否显示底部栏
+    private boolean isGreat;//是否点赞过
     private ArticleInfoEntity.ResultBean data;
     private List<String> imgList; //图片地址
     private BottomSheetDialog dialog;
@@ -169,7 +176,7 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
         mTvAddress.setText(data.getAddressContent());
         mTvFindTime.setText(StringUtils.stampToDate(data.getFindTime()));
         mTvNoteContext.setText(data.getDescription());
-        if (data!=null&&data.getCommentList().size()>0){
+        if (data.getCommentList()!=null&&data.getCommentList().size()>0){
             mTvCommentTotal.setText("全部评论("+data.getCommentList().size()+")");
         }
         if (data.getBackTime()!=0){
@@ -178,6 +185,23 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
         //评论列表
         mRvCommentList.setLayoutManager(new LinearLayoutManager(this));
         mRvCommentList.setAdapter(new CommentAdapter(mContext,data.getCommentList()));
+        //点赞数
+        List<Great> greats = data.getGreatList();
+
+        if (greats!=null&&greats.size()>0){
+            mTvGreatNum.setText(greats.size()+"");
+            int userId = MyApplication.getUserId(mContext);
+            for (Great great:greats){
+                if (great.getUserId() == userId){
+                    isGreat = true;
+                    mIvGreat.setImageResource(R.drawable.icon_work_dolike);
+                    break;
+                }
+            }
+        } else {
+            isGreat = false;
+            mTvGreatNum.setText("0");
+        }
 
     }
 
@@ -194,7 +218,8 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
 
     @OnClick({R.id.rl_content_pic,R.id.btn_share,R.id.iv_edit, R.id.iv_back,
             R.id.btn_success, R.id.btn_quit, R.id.btn_call, R.id.civ_pic,
-            R.id.btn_help, R.id.btn_private_chat,R.id.detail_page_do_comment})
+            R.id.btn_help, R.id.btn_private_chat,R.id.detail_page_do_comment,
+            R.id.iv_great})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_content_pic:
@@ -246,6 +271,22 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
                 break;
             case R.id.detail_page_do_comment:
                 showCommentDialog();
+                break;
+            case R.id.iv_great:
+                int size = data.getGreatList().size();
+                if (isGreat){
+                    isGreat = false;
+                    size = size - 1;
+                    mIvGreat.setImageResource(R.drawable.icon_work_like);
+                    mTvGreatNum.setText(size+"");
+                    mPresenter.CancelLike(data.getId());
+                } else {
+                    isGreat = true;
+                    mIvGreat.setImageResource(R.drawable.icon_work_dolike);
+                     size = size + 1;
+                    mTvGreatNum.setText(size+"");
+                    mPresenter.AddLike(data.getId());
+                }
                 break;
         }
     }
@@ -314,19 +355,33 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
     public void onSuccess(HttpHelper.TaskType type, HttpItem item) {
         switch (type) {
             case updateArticleStatus:
+                ToastUtils.show_s(mContext, item.getMessage());
+                break;
+            case AddGreat:
+            case DeleteGreat:
             case AddComment:
                 ToastUtils.show_s(mContext, item.getMessage());
+                ProgressUtils.show(mContext,"正在刷新");
+                mPresenter.reArticle(data.getId());
                 break;
         }
     }
 
     @Override
     public void onSuccess(HttpHelper.TaskType type, JSONObject object) {
-
+        ProgressUtils.dismiss();
+        switch (type){
+            case QueryArticleInfo:
+                ArticleInfoEntity articleInfoEntity = JsonUtil.JSONObjectToBean(object, ArticleInfoEntity.class);
+                data = articleInfoEntity.getResult().get(0);
+                initView();
+                break;
+        }
     }
 
     @Override
     public void onFailure(HttpHelper.TaskType type, ApiError e) {
+        ProgressUtils.dismiss();
         switch (type) {
             case updateArticleStatus:
             case AddComment:

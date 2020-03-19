@@ -58,9 +58,19 @@ public class ArticleInfoEntity extends HttpItem {
         private PersonInfoEntity.ResultBean personInfo;
         //评论列表
         private List<CommentEntity> commentList;
+        //点赞数
+        private List<Great> greatList;
 
         public List<CommentEntity> getCommentList() {
             return commentList;
+        }
+
+        public List<Great> getGreatList() {
+            return greatList;
+        }
+
+        public void setGreatList(List<Great> greatList) {
+            this.greatList = greatList;
         }
 
         public void setCommentList(List<CommentEntity> commentList) {

@@ -480,12 +480,14 @@
             android:textSize="14sp" />
 
         <ImageView
+            android:id="@+id/iv_great"
             android:layout_width="22dp"
             android:layout_height="22dp"
             android:layout_marginLeft="20dp"
             android:src="@drawable/icon_work_like" />
 
         <TextView
+            android:id="@+id/tv_great_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
