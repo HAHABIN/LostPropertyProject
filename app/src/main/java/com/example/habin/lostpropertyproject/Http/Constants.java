@@ -1,5 +1,7 @@
 package com.example.habin.lostpropertyproject.Http;
 
+import com.example.habin.lostpropertyproject.Widget.PublishDialog;
+
 /**
  * Create by HABIN on 2019/11/4
  * Time：22:29
@@ -8,10 +10,13 @@ package com.example.habin.lostpropertyproject.Http;
  */
 public class Constants {
 
-    //网络请求
-    public static final String BASE_URL = "http://192.168.199.221:8080/";
-//    public static final String BASE_URL = "http://101.37.75.132:9090/LostFoundSsm/";
-
+    //本地
+//    public static final String BASE_URL = "http://192.168.199.221:8080/";
+    //服务器
+    public static final String BASE_URL = "http://101.37.75.132:9090/LostFoundSsm/";
+    public static final String APP_ID = "101853801";
+    public static final String APP_KEY = "132b7c6cce1318aabdaa531f67f4f15c";
+    public static final String UM_KEY = "5e6f2b1a0cafb23c7f00034e";
     //返回结果
     public static final int NICKNAME_REQUEST = 1000;
     public static final int PROIMG_REQUEST = 1000;

@@ -2,10 +2,14 @@ package com.example.habin.lostpropertyproject.Presenter.activity;
 
 import com.example.habin.lostpropertyproject.Base.RxPresenter;
 import com.example.habin.lostpropertyproject.Bean.HttpItem;
+import com.example.habin.lostpropertyproject.Bean.entity.ArticleInfoEntity;
+import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Http.HttpHelper;
+import com.example.habin.lostpropertyproject.MyApplication;
 import com.example.habin.lostpropertyproject.Presenter.activity.contract.RecordDtailsContract;
 import com.example.habin.lostpropertyproject.Ui.activity.RecordDetailsActivity;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
 
 import java.util.HashMap;
 
@@ -20,5 +24,18 @@ public class RecordDtailsPresenter extends RxPresenter<RecordDtailsContract.View
         hashMap.put("id",id);
         hashMap.put("recordStatus",recordStatus);
         HttpClient.getInstance().startTask(HttpHelper.TaskType.updateArticleStatus,this,hashMap, HttpItem.class);
+    }
+
+    @Override
+    public void addComment(int articleId, String content) {
+        //获取当前用户信息
+        PersonInfoEntity.ResultBean userInfo = MyApplication.getUserInfo(UiUtils.getContext());
+        HashMap<String,Object> hashMap = new HashMap<>();
+        hashMap.put("userId",userInfo.getUserId());
+        hashMap.put("articleId",articleId);
+        hashMap.put("content",content);
+        hashMap.put("nickName",userInfo.getNickname());
+        hashMap.put("imgStr",userInfo.getProfileImg());
+        HttpClient.getInstance().startTask(HttpHelper.TaskType.AddComment,this,hashMap, HttpItem.class);
     }
 }

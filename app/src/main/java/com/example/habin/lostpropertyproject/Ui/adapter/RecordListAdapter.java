@@ -71,8 +71,7 @@ public class RecordListAdapter extends RecyclerView.Adapter<RecordListAdapter.Vi
         viewHolder.mTvNoteContext.setText(resultBean.getDescription());
         viewHolder.mIvResult.setBackgroundResource(ResultPic[resultBean.getRecordStatus()-1]);
         if (resultBean.getImgStr()!=null){
-            List<String> imgStrList = JsonUtil.fromJson(resultBean.getImgStr(), new TypeToken<List<String>>() {
-            });
+            List<String> imgStrList = JsonUtil.StringToList(resultBean.getImgStr());
             UiUtils.GildeLoad(mContext,viewHolder.mIvImg,imgStrList.get(0));
         }
 

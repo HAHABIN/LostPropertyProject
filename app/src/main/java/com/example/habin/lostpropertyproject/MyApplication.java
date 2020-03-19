@@ -8,13 +8,20 @@ import com.example.habin.lostpropertyproject.Bean.entity.City;
 import com.example.habin.lostpropertyproject.Bean.entity.County;
 import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.Province;
+import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
+import com.umeng.commonsdk.UMConfigure;
+import com.umeng.socialize.PlatformConfig;
+import com.umeng.socialize.UMShareAPI;
 
 
 import java.util.ArrayList;
+
+import static com.example.habin.lostpropertyproject.Http.Constants.APP_ID;
+import static com.example.habin.lostpropertyproject.Http.Constants.APP_KEY;
 
 /**
  * Create by HABIN on 2019/11/616:21
@@ -32,19 +39,28 @@ public class MyApplication extends Application {
     private static ArrayList<ArrayList<ArrayList<County>>> options3Items;
     private static ArrayList<ArticleTypeEntity.ResultBean> jsonType;
 
+
     @Override
     public void onCreate() {
         super.onCreate();
         application = this;
         context = getApplicationContext();
         HttpClient.getInstance().setContext(this);
+        //初始化友盟推送
+        UMConfigure.init(context,Constants.UM_KEY,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
+        UMShareAPI.get(this);
         //配置LitePal数据库
 //        LitePal.initialize(this);
         ToastUtils.init(this);
         //初始化省级列表
         initProvice();
     }
+    //各个平台的配置
+    {
+        //QQ
+        PlatformConfig.setQQZone(APP_ID, APP_KEY);
 
+    }
     private void initProvice() {
         //获取类型分类
         jsonType = JsonUtil.JsontoListT(getContext(), "article.json", ArticleTypeEntity.ResultBean.class);
@@ -105,7 +121,6 @@ public class MyApplication extends Application {
     public static Context getContext() {
         return context;
     }
-
 
     public static int getUserId(Context context) {
         try {

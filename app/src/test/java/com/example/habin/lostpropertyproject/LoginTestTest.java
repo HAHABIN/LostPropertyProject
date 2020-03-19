@@ -17,12 +17,12 @@ import java.util.Calendar;
 public class LoginTestTest {
     @Test
     public void test() {
-        String s = StringUtils.stampToDate("1581783612000");
-        System.out.println(s);
-        String str = "2019-03-13 13:54:00";
-        long l = StringUtils.dateToStamp(s);
-        System.out.println(l);
-        Calendar instance = Calendar.getInstance();
-        System.out.println(instance.toString());
+//        String s = StringUtils.stampToDate();
+//        System.out.println(s);
+//        String str = "2019-03-13 13:54:00";
+//        long l = StringUtils.dateToStamp(s);
+//        System.out.println(l);
+//        Calendar instance = Calendar.getInstance();
+//        System.out.println(instance.toString());
     }
 }

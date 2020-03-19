@@ -141,6 +141,7 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
             ToastUtils.show_s("帐号密码不能为空");
             return;
         }
+
         //获取输入验证码 统一转化为小写
         String inputcode = mEtPhoneCodes.getText().toString().trim().toLowerCase();
         if (inputcode.length()==0){
@@ -170,6 +171,14 @@ public class LandActivity extends BaseMVPActivity<LandContract.Presenter> implem
         }
         if (!StringUtils.checkEmail(email)) {
             Toast.makeText(mContext, "请输入正确的邮箱格式", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!StringUtils.checkName(mUsername)){
+            ToastUtils.show_s("帐号需要5至12位小写字母, 大写字母和数字的组合");
+            return;
+        }
+        if (!StringUtils.checkName(password)){
+            ToastUtils.show_s("密码为5至12位小写字母, 大写字母和数字的组合");
             return;
         }
         if (!password.equals(rpassword)) {

@@ -56,6 +56,16 @@ public class ArticleInfoEntity extends HttpItem {
         private long lastEditTime;
 
         private PersonInfoEntity.ResultBean personInfo;
+        //评论列表
+        private List<CommentEntity> commentList;
+
+        public List<CommentEntity> getCommentList() {
+            return commentList;
+        }
+
+        public void setCommentList(List<CommentEntity> commentList) {
+            this.commentList = commentList;
+        }
 
         public PersonInfoEntity.ResultBean getPersonInfo() {
             return personInfo;

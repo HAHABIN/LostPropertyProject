@@ -3,7 +3,9 @@ package com.example.habin.lostpropertyproject.Bean;
 /**
  * Create by HABIN on 2019/11/616:06
  * Email:739115041@qq.com
+ * 弃用
  */
+@Deprecated
 public class BaseResponse<T> {
     private boolean success;
     private String errMsg;

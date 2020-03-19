@@ -4,7 +4,7 @@ package com.example.habin.lostpropertyproject.Base;
  *
  * 通用javabean
  */
-
+@Deprecated
 public class BaseBean {
     /**
      * status : 100

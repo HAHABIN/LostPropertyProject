@@ -22,6 +22,8 @@ public class HttpHelper {
         queryType,
         updateArticle, //更新物品信息
         updateArticleStatus,//更新物品状态
+
+        AddComment,//添加评论
     }
 
     public static String getMethod(TaskType type) {
@@ -68,6 +70,9 @@ public class HttpHelper {
                 break;
             case updateArticleStatus:
                 method = "articleInfo/updateArticleStatus";
+                break;
+            case AddComment:
+                method = "Comment/addComment";
                 break;
         }
         return method;

@@ -4,14 +4,20 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 
 import com.example.habin.lostpropertyproject.Base.BaseActivity;
 import com.example.habin.lostpropertyproject.R;
+import com.example.habin.lostpropertyproject.Util.ProgressUtils;
+import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
 import com.example.habin.lostpropertyproject.Util.StatusBarUtils;
+import com.example.habin.lostpropertyproject.Util.UiUtils;
+import com.example.habin.lostpropertyproject.Widget.AlertDialogView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import io.reactivex.functions.Consumer;
@@ -33,10 +39,32 @@ public class SplashActivity extends BaseActivity {
     protected void initView() {
         //全屏透明状态栏
         StatusBarUtils.transparencyBar(mActivity);
+        restart(UiUtils.isNetworkConnected());
 //        checkPermissionRequest(this);
-        StartUp();
-    }
 
+    }
+    private void restart(Boolean flag){
+        if (!flag){
+            AlertDialogView dialogView = new AlertDialogView(this);
+            dialogView.setTitle("网络请求");
+            dialogView.setMessage("当前无网络，请开启网络");
+            dialogView.setConfimStr("退出");
+            dialogView.setCancelStr("重试");
+            dialogView.setListener(new AlertDialogView.onClickListener() {
+                @Override
+                public void cancelClick(AlertDialogView dialog) {
+                    restart(UiUtils.isNetworkConnected());
+                }
+                @Override
+                public void confirmClick(AlertDialogView dialog) {
+                    finish();
+                }
+            });
+            dialogView.show();
+        } else {
+            StartUp();
+        }
+    }
     @Override
     protected void initListener() {
 

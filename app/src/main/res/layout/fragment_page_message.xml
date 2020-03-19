@@ -2,7 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/blue_386FFE"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="消息"
+            android:textSize="16sp"
+            android:gravity="center"
+            android:textColor="@color/white_f5"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
     <com.example.habin.lostpropertyproject.Widget.SwipeRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipeRecyclerView"
         android:layout_width="match_parent"

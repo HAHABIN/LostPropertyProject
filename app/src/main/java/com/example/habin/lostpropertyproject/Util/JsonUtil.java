@@ -96,6 +96,16 @@ public class JsonUtil {
         Type type = typeToken.getType();
         return gson.fromJson(jsonString, type);
     }
+    /**
+     *["http://habin-picload.oss-cn-beijing.aliyuncs.com/upload/image/20200306/20200306173138364.jpeg",
+     * "http://habin-picload.oss-cn-beijing.aliyuncs.com/upload/image/20200306/20200306173138663.jpeg",
+     * "http://habin-picload.oss-cn-beijing.aliyuncs.com/upload/image/20200306/20200306173139095.jpeg"]
+     * 将[a,b]类型字符串转化为List<String>
+     */
+    public static List<String> StringToList(String jsonString){
+        return fromJson(jsonString, new TypeToken<List<String>>() {
+        });
+    }
 
     public static void main(String[] args) {
         Map<String, String> maps = new LinkedHashMap<String, String>();

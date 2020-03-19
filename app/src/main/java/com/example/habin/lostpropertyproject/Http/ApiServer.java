@@ -1,6 +1,5 @@
 package com.example.habin.lostpropertyproject.Http;
 
-import com.example.habin.lostpropertyproject.Bean.BaseResponse;
 
 import java.util.Map;
 
@@ -30,18 +29,18 @@ public interface ApiServer {
 //    Observable<List<BeanGSchaxun>> getGSxin(@Path("fenzhi") String fenzhi,
 //                                            @Path("bianhao") String bianhao,
 //                                            @Query("batchNo") String batchNo);
-    @POST("lostadmin/logincheck")
-    Observable<BaseResponse> login(@Query("username") String username,
-                                   @Query("password") String password);
-    @POST("lostadmin/signupcheck")
-    Observable<BaseResponse> signup(@Query("username") String username,
-                                   @Query("password") String password);
-
-    //上传图片
-    @Multipart
-    @POST("userAction_uploadImage.action")
-    Observable<BaseResponse> uploadPhoto(@Part("user.file") MultipartBody file,
-                                            @Part MultipartBody.Part... parts);
+//    @POST("lostadmin/logincheck")
+//    Observable<BaseResponse> login(@Query("username") String username,
+//                                   @Query("password") String password);
+//    @POST("lostadmin/signupcheck")
+//    Observable<BaseResponse> signup(@Query("username") String username,
+//                                   @Query("password") String password);
+//
+//    //上传图片
+//    @Multipart
+//    @POST("userAction_uploadImage.action")
+//    Observable<BaseResponse> uploadPhoto(@Part("user.file") MultipartBody file,
+//                                            @Part MultipartBody.Part... parts);
 
 
     @FormUrlEncoded

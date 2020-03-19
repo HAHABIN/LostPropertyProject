@@ -70,7 +70,8 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
             mTvName.setText(mPersonInfo.getNickname());
         }
         if (mPersonInfo.getProfileImg()!=null){
-            List<String> strings = JsonUtil.fromJson(mPersonInfo.getProfileImg(), new TypeToken<List<String>>() {});
+
+            List<String> strings = JsonUtil.StringToList(mPersonInfo.getProfileImg());
             UiUtils.GildeLoad(mActivity,mCivPic,strings.get(0));
         }
     }
@@ -133,7 +134,7 @@ public class MinePageFragment extends BaseMVPFragment<MinePageContract.Presenter
         if (personInfo != null) {
             mTvName.setText(personInfo.getNickname());
             if (personInfo.getProfileImg()!=null){
-                List<String> strings = JsonUtil.fromJson(personInfo.getProfileImg(), new TypeToken<List<String>>() {});
+                List<String> strings = JsonUtil.StringToList(personInfo.getProfileImg());
                 UiUtils.GildeLoad(mActivity,mCivPic,strings.get(0));
             }
         }

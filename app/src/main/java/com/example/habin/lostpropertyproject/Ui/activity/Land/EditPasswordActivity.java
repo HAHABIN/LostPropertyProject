@@ -20,6 +20,7 @@ import com.example.habin.lostpropertyproject.R;
 import com.example.habin.lostpropertyproject.Util.ProgressUtils;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.SnackbarUtils;
+import com.example.habin.lostpropertyproject.Util.StringUtils;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.example.habin.lostpropertyproject.Util.UiUtils;
 
@@ -77,6 +78,10 @@ public class EditPasswordActivity extends BaseMVPActivity<EditPasswordContract.P
             String ReNp = mEdReNewPassword.getText().toString().trim();
             if (mSpusername.length() == 0 || oldPassword.length() == 0 || Np.length() == 0 || ReNp.length() == 0) {
                 ToastUtils.show_s("请填写必要信息");
+                return;
+            }
+            if (!StringUtils.checkName(Np)){
+                ToastUtils.show_s("密码为5至12位小写字母, 大写字母和数字的组合");
                 return;
             }
             if (oldPassword.equals(Np)) {

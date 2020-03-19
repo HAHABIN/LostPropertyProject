@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            storeFile file('lostProperty.jks')
+            storePassword '123456'
+            keyAlias = 'lfKey'
+            keyPassword '123456'
+        }
+    }
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.habin.lostpropertyproject"
@@ -14,6 +22,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
     compileOptions {
@@ -54,17 +63,20 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
     //沉浸式状态栏
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
-
     //PickerView 选择器
     //权限管理
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
-
     /*PictureSelector*/
     implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.2.3'
-
     //PickerView 选择弹出
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
-
     //查看图片  由于PictureSelector里面自带PhotoView 所以不用重新引用
-//    implementation 'com.github.chrisbanes:PhotoView:1.2.6'
+    //    implementation 'com.github.chrisbanes:PhotoView:1.2.6'
+    implementation files('libs/umeng-common-2.2.5.jar')
+    implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
+    implementation files('libs/umeng-share-core-6.9.8.jar')
+    implementation files('libs/umeng-share-QQ-simplify-6.9.8.jar')
+    implementation files('libs/umeng-shareboard-widget-6.9.8.jar')
+    implementation files('libs/umeng-sharetool-6.9.8.jar')
+    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
 }

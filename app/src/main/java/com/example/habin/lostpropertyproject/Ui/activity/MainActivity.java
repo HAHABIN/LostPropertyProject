@@ -110,11 +110,7 @@ public class MainActivity extends BaseActivity {
                         startActivity(ReleaseActivity.class,bundle);
                         publishDialog.outDia();
                     });
-                    publishDialog.setPingguClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                        }
-                    });
+
                 }
                 publishDialog.show();
                 break;

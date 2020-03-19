@@ -115,7 +115,7 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
         mTvHelptimes.setText(String.valueOf(mUserInfo.getHelpTimes()));
         mTvUserid.setText(String.valueOf(mUserInfo.getUserId()));
         if (mUserInfo.getProfileImg()!=null){
-            List<String> strings = JsonUtil.fromJson(mUserInfo.getProfileImg(), new TypeToken<List<String>>() {});
+            List<String> strings = JsonUtil.StringToList(mUserInfo.getProfileImg());
             UiUtils.GildeLoad(mContext,mCivAvatar,strings.get(0));
         }
     }
@@ -124,17 +124,14 @@ public class UserInfoActivity extends BaseMVPActivity<UserInfoContract.Presenter
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_avatar:
-//                showPop();
                  SelectorDialogUtils.getInstance().openForHeaderInActivity(mActivity);
                 break;
             case R.id.civ_avatar:
-                List<String> imgStrList = JsonUtil.fromJson(mUserInfo.getProfileImg(), new TypeToken<List<String>>() {
-                });
+                List<String> imgStrList = JsonUtil.StringToList(mUserInfo.getProfileImg());
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constants.OPEN_PIC_POSITION,0);
                 bundle.putSerializable(Constants.OPEN_PIC_MEDIALAST,(Serializable)imgStrList);
                 startActivity(OpenPicActivity.class,bundle);
-//                OpenPicActivity.StartAct(mContext,0,imgList);
                 overridePendingTransition(R.anim.a5, 0);
                 break;
             case R.id.ll_nickname:

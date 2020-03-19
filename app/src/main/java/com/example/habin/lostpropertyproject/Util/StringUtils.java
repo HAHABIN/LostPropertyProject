@@ -80,6 +80,48 @@ public class StringUtils {
         return flag;
     }
 
+    public static void main(String[] args) {
+        String name = "中中中中中";
+        boolean b = checkName(name);
+        System.out.println(b);
+    }
+    /**
+     * 验证帐号和密码，6-12字符长度范围
+     * @param str
+     * @return
+     */
+    public static boolean checkLenth(String str){
+        boolean flag = true;
+        if (str.length()==0){
+            return false;
+        }
+        if (str.length()>12||str.length()<5){
+            return false;
+        }
+        return flag;
+
+    }
+    /**
+     * 验证帐号和密码，6-12位字母数字
+     * @param str
+     * @return
+     */
+    public static boolean checkName(String str) {
+        boolean flag = false;
+        if (str.length()==0){
+            return false;
+        }
+        try {
+            Pattern regex = Pattern.compile("^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])[a-zA-Z0-9]{5,12}$");
+            Matcher matcher = regex.matcher(str);
+            flag = matcher.matches();
+        } catch (Exception e) {
+            e.printStackTrace();
+            flag = false;
+
+        }
+        return flag;
+    }
     /**
      * 随机返回颜色Color十六进制字符串
      * @return

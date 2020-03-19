@@ -13,5 +13,6 @@ public interface RecordDtailsContract extends BaseContract {
 
     interface Presenter extends BasePresenter<View>{
         void updateArticle(int id,int recordStatus);
+        void addComment(int ArticleId,String Content);
     }
 }

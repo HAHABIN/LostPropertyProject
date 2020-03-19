@@ -25,7 +25,7 @@ public class PublishDialog extends Dialog {
     private RelativeLayout mPublishMainRlmian;
     private LinearLayout mPublishDialogLost;
     private LinearLayout mPublishDialogFind;
-    private LinearLayout mPublishDialogPinggu;
+//    private LinearLayout mPublishDialogPinggu;
 //    private LinearLayout mPublishDialogLlBt;
     private ImageView mPublishDialogIvMenu;
     public static Dialog dialog;
@@ -66,7 +66,7 @@ public class PublishDialog extends Dialog {
         mPublishMainRlmian = (RelativeLayout) findViewById(R.id.publish_main_rlmian);//主布局
         mPublishDialogLost = (LinearLayout) findViewById(R.id.Publish_dialog_fabu);//发布
         mPublishDialogFind = (LinearLayout) findViewById(R.id.publish_dialog_huishou);//官方回收
-        mPublishDialogPinggu = (LinearLayout) findViewById(R.id.publish_dialog_pinggu);//评估
+//        mPublishDialogPinggu = (LinearLayout) findViewById(R.id.publish_dialog_pinggu);//评估
 //        mPublishDialogLlBt = (LinearLayout) findViewById(R.id.publish_dialog_llBt);
         mPublishDialogIvMenu = (ImageView) findViewById(R.id.publish_dialog_ivMenu);//退出按钮x
 
@@ -102,7 +102,7 @@ public class PublishDialog extends Dialog {
     private void goinDia() {
         mPublishDialogLost.setVisibility(View.INVISIBLE);
         mPublishDialogFind.setVisibility(View.INVISIBLE);
-        mPublishDialogPinggu.setVisibility(View.INVISIBLE);
+//        mPublishDialogPinggu.setVisibility(View.INVISIBLE);
         //首先把发布回收评估三个控件设置为不可见
         mPublishMainRlmian.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_go_in));
         //然后设置主布局的动画
@@ -124,15 +124,15 @@ public class PublishDialog extends Dialog {
             }
         }, 100);
 
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPublishDialogPinggu.setVisibility(View.VISIBLE);
-                mPublishDialogPinggu.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_in));
-
-
-            }
-        }, 200);
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mPublishDialogPinggu.setVisibility(View.VISIBLE);
+//                mPublishDialogPinggu.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_in));
+//
+//
+//            }
+//        }, 200);
         //这里需要设置成两百不然会出现和评估同时向上滑动
     }
 
@@ -163,13 +163,13 @@ public class PublishDialog extends Dialog {
             }
         }, 100);
         //同理使用定时器将评估和回向下平移 这里需要注意的是评估和回收的定时器时间的设置不能大于关闭Dialog的定时时间
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPublishDialogPinggu.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_out));
-                mPublishDialogPinggu.setVisibility(View.INVISIBLE);
-            }
-        }, 150);
+//        mHandler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mPublishDialogPinggu.setAnimation(AnimationUtils.loadAnimation(mContext, R.anim.btn_shoot_out));
+//                mPublishDialogPinggu.setVisibility(View.INVISIBLE);
+//            }
+//        }, 150);
     }
 
     @Override
@@ -197,9 +197,9 @@ public class PublishDialog extends Dialog {
 
     }
 
-    public PublishDialog setPingguClickListener(View.OnClickListener clickListener) {
-        mPublishDialogPinggu.setOnClickListener(clickListener);
-        return this;
-
-    }
+//    public PublishDialog setPingguClickListener(View.OnClickListener clickListener) {
+//        mPublishDialogPinggu.setOnClickListener(clickListener);
+//        return this;
+//
+//    }
 }
