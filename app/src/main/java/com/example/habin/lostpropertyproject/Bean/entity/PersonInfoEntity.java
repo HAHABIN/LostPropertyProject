@@ -62,6 +62,7 @@ public class PersonInfoEntity extends HttpItem {
             return userId;
         }
 
+
         public void setUserId(int userId) {
             this.userId = userId;
         }
@@ -129,5 +130,6 @@ public class PersonInfoEntity extends HttpItem {
         public void setHelpTimes(int helpTimes) {
             this.helpTimes = helpTimes;
         }
+
     }
 }

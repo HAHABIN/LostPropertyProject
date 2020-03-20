@@ -42,8 +42,14 @@ public class RecordDtailsPresenter extends RxPresenter<RecordDtailsContract.View
         hashMap.put("userId",userInfo.getUserId());
         hashMap.put("articleId",articleId);
         hashMap.put("content",content);
-        hashMap.put("nickName",userInfo.getNickname());
-        hashMap.put("imgStr",userInfo.getProfileImg());
+        if (userInfo.getProfileImg()!=null){
+            hashMap.put("imgStr",userInfo.getProfileImg());
+        }
+        if (userInfo.getNickname()!=null){
+            hashMap.put("nickName",userInfo.getNickname());
+        }
+
+
         HttpClient.getInstance().startTask(HttpHelper.TaskType.AddComment,this,hashMap, HttpItem.class);
     }
 

@@ -68,7 +68,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initMainLayout() {
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+//        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         //是否显示标题栏
         if (!showTitle()) {
             setContentView(getLayoutId());

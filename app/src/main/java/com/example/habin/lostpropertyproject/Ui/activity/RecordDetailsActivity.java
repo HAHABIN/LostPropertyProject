@@ -111,7 +111,7 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
     ImageView mIvGreat;
 
     private boolean isVis; //判断是否显示底部栏
-    private boolean isGreat;//是否点赞过
+    private boolean isGreat = false;//是否点赞过
     private ArticleInfoEntity.ResultBean data;
     private List<String> imgList; //图片地址
     private BottomSheetDialog dialog;
@@ -199,7 +199,6 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
                 }
             }
         } else {
-            isGreat = false;
             mTvGreatNum.setText("0");
         }
 
@@ -400,7 +399,7 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
      * func:弹出评论框
      */
     private void showCommentDialog(){
-        dialog = new BottomSheetDialog(this);
+        dialog = new BottomSheetDialog(this,R.style.BottomSheetEdit);
         View commentView = LayoutInflater.from(this).inflate(R.layout.comment_dialog,null);
         final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
         final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
@@ -408,10 +407,10 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
         /**
          * 解决bsd显示不全的情况
          */
-        View parent = (View) commentView.getParent();
-        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
-        commentView.measure(0,0);
-        behavior.setPeekHeight(commentView.getMeasuredHeight());
+//        View parent = (View) commentView.getParent();
+//        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
+//        commentView.measure(0,0);
+//        behavior.setPeekHeight(commentView.getMeasuredHeight());
 
         bt_comment.setOnClickListener(new View.OnClickListener() {
 

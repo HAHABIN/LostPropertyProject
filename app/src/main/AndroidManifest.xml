@@ -38,11 +38,13 @@
             </intent-filter>
         </activity>
         <activity android:name=".Ui.activity.MainActivity" />
-        <activity android:name=".Ui.activity.Land.LandActivity" />
+        <activity android:name=".Ui.activity.Land.LandActivity"
+            android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity android:name=".Ui.activity.mine.UserInfoActivity" />
         <activity android:name=".Ui.activity.RecordDetailsActivity" />
         <activity
-            android:name=".Ui.activity.ReleaseActivity"/>
+            android:name=".Ui.activity.ReleaseActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:noHistory="true"
