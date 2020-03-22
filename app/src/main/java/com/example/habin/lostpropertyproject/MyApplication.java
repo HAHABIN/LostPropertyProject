@@ -1,6 +1,7 @@
 package com.example.habin.lostpropertyproject;
 
 import android.app.Application;
+import android.app.Notification;
 import android.content.Context;
 
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleTypeEntity;
@@ -28,7 +29,6 @@ import static com.example.habin.lostpropertyproject.Http.Constants.APP_KEY;
  * Email:739115041@qq.com
  */
 public class MyApplication extends Application {
-
     public static MyApplication application;
     private static Context context;
     public static int userId;
@@ -46,6 +46,7 @@ public class MyApplication extends Application {
         application = this;
         context = getApplicationContext();
         HttpClient.getInstance().setContext(this);
+
         //初始化友盟推送
         UMConfigure.init(context,Constants.UM_KEY,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
         UMShareAPI.get(this);

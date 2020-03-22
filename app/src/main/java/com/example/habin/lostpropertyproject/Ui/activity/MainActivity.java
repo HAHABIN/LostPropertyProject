@@ -3,6 +3,8 @@ package com.example.habin.lostpropertyproject.Ui.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.view.View;
 import android.widget.ImageView;
@@ -54,7 +56,12 @@ public class MainActivity extends BaseActivity {
     private Fragment fragment;
     //发布动画
     private PublishDialog publishDialog;
-
+    Handler handler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+        }
+    };
 
     //是否显示标题 默认不显示
     @Override

@@ -404,13 +404,6 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
         final EditText commentText = (EditText) commentView.findViewById(R.id.dialog_comment_et);
         final Button bt_comment = (Button) commentView.findViewById(R.id.dialog_comment_bt);
         dialog.setContentView(commentView);
-        /**
-         * 解决bsd显示不全的情况
-         */
-//        View parent = (View) commentView.getParent();
-//        BottomSheetBehavior behavior = BottomSheetBehavior.from(parent);
-//        commentView.measure(0,0);
-//        behavior.setPeekHeight(commentView.getMeasuredHeight());
 
         bt_comment.setOnClickListener(new View.OnClickListener() {
 
@@ -418,7 +411,10 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
             public void onClick(View view) {
                 String commentContent = commentText.getText().toString().trim();
                 if(!TextUtils.isEmpty(commentContent)){
-
+                    if(commentContent.length()<2){
+                        ToastUtils.show_s(mContext,"请输入2位数以上");
+                        return;
+                    }
                     //commentOnWork(commentContent);
                     dialog.dismiss();
                     mPresenter.addComment(data.getId(),commentContent);
