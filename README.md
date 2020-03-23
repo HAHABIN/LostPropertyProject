@@ -29,7 +29,7 @@
 + **Widget**：存放自定义的一些组件 
 + **MyApplication**
 
-##以下是登录注册和APP主界面图片
+##以下是登录注册和APP主界面图片  
 <img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/login.png" width="30%" height="50%">
 <img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/register.png" width="30%" height="50%">
 <img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/main-1.png" width="30%" height="50%">
