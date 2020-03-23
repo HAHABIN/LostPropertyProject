@@ -22,6 +22,9 @@ import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
+/**
+ * Rxjava异步访问数据处理管理器
+ * */
 public class HttpTask {
 
     private static final String TAG = "HttpTask";
