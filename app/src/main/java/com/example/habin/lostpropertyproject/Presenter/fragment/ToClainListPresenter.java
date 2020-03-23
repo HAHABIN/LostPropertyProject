@@ -22,8 +22,9 @@ public class ToClainListPresenter extends RxPresenter<ToClaimListContract.View> 
         if (type != 0) {
             hashMap.put("typeId", type);
         } else {
-            hashMap.put("status", status);
+            hashMap.put("recordStatus",status);
         }
+
         hashMap.put("pageNo", pageNo);
         hashMap.put("pageSize", pageSize);
 
