@@ -34,7 +34,7 @@
 <img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/register.png" width="30%" height="50%">
 <img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/main-1.png" width="30%" height="50%">  
 <img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/main-2.png" width="30%" height="50%">
-<img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/main-3.png" width="30%" height="50%">
+<img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/main-3.jpg" width="30%" height="50%">
 <img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/main-4.png" width="30%" height="50%">  
 
 ##后台服务端
