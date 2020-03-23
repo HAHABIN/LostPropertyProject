@@ -29,7 +29,6 @@
 + **Widget**：存放自定义的一些组件 
 + **MyApplication**
 
-![](https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/Detailed1.png =400x600)
-
+<img src="https://github.com/HAHABIN/LostPropertyProject/blob/master/Introduce/image/Detailed1.png" width="40%" height="60%">
 ##后台服务端
 https://github.com/HAHABIN/LostFoundSSM/create/master
