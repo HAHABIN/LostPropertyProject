@@ -27,8 +27,6 @@ public class MessagePageFragment  extends BaseMVPFragment<MessagePageContract.Pr
         return new MessagePageFragment();
     }
 
-    @BindView(R.id.swipeRecyclerView)
-    SwipeRecyclerView swipeRecyclerView;
 
 
 

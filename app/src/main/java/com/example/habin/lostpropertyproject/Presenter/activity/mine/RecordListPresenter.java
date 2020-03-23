@@ -21,6 +21,7 @@ public class RecordListPresenter extends RxPresenter<RecordListContract.View> im
     public void QueryArticleInfo(int userId, int recordStatus) {
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("userId", userId);
+        hashMap.put("pageSize",100);
         if (recordStatus<4){
             hashMap.put("recordStatus", recordStatus);
         }

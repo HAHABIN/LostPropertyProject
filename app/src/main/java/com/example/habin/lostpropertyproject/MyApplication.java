@@ -3,6 +3,11 @@ package com.example.habin.lostpropertyproject;
 import android.app.Application;
 import android.app.Notification;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.multidex.MultiDex;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.example.habin.lostpropertyproject.Bean.entity.ArticleTypeEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.City;
@@ -11,10 +16,16 @@ import com.example.habin.lostpropertyproject.Bean.entity.PersonInfoEntity;
 import com.example.habin.lostpropertyproject.Bean.entity.Province;
 import com.example.habin.lostpropertyproject.Http.Constants;
 import com.example.habin.lostpropertyproject.Http.HttpClient;
+import com.example.habin.lostpropertyproject.Ui.activity.RecordDetailsActivity;
 import com.example.habin.lostpropertyproject.Util.JsonUtil;
 import com.example.habin.lostpropertyproject.Util.SharedPreferenceHandler;
 import com.example.habin.lostpropertyproject.Util.ToastUtils;
 import com.umeng.commonsdk.UMConfigure;
+import com.umeng.message.IUmengRegisterCallback;
+import com.umeng.message.PushAgent;
+import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.UmengNotificationClickHandler;
+import com.umeng.message.entity.UMessage;
 import com.umeng.socialize.PlatformConfig;
 import com.umeng.socialize.UMShareAPI;
 
@@ -29,6 +40,10 @@ import static com.example.habin.lostpropertyproject.Http.Constants.APP_KEY;
  * Email:739115041@qq.com
  */
 public class MyApplication extends Application {
+
+
+    private static final String TAG = MyApplication.class.getName();;
+
     public static MyApplication application;
     private static Context context;
     public static int userId;
@@ -46,16 +61,61 @@ public class MyApplication extends Application {
         application = this;
         context = getApplicationContext();
         HttpClient.getInstance().setContext(this);
-
+        //
+        MultiDex.install(this);
         //初始化友盟推送
-        UMConfigure.init(context,Constants.UM_KEY,"umeng",UMConfigure.DEVICE_TYPE_PHONE,"");
-        UMShareAPI.get(this);
+        initUm();
+
         //配置LitePal数据库
 //        LitePal.initialize(this);
         ToastUtils.init(this);
         //初始化省级列表
         initProvice();
     }
+
+    private void initUm() {
+        UMConfigure.init(context,Constants.UM_KEY,"Umeng",UMConfigure.DEVICE_TYPE_PHONE,Constants.UM_MESSAGE_SECRET);
+        UMShareAPI.get(context);
+        PushAgent mPushAgent = PushAgent.getInstance(context);
+        //注册推送服务，每次调用register方法都会回调该接口
+        mPushAgent.register(new IUmengRegisterCallback() {
+
+            @Override
+            public void onSuccess(String deviceToken) {
+                //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
+                Log.i(TAG,"注册成功：deviceToken：-------->  " + deviceToken);
+            }
+
+            @Override
+            public void onFailure(String s, String s1) {
+                Log.e(TAG,"注册失败：-------->  " + "s:" + s + ",s1:" + s1);
+            }
+        });
+        //自定义通知栏打开动作
+        UmengNotificationClickHandler notificationClickHandler = new UmengNotificationClickHandler() {
+            @Override
+            public void dealWithCustomAction(Context context, UMessage msg) {
+                Log.i(TAG,"返回消息：-------->  " + msg.custom);
+                Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean(Constants.IS_SHOW,false);
+                bundle.putString("id",msg.custom);
+                bundle.putSerializable(Constants.ACTICLEINFO_DATA,null);
+                Intent intent = new Intent();
+
+                if (bundle!=null) {
+                    intent.putExtras(bundle);
+                }
+                intent.setClass(context,RecordDetailsActivity.class);
+                //开启了一个新的任务队列，且其位于队列的开始的模式打开。
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+
+            }
+        };
+        mPushAgent.setNotificationClickHandler(notificationClickHandler);
+    }
+
     //各个平台的配置
     {
         //QQ

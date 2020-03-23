@@ -17,6 +17,7 @@ public class Constants {
     public static final String APP_ID = "101853801";
     public static final String APP_KEY = "132b7c6cce1318aabdaa531f67f4f15c";
     public static final String UM_KEY = "5e6f2b1a0cafb23c7f00034e";
+    public static final String UM_MESSAGE_SECRET = "97083efdf319d04d0c89059dfaa72307";
     //返回结果
     public static final int NICKNAME_REQUEST = 1000;
     public static final int PROIMG_REQUEST = 1000;

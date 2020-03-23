@@ -115,6 +115,7 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
     private ArticleInfoEntity.ResultBean data;
     private List<String> imgList; //图片地址
     private BottomSheetDialog dialog;
+    private String id;
     @Override
     protected int getLayoutId() {
         return R.layout.activity_record_detail;
@@ -133,19 +134,22 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
             //是否显示底部栏
             isVis = extras.getBoolean(Constants.IS_SHOW, false);
             data = (ArticleInfoEntity.ResultBean) extras.getSerializable(Constants.ACTICLEINFO_DATA);
-            if (data != null && data.getImgStr() != null) {
-
-                List<String> imgStrList = JsonUtil.StringToList(data.getImgStr());
-                imgList = new ArrayList<>();
-                for (String imgstr : imgStrList) {
-                    imgList.add(imgstr);
+            if (data != null ) {
+                if (data.getImgStr() != null){
+                    List<String> imgStrList = JsonUtil.StringToList(data.getImgStr());
+                    imgList = new ArrayList<>();
+                    for (String imgstr : imgStrList) {
+                        imgList.add(imgstr);
+                    }
                 }
+                initDate();
+            } else {
+                id = extras.getString("id");
+                mPresenter.reArticle(Integer.parseInt(id));
             }
         }
     }
-
-    @Override
-    protected void initView() {
+    public void initDate(){
         StatusBarUtils.transparencyBar(mActivity);
 
         if (isVis) {
@@ -201,6 +205,10 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
         } else {
             mTvGreatNum.setText("0");
         }
+
+    }
+    @Override
+    protected void initView() {
 
     }
 
@@ -355,6 +363,7 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
         switch (type) {
             case updateArticleStatus:
                 ToastUtils.show_s(mContext, item.getMessage());
+                finish();
                 break;
             case AddGreat:
             case DeleteGreat:
@@ -373,7 +382,7 @@ public class RecordDetailsActivity extends BaseMVPActivity<RecordDtailsContract.
             case QueryArticleInfo:
                 ArticleInfoEntity articleInfoEntity = JsonUtil.JSONObjectToBean(object, ArticleInfoEntity.class);
                 data = articleInfoEntity.getResult().get(0);
-                initView();
+                initDate();
                 break;
         }
     }

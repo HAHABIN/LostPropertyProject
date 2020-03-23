@@ -17,6 +17,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        //
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -28,6 +31,14 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    lintOptions {
+        // true--所有正式版构建执行规则生成崩溃的lint检查，如果有崩溃问题将停止构建
+        checkReleaseBuilds false
+        // true--错误发生后停止gradle构建
+        abortOnError false
+
     }
 }
 
@@ -72,14 +83,9 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
     implementation project(path: ':umlibrary')
 
+    implementation 'com.android.support:multidex:1.0.3'
 
     //查看图片  由于PictureSelector里面自带PhotoView 所以不用重新引用
     //    implementation 'com.github.chrisbanes:PhotoView:1.2.6'
-//    implementation files('libs/umeng-common-2.2.5.jar')
-//    implementation files('libs/SecurityEnvSDK-release-1.1.0.jar')
-//    implementation files('libs/umeng-share-core-6.9.8.jar')
-//    implementation files('libs/umeng-share-QQ-simplify-6.9.8.jar')
-//    implementation files('libs/umeng-shareboard-widget-6.9.8.jar')
-//    implementation files('libs/umeng-sharetool-6.9.8.jar')
-//    implementation files('libs/utdid4all-1.1.5.3_proguard.jar')
+
 }
