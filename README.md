@@ -4,8 +4,9 @@
 
 ###App下载链接  
 [http://habin-picload.oss-cn-beijing.aliyuncs.com/Android/app-release.apk](http://habin-picload.oss-cn-beijing.aliyuncs.com/Android/app-release.apk)
+测试账号 admin123 密码admin
 
-##我简要搭建的MVP模式下常见的目录结构
+##VP模式下常见的目录结构
 
 + **Base** ：存放app的基类  
 + **Bean**：用来存放定义的数据  
